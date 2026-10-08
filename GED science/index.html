@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#ffffff"/>
+<meta name="color-scheme" content="light"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<title>GED Science Practice Quiz</title>
+<style>
+
+:root{--bg:#f7f9fc;--panel:#fff;--line:#dce3eb;--text:#172033;--muted:#657386;--gold:#b78618;--gold2:#f0ce72;--teal:#0f8f83;--green:#16865f;--red:#c94c5b;--blue:#2563eb;--shadow:0 24px 70px rgba(23,32,51,.12)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%;overflow-x:hidden}
+body{margin:0;min-width:280px;min-height:100vh;min-height:100dvh;overflow-x:hidden;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f0f2f0;color:var(--text);-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer;-webkit-appearance:none;appearance:none;touch-action:manipulation}
+.app{width:100%;max-width:1200px;margin:0 auto;padding:max(22px,env(safe-area-inset-top)) max(18px,env(safe-area-inset-right)) max(72px,env(safe-area-inset-bottom)) max(18px,env(safe-area-inset-left))}
+.hero{display:flex;justify-content:center;align-items:center;gap:clamp(18px,4vw,54px);flex-wrap:wrap;margin:12px 0 26px;padding:20px 0 12px}.brand{display:flex;justify-content:center;align-items:center;flex:0 0 auto}.brandText{display:flex;flex-direction:column;justify-content:center}.siteLogo{width:clamp(260px,27vw,480px);max-width:100%;height:auto;display:block;object-fit:contain;filter:drop-shadow(0 18px 20px rgba(23,32,51,.08));flex-shrink:0}.logo{width:50px;height:50px;border-radius:15px;background:linear-gradient(145deg,#d7aa3b,#f4d77c);display:grid;place-items:center;font-weight:950;box-shadow:0 10px 28px rgba(183,134,24,.2)}h1{font-size:clamp(2.5rem,7vw,10rem);margin:0;letter-spacing:-.075em;line-height:.82;font-weight:900;color:#1b2b41}.subtitle{margin:.35rem 0 0;color:var(--muted);font-size:clamp(1.5rem,3vw,3.5rem);font-weight:300;letter-spacing:-.045em;font-family:"Segoe UI",sans-serif}.pill{border:1px solid #d9e6e3;background:#f2fbf8;color:#17685f;border-radius:999px;padding:8px 12px;font-weight:850;white-space:nowrap}
+.heroTitleBlock{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-width:min(42vw,520px)}
+.heroTitle{margin:0;font-size:clamp(4rem,8vw,11rem);line-height:.8;letter-spacing:-.08em;font-weight:900;color:#1b2b41;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.heroSubtitle{margin:0.4rem 0 0;color:#6d7784;font-size:clamp(1.8rem,4vw,4.2rem);line-height:1.02;font-weight:300;letter-spacing:-.05em;font-family:"Segoe UI",sans-serif}
+.shell{background:rgba(255,255,255,.97);border:1px solid #e1e7ee;border-radius:28px;box-shadow:var(--shadow);overflow:hidden;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}.start{padding:36px 28px 40px;text-align:center}.kicker{color:var(--gold);font-weight:950;text-transform:uppercase;letter-spacing:.12em;font-size:.85rem}.start h2{font-size:clamp(1.7rem,4vw,2.5rem);margin:9px auto 10px;max-width:760px}.start p{color:var(--muted);line-height:1.65;max-width:780px;margin:0 auto 24px}
+.featureGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:24px auto;max-width:860px}.feature{padding:14px;border:1px solid #dfe6ed;border-radius:14px;background:#fff;color:#344257}.feature strong{color:#172033}
+.nameEntry{display:grid;gap:8px;max-width:420px;margin:0 auto 20px;text-align:left}.nameEntry label{font-weight:850;color:#344257}.nameEntry input{width:100%;min-height:50px;padding:12px 14px;border:1px solid #cfd9e4;border-radius:12px;font:inherit;color:var(--text);background:#fff}.nameEntry input:focus-visible{outline:3px solid rgba(37,99,235,.32);outline-offset:2px}
+.btn{border:0;border-radius:13px;padding:13px 18px;min-height:50px;font-weight:900;transition:.15s ease}.btnPrimary{background:linear-gradient(135deg,#d4a437,#f0ce72);color:#172033;box-shadow:0 8px 22px rgba(183,134,24,.18)}.btnSecondary{background:#eef4f7;color:#173d3a;border:1px solid #cfe0df}.btnGhost{background:#fff;color:#30455f;border:1px solid #cfd9e4}.btnTeal{background:linear-gradient(135deg,#0f8f83,#2db6a6);color:#fff}.btn:disabled{opacity:.45;cursor:not-allowed}
+.topbar{padding:19px 23px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff,#fbfcfe)}.meta{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:10px;flex-wrap:wrap}.counter{font-weight:900}.catwrap{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.category{color:var(--teal);font-weight:950}.diff{font-size:.8rem;font-weight:900;border-radius:999px;padding:4px 8px;background:#f1f5f9;color:#475569}.progressTrack{height:9px;background:#edf1f5;border-radius:99px;overflow:hidden;border:1px solid #e1e7ed}.progress{height:100%;width:2%;background:linear-gradient(90deg,var(--teal),#d3a93f);transition:width .3s ease}
+.content{padding:28px}.questionNo{color:var(--gold);font-size:.88rem;font-weight:950;text-transform:uppercase;letter-spacing:.12em}.sourcePassageBox{margin:10px 0 18px;padding:17px 19px;border:1px solid #dce3eb;border-left:4px solid #0f8f83;border-radius:14px;background:#f8fbfc;text-align:left}.sourcePassageTitle{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px;color:#17685f;font-size:.82rem;font-weight:950;text-transform:uppercase;letter-spacing:.08em}.passageQuestionLabel{flex:0 0 auto;border:1px solid #cfe0df;border-radius:999px;padding:5px 9px;background:#fff;color:#17685f;font-size:.72rem;letter-spacing:.02em;text-transform:none}.sourcePassageText{margin:0;color:#344257;line-height:1.65;font-size:1rem}.sourceAttribution{margin-top:10px;color:#657386;font-size:.82rem;font-weight:750}
+.question{font-size:clamp(1.28rem,2.5vw,1.72rem);line-height:1.45;margin:9px 0 18px;font-weight:850;letter-spacing:-.02em}.diagram{border:1px solid #e0e6ed;border-radius:18px;background:#fbfcfe;padding:8px;margin:0 0 19px;overflow:hidden}.diagram svg{display:block;width:100%;height:auto;max-height:330px}.miniTableWrap{overflow-x:auto;-webkit-overflow-scrolling:touch}.miniTable{border-collapse:collapse;width:100%;min-width:420px;background:#fff}.miniTable th,.miniTable td{padding:10px 12px;border:1px solid #dfe6ed;text-align:center}.miniTable th{background:#fffaf0;color:#8e6814}
+.answers{display:grid;gap:12px;border:0;padding:0;margin:0}.answer{width:100%;text-align:left;display:flex;gap:13px;align-items:flex-start;background:#fff;border:1px solid #d7e0e8;color:var(--text);padding:15px 16px;border-radius:15px;min-height:58px;transition:.16s ease;box-shadow:0 4px 14px rgba(31,41,55,.035)}.answer:hover:not(:disabled){transform:translateY(-1px);border-color:#8fb3d2;background:#f8fbff}.answer:focus-visible,.btn:focus-visible{outline:3px solid rgba(37,99,235,.32);outline-offset:3px}.letter{display:grid;place-items:center;flex:0 0 30px;height:30px;border-radius:9px;background:#eef3f8;color:#28415b;font-weight:950;border:1px solid #dde6ee}.answer.correct{border-color:#78bea4;background:#effaf5}.answer.correct .letter{background:#dff5eb;color:#136246;border-color:#a9d8c7}.answer.wrong{border-color:#df9ba5;background:#fff3f4}.answer.wrong .letter{background:#fde4e7;color:#9f2f3e;border-color:#efbdc4}.answer.dim{opacity:.58;background:#fafbfc}
+.hintBox,.feedback{margin-top:16px;border-radius:17px;padding:15px 16px;line-height:1.6}.hintBox{display:none;background:#fff9e8;border:1px solid #eed89b;color:#5f4a14}.hintBox.show{display:block}.feedback{display:none;border:1px solid #d8e1e9;background:#fbfcfe}.feedback.show{display:block}.feedbackTitle{font-weight:950;margin-bottom:7px}.feedback.correct .feedbackTitle{color:var(--green)}.feedback.wrong .feedbackTitle{color:#b33849}.explanation{color:#445267;margin:0;line-height:1.65}.actions{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-top:20px}.leftActions{display:flex;gap:9px;flex-wrap:wrap}.keyboardHint{color:var(--muted);font-size:.91rem;margin-top:10px}
+.results{padding:30px 28px}.scoreRing{width:146px;height:146px;border-radius:50%;display:grid;place-items:center;margin:0 auto 18px;background:conic-gradient(var(--teal) 0deg,var(--gold) 0deg,#e7edf3 0deg);position:relative;box-shadow:0 8px 24px rgba(31,41,55,.08)}.scoreRing:after{content:"";position:absolute;inset:12px;border-radius:50%;background:#fff}.scoreText{z-index:1;text-align:center;font-weight:950;font-size:2rem}.scoreText small{display:block;font-size:.78rem;color:var(--muted);font-weight:800}.resultTitle{text-align:center;margin:0 0 6px;font-size:2rem}.resultSub{text-align:center;color:var(--muted);margin:0 auto 22px;max-width:720px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}.stat{background:#fff;border:1px solid #dfe6ed;border-radius:15px;padding:16px;text-align:center}.stat strong{display:block;font-size:1.5rem}.stat span{color:var(--muted)}.resultActions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:20px 0}
+.missedTopicsBox{margin:20px 0 6px;border:1px solid #f0d7dc;background:#fff7f8;border-radius:16px;padding:16px}.missedTopicsBox h3{margin:0 0 10px;color:#a83b4b}.missedTopicsList{display:flex;flex-wrap:wrap;gap:9px}.missedTopicChip{display:inline-flex;align-items:center;gap:7px;border:1px solid #ecc4cb;background:#fff;color:#8f3040;border-radius:999px;padding:8px 11px;font-weight:850;font-size:.92rem}.noMissedTopics{color:#16865f;font-weight:850}
+.sectionTitle{margin:26px 0 12px}.topicGrid{display:grid;gap:10px}.topicRow{border:1px solid #dfe6ed;border-radius:14px;padding:12px;background:#fff}.topicHead{display:flex;justify-content:space-between;gap:10px;font-weight:850}.meter{height:8px;border-radius:99px;background:#edf1f5;overflow:hidden;margin-top:8px}.meterFill{height:100%;background:linear-gradient(90deg,var(--red),var(--gold),var(--teal));border-radius:99px}.reviewList{display:grid;gap:12px}details{border:1px solid #dbe3eb;border-radius:14px;background:#fff;padding:12px 14px}summary{cursor:pointer;font-weight:850;line-height:1.45}details p{color:#536276;line-height:1.6}.keyTable{width:100%;border-collapse:collapse;margin-top:14px;background:#fff;min-width:650px}.keyTable th,.keyTable td{border-bottom:1px solid #e0e6ed;padding:10px 8px;text-align:left;vertical-align:top}.keyTable th{color:#8e6814;background:#fffaf0}
+.frac{display:inline-grid;grid-template-rows:auto auto;text-align:center;vertical-align:-.36em;line-height:1;margin:0 .12em;white-space:nowrap}.frac .num{display:block;padding:0 .18em .10em;border-bottom:1.45px solid currentColor}.frac .den{display:block;padding:.10em .18em 0}.hidden{display:none!important}.footer{text-align:center;color:#7b8797;margin-top:18px;font-size:.9rem}
+.studyBuddy{position:fixed;right:max(12px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));z-index:9999;display:flex;align-items:center;gap:9px;padding:9px 13px;border-radius:999px;background:rgba(255,255,255,.98);border:1px solid rgba(11,122,117,.18);box-shadow:0 10px 26px rgba(0,0,0,.14);font-weight:900;font-size:14px;transform-origin:80% 100%}.studyAvatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#d7aa3b,#f4d77c);color:#172033;font-size:18px;font-weight:950;position:relative}.greenLight{width:10px;height:10px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 0 rgba(34,197,94,.8);animation:lightPulse 1.2s infinite}.cheerBubble{position:absolute;right:10px;bottom:58px;background:#fff;border:1px solid #dfe6ed;border-radius:14px;padding:8px 11px;box-shadow:0 8px 22px rgba(0,0,0,.12);opacity:0;transform:translateY(8px) scale(.92);pointer-events:none;white-space:nowrap;color:#17685f}.confetti{position:absolute;inset:-18px;pointer-events:none;opacity:0}.confetti i{position:absolute;width:7px;height:12px;border-radius:2px;background:#d4a437}.confetti i:nth-child(1){left:8%;top:28%;transform:rotate(15deg)}.confetti i:nth-child(2){left:28%;top:0;background:#0f8f83;transform:rotate(-28deg)}.confetti i:nth-child(3){left:50%;top:-6%;background:#2563eb;transform:rotate(30deg)}.confetti i:nth-child(4){right:18%;top:5%;background:#c94c5b;transform:rotate(-20deg)}.confetti i:nth-child(5){right:2%;top:32%;background:#22c55e;transform:rotate(40deg)}.confetti i:nth-child(6){left:18%;bottom:3%;background:#c94c5b;transform:rotate(35deg)}.confetti i:nth-child(7){right:30%;bottom:-4%;background:#2563eb;transform:rotate(-35deg)}.confetti i:nth-child(8){right:2%;bottom:20%;background:#d4a437;transform:rotate(18deg)}
+.studyBuddy.cheer{animation:studyJump .72s ease 2}.studyBuddy.cheer .studyAvatar{animation:studySpin .7s ease 1}.studyBuddy.cheer .cheerBubble{animation:bubblePop 2s ease forwards}.studyBuddy.cheer .confetti{animation:confettiPop 2s ease forwards}.studyBuddy.finalCheer{animation:studyMega 1s ease 3}
+.correctPop{position:fixed;inset:0;z-index:10060;display:grid;place-items:center;visibility:hidden;pointer-events:none}.correctPop.show{visibility:visible}.correctPopInner{display:flex;flex-direction:column;align-items:center;gap:12px;transform:translateY(-8px)}.correctPopMark{color:#16a34a;font-size:clamp(9rem,36vw,22rem);font-weight:1000;line-height:1;text-shadow:0 10px 36px rgba(22,134,95,.28);transform:scale(.3);opacity:0}.correctPopLabel{display:inline-block;background:rgba(255,255,255,.94);border:1px solid rgba(22,134,95,.2);color:#17685f;border-radius:999px;padding:10px 18px;font-weight:900;letter-spacing:.02em;box-shadow:0 16px 40px rgba(22,134,95,.18);transform:translateY(12px) scale(.9);opacity:0}.correctPop.show .correctPopMark,.correctPop.show .correctPopLabel{animation:correctSignPop 2s cubic-bezier(.16,1,.3,1) both}
+@keyframes lightPulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.8)}70%{box-shadow:0 0 0 8px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}@keyframes studyJump{0%,100%{transform:translateY(0) rotate(0)}40%{transform:translateY(-18px) rotate(-4deg)}65%{transform:translateY(-8px) rotate(4deg)}}@keyframes studySpin{0%{transform:rotate(0) scale(1)}50%{transform:rotate(12deg) scale(1.15)}100%{transform:rotate(0) scale(1)}}@keyframes bubblePop{0%{opacity:0;transform:translateY(8px) scale(.9)}18%,70%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-8px) scale(.96)}}@keyframes confettiPop{0%{opacity:0;transform:scale(.6) rotate(0)}20%{opacity:1}100%{opacity:0;transform:scale(1.45) rotate(120deg)}}@keyframes studyMega{0%,100%{transform:translateY(0) rotate(0) scale(1)}45%{transform:translateY(-22px) rotate(-6deg) scale(1.08)}70%{transform:translateY(-10px) rotate(6deg) scale(1.04)}}
+@keyframes correctSignPop{0%{opacity:0;transform:scale(.3)}28%{opacity:1;transform:scale(1.12)}70%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.82)}}
+@media(max-width:760px){.content,.results{padding:21px 16px}.topbar{padding:16px}.featureGrid{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1fr}.actions{align-items:stretch;flex-direction:column}.leftActions{display:grid;grid-template-columns:1fr 1fr}.actions>.btn{width:100%}}
+@media(max-width:430px){.app{padding-left:max(8px,env(safe-area-inset-left));padding-right:max(8px,env(safe-area-inset-right))}.shell{border-radius:18px}.start{padding:26px 14px 30px}.featureGrid{grid-template-columns:1fr 1fr;gap:8px}.question{font-size:1.18rem}.answer{padding:13px 11px;min-height:56px}.leftActions{grid-template-columns:1fr}.studyBuddy{right:8px;bottom:max(8px,env(safe-area-inset-bottom));font-size:13px;padding:8px 10px}}
+@media(hover:none),(pointer:coarse){.answer:hover:not(:disabled),.btn:hover:not(:disabled){transform:none}.answer,.btn{min-height:52px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}.studyBuddy.cheer .cheerBubble{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.correctPop.show .correctPopMark{animation:none!important;opacity:1;transform:none}}
+@media print{.hero,.start,#quizView,.resultActions,.studyBuddy,.footer{display:none!important}.shell{box-shadow:none;border:0}.results{padding:0}#answerKey{display:block!important}}
+
+.navigatorWrap{margin:18px 0 0;border:1px solid #dfe6ed;background:#fff;border-radius:18px;overflow:hidden}
+.navigatorHeader{width:100%;border:0;background:linear-gradient(180deg,#fff,#fbfcfe);color:#172033;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;font-weight:950;text-align:left}
+.navigatorHeader span:last-child{color:#0f8f83;font-size:.9rem}
+.navigatorBody{padding:14px 16px 16px;border-top:1px solid #e7ecf1}
+.navigatorLegend{display:flex;flex-wrap:wrap;gap:10px 14px;margin:0 0 12px;color:#657386;font-size:.88rem}
+.legendItem{display:inline-flex;align-items:center;gap:6px}.legendDot{width:13px;height:13px;border-radius:4px;border:1px solid #cfd9e4;background:#fff}
+.legendDot.correct{background:#eaf8f2;border-color:#9dd4bf}.legendDot.wrong{background:#fff0f2;border-color:#e4a6b0}.legendDot.skipped{background:#fff8e8;border-color:#e3c66e}.legendDot.current{background:#eef8f6;border:2px solid #0f8f83}
+.navigatorGrid{display:grid;grid-template-columns:repeat(10,1fr);gap:8px}.navQ{min-width:0;min-height:42px;border-radius:10px;border:1px solid #d6e0e8;background:#fff;color:#334155;font-weight:900;padding:6px 2px}
+.navQ:hover{border-color:#8fb3d2;background:#f8fbff}.navQ.correct{background:#edf9f4;border-color:#a9d8c7;color:#126147}.navQ.wrong{background:#fff2f4;border-color:#e4a6b0;color:#a13243}.navQ.skipped{background:#fff8e8;border-color:#e5ca76;color:#8b6b10}.navQ.current{outline:3px solid rgba(15,143,131,.22);border:2px solid #0f8f83}.navQ:focus-visible{outline:3px solid rgba(37,99,235,.32);outline-offset:2px}.resultNavigator{margin:22px 0 4px}
+@media(max-width:760px){.navigatorGrid{grid-template-columns:repeat(5,1fr);gap:8px}.navQ{min-height:44px}}
+@media(max-width:390px){.navigatorBody{padding:12px 10px 14px}.navigatorGrid{gap:6px}.navQ{border-radius:9px;min-height:42px;font-size:.92rem}}
+
+
+.timerStreakBar{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  margin:12px 0 11px;padding:12px 14px;border:1px solid #dfe6ed;border-radius:16px;background:#fff;
+}
+.timerGroup{display:flex;align-items:center;gap:12px;min-width:190px}
+.timerRing{
+  --p:100;--ring:#0f8f83;
+  width:58px;height:58px;border-radius:50%;display:grid;place-items:center;position:relative;
+  background:conic-gradient(var(--ring) calc(var(--p)*1%),#e7edf3 0);
+  box-shadow:0 4px 14px rgba(31,41,55,.08);
+}
+.timerRing:after{content:"";position:absolute;inset:6px;border-radius:50%;background:#fff}
+.timerText{position:relative;z-index:1;font-size:.9rem;font-weight:950;color:#172033;font-variant-numeric:tabular-nums}
+.timerLabel{font-weight:950;color:#172033}.timerSub{font-size:.82rem;color:#657386;margin-top:2px}
+.streakBox{display:flex;align-items:center;gap:9px;border:1px solid #ecd38e;background:#fff9e8;border-radius:13px;padding:9px 12px;font-weight:900;color:#71550d}
+.streakCount{font-size:1.2rem;color:#9b6b09}
+.timerRing.warn{--ring:#d69d20}.timerRing.danger{--ring:#c94c5b;animation:timerPulse .75s ease-in-out infinite}.timerRing.critical{animation:timerPulse .38s ease-in-out infinite}
+@keyframes timerPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08);box-shadow:0 0 0 7px rgba(201,76,91,.10)}}
+.timeoutNote{margin-top:8px;padding:8px 10px;border-radius:10px;background:#fff0f2;color:#9f2f3e;font-weight:800}
+@media(max-width:520px){.timerStreakBar{align-items:stretch}.timerGroup{min-width:0}.streakBox{justify-content:center;flex:1}}
+
+
+
+/* Side Timer + Side Navigator */
+.sideControls{position:relative;z-index:10020}
+.sidePanel{
+  position:fixed;
+  top:max(86px,calc(env(safe-area-inset-top) + 70px));
+  bottom:max(18px,env(safe-area-inset-bottom));
+  width:min(320px,calc(100vw - 42px));
+  background:rgba(255,255,255,.985);
+  border:1px solid #dfe6ed;
+  border-radius:22px;
+  box-shadow:0 20px 55px rgba(23,32,51,.18);
+  z-index:10020;
+  overflow:auto;
+  -webkit-overflow-scrolling:touch;
+  transition:transform .25s ease,opacity .2s ease;
+}
+.navSidePanel{
+  left:max(12px,env(safe-area-inset-left));
+  transform:translateX(calc(-100% - 28px));
+}
+.timerSidePanel{
+  right:max(12px,env(safe-area-inset-right));
+  width:min(285px,calc(100vw - 42px));
+  transform:translateX(calc(100% + 28px));
+}
+.sidePanel.open{transform:translateX(0)}
+.sidePanelHead{
+  position:sticky;top:0;z-index:2;
+  display:flex;justify-content:space-between;align-items:flex-start;gap:10px;
+  padding:15px 15px 13px;
+  background:linear-gradient(180deg,#fff,#fbfcfe);
+  border-bottom:1px solid #e4e9ef;
+}
+.sidePanelTitle{font-weight:950;color:#172033}
+.sidePanelSub{font-size:.82rem;line-height:1.35;color:#657386;margin-top:3px}
+.sideHideBtn{
+  border:1px solid #cfd9e4;background:#fff;color:#30455f;
+  min-height:38px;padding:7px 10px;border-radius:10px;font-weight:900;
+}
+.sidePanelBody{padding:14px}
+.edgeToggle{
+  position:fixed;z-index:10010;top:48%;
+  border:1px solid #d5dee7;background:rgba(255,255,255,.98);
+  color:#17324d;box-shadow:0 8px 22px rgba(23,32,51,.14);
+  min-height:48px;padding:10px 11px;font-weight:950;
+  transition:opacity .18s ease,transform .18s ease;
+}
+.edgeToggle.navEdge{
+  left:max(0px,env(safe-area-inset-left));
+  border-left:0;border-radius:0 13px 13px 0;
+}
+.edgeToggle.timerEdge{
+  right:max(0px,env(safe-area-inset-right));
+  border-right:0;border-radius:13px 0 0 13px;
+}
+.edgeToggle.tabHidden{opacity:0;pointer-events:none;transform:scale(.92)}
+.navSidePanel .navigatorBody{padding:0;border-top:0}
+.navSidePanel .navigatorGrid{grid-template-columns:repeat(5,1fr)}
+.navSidePanel .navigatorLegend{margin-bottom:13px}
+.timerSideBody{display:grid;gap:14px}
+.timerSidePanel .timerGroup{
+  display:grid;justify-items:center;text-align:center;gap:10px;min-width:0
+}
+.timerSidePanel .timerRing{width:112px;height:112px}
+.timerSidePanel .timerRing:after{inset:9px}
+.timerSidePanel .timerText{font-size:1.45rem}
+.timerSidePanel .timerLabel{font-size:1.06rem}
+.timerSidePanel .timerSub{font-size:.9rem;line-height:1.4}
+.timerSidePanel .streakBox{justify-content:center;width:100%;min-height:50px}
+.timerSidePanel .streakCount{font-size:1.35rem}
+.panelTip{
+  border-radius:12px;padding:10px 11px;background:#f7f9fc;
+  color:#657386;font-size:.84rem;line-height:1.45
+}
+.comboSidePanel{
+  right:max(12px,env(safe-area-inset-right));
+  width:min(320px,calc(100vw - 42px));
+}
+.comboBody{display:grid;gap:14px}
+.comboDivider{height:1px;background:#e4e9ef;margin:2px 0}
+.comboNavSection .navigatorBody{padding:0;border-top:0}
+.comboNavSection .navigatorGrid{grid-template-columns:repeat(5,1fr)}
+.comboNavSection .navigatorLegend{margin-bottom:13px}
+@media(max-width:760px){
+  .comboSidePanel{width:min(320px,calc(100vw - 26px))}
+}
+@media(max-width:390px){
+  .comboSidePanel{width:calc(100vw - 18px)}
+}
+@media(min-width:1280px){
+  body.timer-panel-open .app{padding-right:300px;max-width:1320px}
+}
+@media(max-width:760px){
+  .sidePanel{
+    top:max(72px,calc(env(safe-area-inset-top) + 58px));
+    bottom:max(10px,env(safe-area-inset-bottom));
+    width:min(330px,calc(100vw - 26px))
+  }
+  .timerSidePanel{width:min(300px,calc(100vw - 26px))}
+  .edgeToggle{
+    top:auto;
+    bottom:max(76px,calc(env(safe-area-inset-bottom) + 62px));
+    font-size:.88rem
+  }
+}
+@media(max-width:390px){
+  .sidePanel{width:calc(100vw - 18px);border-radius:18px}
+  .timerSidePanel{width:calc(100vw - 18px)}
+  .sidePanelBody{padding:11px}
+  .navSidePanel .navigatorGrid{gap:6px}
+}
+@media(prefers-reduced-motion:reduce){
+  .sidePanel,.edgeToggle{transition:none!important}
+}
+@media print{
+  .sideControls{display:none!important}
+}
+
+
+/* Compact non-overlapping layout refinements */
+.app{
+  max-width:1180px;
+  transition:padding-left .24s ease,padding-right .24s ease,max-width .24s ease;
+}
+
+/* Side cards should hug their content instead of stretching to the bottom */
+.sidePanel{
+  bottom:auto;
+  max-height:calc(100dvh - 112px);
+}
+.timerSidePanel{
+  width:268px;
+  max-height:430px;
+  overflow:hidden;
+}
+.timerSidePanel .sidePanelBody{
+  padding:14px 14px 16px;
+}
+.navSidePanel{
+  max-height:calc(100dvh - 112px);
+}
+
+/* Reserve real space for open side panels on wide screens so nothing overlaps */
+@media(min-width:1180px){
+  body.timer-panel-open .app{
+    max-width:1480px;
+    padding-right:300px;
+  }
+  body.nav-panel-open .app{
+    max-width:1480px;
+    padding-left:340px;
+  }
+  body.timer-panel-open.nav-panel-open .app{
+    max-width:1660px;
+    padding-left:340px;
+    padding-right:300px;
+  }
+}
+
+/* Study buddy must always remain visible and outside the timer card */
+.studyBuddy{
+  z-index:10060;
+  transition:right .24s ease,left .24s ease,bottom .24s ease,transform .24s ease;
+}
+@media(min-width:900px){
+  body.timer-panel-open .studyBuddy{
+    right:300px;
+    left:auto;
+  }
+}
+@media(max-width:899px){
+  body.timer-panel-open .studyBuddy{
+    left:max(12px,env(safe-area-inset-left));
+    right:auto;
+    bottom:max(12px,env(safe-area-inset-bottom));
+  }
+  body.nav-panel-open .studyBuddy{
+    right:max(12px,env(safe-area-inset-right));
+    left:auto;
+  }
+}
+
+/* The timer panel stays compact on phones too */
+@media(max-width:760px){
+  .timerSidePanel{
+    max-height:410px;
+  }
+  .navSidePanel{
+    max-height:calc(100dvh - 90px);
+  }
+  .app{
+    padding-bottom:max(88px,calc(env(safe-area-inset-bottom) + 72px));
+  }
+}
+
+/* On very wide displays, let the quiz itself use more of the available width */
+@media(min-width:1450px){
+  body:not(.nav-panel-open):not(.timer-panel-open) .app{
+    max-width:1280px;
+  }
+}
+
+
+/* Navigator moved to the RIGHT side */
+.navSidePanel{
+  left:auto !important;
+  right:max(12px,env(safe-area-inset-right)) !important;
+  transform:translateX(calc(100% + 28px)) !important;
+}
+.navSidePanel.open{
+  transform:translateX(0) !important;
+}
+
+/* Navigator show-tab also moves to the right edge */
+.edgeToggle.navEdge{
+  left:auto !important;
+  right:max(0px,env(safe-area-inset-right)) !important;
+  border-left:1px solid #d5dee7 !important;
+  border-right:0 !important;
+  border-radius:13px 0 0 13px !important;
+}
+
+/* Put the two right-edge tabs at different heights */
+.edgeToggle.navEdge{top:42% !important}
+.edgeToggle.timerEdge{top:55% !important}
+
+/* Both drawers use the right side, so only one reserves layout space at a time */
+@media(min-width:1180px){
+  body.nav-panel-open .app{
+    max-width:1480px;
+    padding-left:max(14px,env(safe-area-inset-left)) !important;
+    padding-right:350px !important;
+  }
+  body.timer-panel-open .app{
+    max-width:1480px;
+    padding-right:300px !important;
+  }
+  body.timer-panel-open.nav-panel-open .app{
+    padding-left:max(14px,env(safe-area-inset-left)) !important;
+    padding-right:350px !important;
+  }
+}
+
+/* Keep the study buddy clear of whichever right drawer is open */
+@media(min-width:900px){
+  body.nav-panel-open .studyBuddy{
+    right:350px !important;
+    left:auto !important;
+  }
+  body.timer-panel-open .studyBuddy{
+    right:300px !important;
+    left:auto !important;
+  }
+}
+@media(max-width:760px){
+  .edgeToggle.navEdge{
+    top:auto !important;
+    bottom:max(132px,calc(env(safe-area-inset-bottom) + 118px)) !important;
+  }
+  .edgeToggle.timerEdge{
+    top:auto !important;
+    bottom:max(76px,calc(env(safe-area-inset-bottom) + 62px)) !important;
+  }
+}
+
+/* FIX: show Timer + Navigator together without clipping */
+.comboSidePanel{
+  width:min(330px,calc(100vw - 34px)) !important;
+  max-height:calc(100dvh - 96px) !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  overscroll-behavior:contain;
+}
+.comboSidePanel .sidePanelHead{
+  padding:12px 13px 10px !important;
+}
+.comboSidePanel .sidePanelBody{
+  padding:11px 12px 14px !important;
+}
+.comboBody{
+  gap:9px !important;
+}
+.comboSidePanel .timerGroup{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:12px !important;
+  text-align:left !important;
+}
+.comboSidePanel .timerRing{
+  width:82px !important;
+  height:82px !important;
+  flex:0 0 82px !important;
+}
+.comboSidePanel .timerRing:after{
+  inset:7px !important;
+}
+.comboSidePanel .timerText{
+  font-size:1.15rem !important;
+}
+.comboSidePanel .timerLabel{
+  font-size:.98rem !important;
+}
+.comboSidePanel .timerSub{
+  font-size:.8rem !important;
+  margin-top:2px !important;
+}
+.comboSidePanel .streakBox{
+  min-height:42px !important;
+  padding:8px 10px !important;
+  font-size:.92rem !important;
+}
+.comboSidePanel .streakCount{
+  font-size:1.15rem !important;
+}
+.comboSidePanel .panelTip{
+  padding:8px 9px !important;
+  font-size:.77rem !important;
+  line-height:1.35 !important;
+}
+.comboDivider{
+  margin:1px 0 3px !important;
+}
+.comboNavSection{
+  display:block !important;
+}
+.comboNavSection .sidePanelTitle{
+  font-size:1rem !important;
+}
+.comboNavSection .sidePanelSub{
+  font-size:.78rem !important;
+}
+.comboNavSection .navigatorLegend{
+  gap:6px 9px !important;
+  margin-bottom:9px !important;
+  font-size:.75rem !important;
+}
+.comboNavSection .navigatorGrid{
+  grid-template-columns:repeat(5,minmax(0,1fr)) !important;
+  gap:6px !important;
+}
+.comboNavSection .navQ{
+  min-height:34px !important;
+  height:34px !important;
+  border-radius:8px !important;
+  padding:2px !important;
+  font-size:.82rem !important;
+}
+@media(min-height:820px) and (min-width:760px){
+  .comboSidePanel .navQ{
+    min-height:36px !important;
+    height:36px !important;
+  }
+}
+@media(max-width:760px){
+  .comboSidePanel{
+    top:max(66px,calc(env(safe-area-inset-top) + 52px)) !important;
+    max-height:calc(100dvh - 82px) !important;
+    width:min(330px,calc(100vw - 18px)) !important;
+  }
+}
+
+#studyBuddy{
+  top:auto!important;
+  right:max(12px,env(safe-area-inset-right))!important;
+  bottom:max(12px,env(safe-area-inset-bottom))!important;
+  left:auto!important;
+  transition:none!important;
+  transform:none!important;
+  animation:none!important;
+}
+#studyBuddy .studyAvatar{animation:none!important}
+body.correct-cheer::before{
+  content:"";position:fixed;inset:0;z-index:10050;pointer-events:none;
+  background:rgba(0,238,255,.14);
+  box-shadow:inset 0 0 170px 55px rgba(0,238,255,.78);
+  animation:cyanPageGlow 1s ease-in-out both;
+}
+body.wrong-buzz .app,body.wrong-buzz .sideControls{animation:wrongBuzz .5s linear both}
+@keyframes cyanPageGlow{
+  0%,100%{opacity:0;filter:brightness(1)}
+  18%{opacity:1;filter:brightness(1.18)}
+  42%{opacity:.38;filter:brightness(1.04)}
+  68%{opacity:1;filter:brightness(1.2)}
+}
+@keyframes wrongBuzz{
+  0%,100%{transform:translate3d(0,0,0)}
+  5%,15%,25%,35%,45%,55%,65%,75%,85%,95%{transform:translate3d(-5px,0,0)}
+  10%,20%,30%,40%,50%,60%,70%,80%,90%{transform:translate3d(5px,0,0)}
+}
+
+.frac{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;vertical-align:middle;line-height:1;margin:0 .14em;white-space:nowrap}
+.frac .num{display:block;padding:0 .18em .12em;border-bottom:1px solid currentColor}
+.frac .den{display:block;padding:.12em .18em 0}
+
+
+/* Quiz interaction styles */
+.typeWrap{display:grid;gap:12px;margin-top:4px}
+.typeLabel{font-weight:900;color:#344257}
+.typeInputRow{display:grid;grid-template-columns:1fr auto;gap:10px}
+.typeInput{width:100%;min-height:56px;padding:13px 15px;border:1px solid #cfd9e4;border-radius:14px;font:inherit;font-size:1.05rem;color:var(--text);background:#fff}
+.typeInput:focus-visible{outline:3px solid rgba(37,99,235,.32);outline-offset:2px}
+.typeInput.correct{border-color:#78bea4;background:#effaf5}
+.typeInput.wrong{border-color:#df9ba5;background:#fff3f4}
+.typeNote{font-size:.9rem;color:var(--muted);line-height:1.45}
+.typeBadge{display:inline-flex;align-items:center;border-radius:999px;padding:4px 8px;background:#eef4ff;color:#2759a8;font-size:.8rem;font-weight:900}
+.chemLine{display:block;margin-top:8px;padding:11px 13px;border:1px solid #dfe6ed;border-radius:12px;background:#fbfcfe;font-size:.98rem;line-height:1.55}
+.eq{font-family:"SFMono-Regular",Consolas,monospace;font-size:.96em}
+@media(max-width:560px){.typeInputRow{grid-template-columns:1fr}.typeInputRow .btn{width:100%}}
+
+</style>
+</head>
+<body>
+<div aria-hidden="true" class="correctPop" id="correctPop"><div class="correctPopInner"><span class="correctPopMark">✓</span><span class="correctPopLabel" id="correctPopLabel">Excellent!</span></div></div>
+
+<main class="app">
+<header class="hero">
+  <div class="brand">
+    <img class="siteLogo" src="Dr King Wunna logo.png" alt="Dr King Wunna logo"/>
+  </div>
+  <div class="heroTitleBlock" aria-label="GED science quiz heading">
+    <h1 class="heroTitle">GED</h1>
+    <p class="heroSubtitle">Science</p>
+  </div>
+</header>
+
+<section aria-live="polite" class="shell">
+  <div class="start" id="startView">
+    <div class="kicker">GED Science Practice Quiz</div>
+    <h2>Science Quiz</h2>
+    <p>50 multiple-choice questions grounded in science passages, with hints, instant explanations, a timer, streak tracking, question navigation, missed-topic review, and a complete answer key.</p>
+    <div class="nameEntry">
+      <label for="playerName">What should we call you?</label>
+      <input autocomplete="given-name" id="playerName" maxlength="40" placeholder="Enter your name" type="text"/>
+    </div>
+    <input id="resultEndpoint" type="hidden" value=""/>
+    <div class="featureGrid">
+      <div class="feature"><strong>50</strong><br/>questions</div>
+      <div class="feature"><strong>50</strong><br/>multiple choice</div>
+      <div class="feature"><strong>Science</strong><br/>passage-based</div>
+      <div class="feature"><strong>Review</strong><br/>weak topics</div>
+    </div>
+    <button class="btn btnPrimary" id="startBtn" type="button">Start 50-Question Quiz</button>
+  </div>
+
+  <div class="hidden" id="quizView">
+    <div class="topbar">
+      <div class="meta">
+        <div class="counter" id="counter">Question 1 of 50</div>
+        <div class="catwrap">
+          <span class="category" id="category"></span>
+          <span class="typeBadge" id="typeBadge"></span>
+          <span class="diff" id="difficulty"></span>
+        </div>
+      </div>
+      <div aria-valuemax="50" aria-valuemin="0" aria-valuenow="1" class="progressTrack" role="progressbar">
+        <div class="progress" id="progress"></div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="questionNo" id="questionNo">Question 1</div>
+      <div class="sourcePassageBox hidden" id="sourcePassageBox"><div class="sourcePassageTitle"><span id="sourcePassageTitle">Reading passage</span><span class="passageQuestionLabel" id="passageQuestionLabel"></span></div><p class="sourcePassageText" id="sourcePassageText"></p><div class="sourceAttribution" id="sourceAttribution"></div></div>
+      <div class="question" id="questionText" tabindex="-1"></div>
+      <div class="diagram hidden" id="diagram"></div>
+      <fieldset class="answers" id="answers"><legend class="hidden">Answer area</legend></fieldset>
+      <div class="hintBox" id="hintBox"></div>
+      <div class="feedback" id="feedback" role="status">
+        <div class="feedbackTitle" id="feedbackTitle"></div>
+        <p class="explanation" id="explanation"></p>
+      </div>
+      <div class="actions">
+        <div class="leftActions">
+          <button class="btn btnSecondary" id="hintBtn" type="button">Show Hint</button>
+          <button class="btn btnGhost" id="skipBtn" type="button">Skip for Now</button>
+        </div>
+        <button class="btn btnPrimary" disabled id="nextBtn" type="button">Next Question</button>
+      </div>
+      <div class="keyboardHint" id="keyboardHint">Keyboard: A–E to answer • H for hint • Enter for next</div>
+    </div>
+  </div>
+
+  <div class="results hidden" id="resultsView">
+    <div class="scoreRing" id="scoreRing">
+      <div class="scoreText"><span id="scorePercent">0%</span><small id="scoreFraction">0 of 50</small></div>
+    </div>
+    <h2 class="resultTitle">Quiz Complete!</h2>
+    <p class="resultSub" id="resultMessage"></p>
+    <div class="stats">
+      <div class="stat"><strong id="correctStat">0</strong><span>Correct</span></div>
+      <div class="stat"><strong id="missedStat">0</strong><span>Missed</span></div>
+      <div class="stat"><strong id="bestStreakStat">0</strong><span>Best Streak</span></div>
+      <div class="stat"><strong id="weakStat">—</strong><span>Focus Topic</span></div>
+    </div>
+
+    <div class="resultNavigator">
+      <h3 class="sectionTitle">Question Navigator</h3>
+      <p class="resultSub" style="text-align:left;margin:0 0 12px">Tap any number to review it. Green = correct, red = wrong, gold = skipped.</p>
+      <div class="navigatorGrid" id="resultNavigatorGrid"></div>
+    </div>
+
+    <div class="missedTopicsBox">
+      <h3>Missed Topics</h3>
+      <div class="missedTopicsList" id="missedTopicsList"></div>
+    </div>
+
+    <div class="resultActions">
+      <button class="btn btnSecondary" id="saveResultBtn" type="button">Collect Result</button>
+      <button class="btn btnGhost" id="downloadCsvBtn" type="button">Download CSV</button>
+      <button class="btn btnSecondary" id="reviewBtn" type="button">Review Missed</button>
+      <button class="btn btnGhost" id="keyBtn" type="button">Show Answer Key</button>
+      <button class="btn btnTeal" id="newBtn" type="button">New Run</button>
+      <button class="btn btnPrimary" id="restartBtn" type="button">Retry Same 50</button>
+    </div>
+    <p class="resultSub hidden" id="saveNotice" aria-live="polite"></p>
+
+    <h3 class="sectionTitle">Weak Topic Tracker</h3>
+    <div class="topicGrid" id="topicGrid"></div>
+    <section class="hidden" id="missedReview"><h3 class="sectionTitle">Missed Questions</h3><div class="reviewList" id="reviewList"></div></section>
+    <section class="hidden" id="answerKey">
+      <h3 class="sectionTitle">Complete Answer Key</h3>
+      <div style="max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch">
+        <table class="keyTable"><thead><tr><th>#</th><th>Type</th><th>Topic</th><th>Key</th><th>Explanation</th></tr></thead><tbody id="keyBody"></tbody></table>
+      </div>
+    </section>
+  </div>
+</section>
+
+<div class="footer">GED Science • Life, Physical, Earth & Space Science • Works Offline</div>
+</main>
+
+<div class="sideControls hidden" id="sideControls">
+  <button aria-controls="timerSidePanel" aria-expanded="false" class="edgeToggle timerEdge" id="timerSideShow" type="button">☰ Panel</button>
+  <aside aria-label="Timer and Question Navigator" class="sidePanel timerSidePanel comboSidePanel" id="timerSidePanel">
+    <div class="sidePanelHead">
+      <div>
+        <div class="sidePanelTitle">Timer + Navigator</div>
+        <div class="sidePanelSub">Timer, streak, and all 50 questions in one panel.</div>
+      </div>
+      <button class="sideHideBtn" id="timerSideHide" type="button">Hide</button>
+    </div>
+    <div class="sidePanelBody timerSideBody comboBody">
+      <div class="timerGroup">
+        <div class="timerRing" id="timerRing"><span class="timerText" id="timerText">3:00</span></div>
+        <div>
+          <div class="timerLabel">Question Timer</div>
+          <div class="timerSub" id="timerSub">Science practice pace.</div>
+        </div>
+      </div>
+      <div class="streakBox">🔥 Current streak <span class="streakCount" id="streakCount">0</span></div>
+      <div class="panelTip">Wrong answer, skip, or timeout resets the streak to 0.</div>
+      <div class="comboDivider"></div>
+      <div class="comboNavSection">
+        <div class="sidePanelTitle" style="margin-bottom:2px">Question Navigator</div>
+        <div class="sidePanelSub" style="margin-bottom:10px">Tap a number to jump to that question.</div>
+        <div class="navigatorBody">
+          <div class="navigatorLegend">
+            <span class="legendItem"><span class="legendDot correct"></span>Correct</span>
+            <span class="legendItem"><span class="legendDot wrong"></span>Wrong</span>
+            <span class="legendItem"><span class="legendDot skipped"></span>Skipped</span>
+            <span class="legendItem"><span class="legendDot"></span>Unanswered</span>
+            <span class="legendItem"><span class="legendDot current"></span>Current</span>
+          </div>
+          <div class="navigatorGrid" id="navigatorGrid"></div>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<div class="studyBuddy" id="studyBuddy">
+  <div class="confetti"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <span>Dr King Wunna</span><span class="greenLight" aria-label="online"></span>
+  <div class="cheerBubble" id="cheerBubble">Excellent science!</div>
+</div>
+
+<script>
+const BANK=[{"type": "mcq", "category": "Thermodynamics", "difficulty": "Science", "questionId": "1.1", "topic": "THERMODYNAMICS - FIRST LAW & P-V SYSTEM PROCESSES", "q": "In an isobaric expansion, a gas expands from 0.02 m³ to 0.06 m³ at a constant pressure\nof 150,000 Pa while receiving 8,000 J of heat energy. What is the net change in internal\nenergy (ΔU) of the gas?", "options": ["+2,000 J", "+6,000 J", "+8,000 J", "+14,000 J", "-2,000 J"], "answer": 0, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "First, calculate the work done by the gas during isobaric expansion:\nW = P·ΔV = 150,000 Pa × (0.06 m³ - 0.02 m³) = 150,000 × 0.04 = 6,000 J.\nThen, apply the First Law of Thermodynamics: ΔU = Q - W = 8,000 J - 6,000 J = +2,000 J.", "passage": "The First Law of Thermodynamics is an extension of the Law of Conservation of Energy:\nthe change in a closed system's internal energy (ΔU) is equal to the heat added to the\nsystem (Q) minus the work done by the system (W): ΔU = Q - W. On the test, you may have to\nanalyze four specific thermodynamic processes, often displayed on Pressure (P) vs. Volume (V)\ngraphs:\n1. Isobaric Process: System pressure remains constant, but volume changes. Because volume\n   changes, the system does work (W = P·ΔV).\n2. Isochoric Process: System volume remains constant (ΔV = 0). Because there is no expansion\n   or compression, no work is done (W = 0), meaning any heat added goes directly into changing\n   internal energy (ΔU = Q). On a P-V graph, this appears as a perfectly vertical line.\n3. Isothermal Process: System temperature remains constant. Since temperature doesn't change,\n   the internal energy does not change (ΔU = 0), meaning all heat added to the system is\n   converted directly into work (Q = W).\n4. Adiabatic Process: A process in which no heat is exchanged with the surroundings (Q = 0),\n   meaning the change in internal energy is entirely due to work done (ΔU = -W).", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Thermodynamics", "difficulty": "Science", "questionId": "1.2", "topic": "THERMODYNAMICS - FIRST LAW & P-V SYSTEM PROCESSES", "q": "On a Pressure vs. Volume (P-V) thermodynamic diagram, which process is represented by\na perfectly vertical line, and how much work is performed by the system during this process?", "options": ["Isobaric process; W = P·ΔV", "Isothermal process; W = Q", "Isochoric process; W = 0", "Adiabatic process; W = -ΔU", "Isobaric process; W = 0"], "answer": 2, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "An isochoric process occurs at a constant volume (ΔV = 0). On a P-V graph,\na constant volume appears as a vertical line. Since there is no displacement/expansion, W = 0.", "passage": "The First Law of Thermodynamics is an extension of the Law of Conservation of Energy:\nthe change in a closed system's internal energy (ΔU) is equal to the heat added to the\nsystem (Q) minus the work done by the system (W): ΔU = Q - W. On the test, you may have to\nanalyze four specific thermodynamic processes, often displayed on Pressure (P) vs. Volume (V)\ngraphs:\n1. Isobaric Process: System pressure remains constant, but volume changes. Because volume\n   changes, the system does work (W = P·ΔV).\n2. Isochoric Process: System volume remains constant (ΔV = 0). Because there is no expansion\n   or compression, no work is done (W = 0), meaning any heat added goes directly into changing\n   internal energy (ΔU = Q). On a P-V graph, this appears as a perfectly vertical line.\n3. Isothermal Process: System temperature remains constant. Since temperature doesn't change,\n   the internal energy does not change (ΔU = 0), meaning all heat added to the system is\n   converted directly into work (Q = W).\n4. Adiabatic Process: A process in which no heat is exchanged with the surroundings (Q = 0),\n   meaning the change in internal energy is entirely due to work done (ΔU = -W).", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Thermodynamics", "difficulty": "Science", "questionId": "1.3", "topic": "THERMODYNAMICS - FIRST LAW & P-V SYSTEM PROCESSES", "q": "During an isothermal gas expansion, a cylinder absorbs 4,500 J of heat from an external\nthermal reservoir. What is the work done by the gas, and what happens to its internal energy?", "options": ["Work done = 0 J; Internal energy increases by 4,500 J", "Work done = 4,500 J; Internal energy remains unchanged (ΔU = 0 J)", "Work done = 4,500 J; Internal energy decreases by 4,500 J", "Work done = 9,000 J; Internal energy increases by 4,500 J", "Work done = -4,500 J; Internal energy increases by 4,500 J"], "answer": 1, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "In an isothermal process, temperature remains constant. Since internal energy\ndepends on temperature, ΔU = 0 J. From ΔU = Q - W, 0 = Q - W =&gt; W = Q = 4,500 J.", "passage": "The First Law of Thermodynamics is an extension of the Law of Conservation of Energy:\nthe change in a closed system's internal energy (ΔU) is equal to the heat added to the\nsystem (Q) minus the work done by the system (W): ΔU = Q - W. On the test, you may have to\nanalyze four specific thermodynamic processes, often displayed on Pressure (P) vs. Volume (V)\ngraphs:\n1. Isobaric Process: System pressure remains constant, but volume changes. Because volume\n   changes, the system does work (W = P·ΔV).\n2. Isochoric Process: System volume remains constant (ΔV = 0). Because there is no expansion\n   or compression, no work is done (W = 0), meaning any heat added goes directly into changing\n   internal energy (ΔU = Q). On a P-V graph, this appears as a perfectly vertical line.\n3. Isothermal Process: System temperature remains constant. Since temperature doesn't change,\n   the internal energy does not change (ΔU = 0), meaning all heat added to the system is\n   converted directly into work (Q = W).\n4. Adiabatic Process: A process in which no heat is exchanged with the surroundings (Q = 0),\n   meaning the change in internal energy is entirely due to work done (ΔU = -W).", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Thermodynamics", "difficulty": "Science", "questionId": "1.4", "topic": "THERMODYNAMICS - FIRST LAW & P-V SYSTEM PROCESSES", "q": "A gas undergoes a rapid adiabatic compression in a closed piston. If 1,200 J of work is\ndone ON the gas during compression, what is the change in the internal energy (ΔU) of the gas?", "options": ["-1,200 J", "0 J", "+600 J", "+1,200 J", "+2,400 J"], "answer": 3, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "In an adiabatic process, no heat is exchanged (Q = 0 J). Work done ON the gas\nmeans W = -1,200 J. Applying ΔU = Q - W gives ΔU = 0 - (-1,200 J) = +1,200 J. The internal\nenergy increases by 1,200 J, causing the gas temperature to rise.", "passage": "The First Law of Thermodynamics is an extension of the Law of Conservation of Energy:\nthe change in a closed system's internal energy (ΔU) is equal to the heat added to the\nsystem (Q) minus the work done by the system (W): ΔU = Q - W. On the test, you may have to\nanalyze four specific thermodynamic processes, often displayed on Pressure (P) vs. Volume (V)\ngraphs:\n1. Isobaric Process: System pressure remains constant, but volume changes. Because volume\n   changes, the system does work (W = P·ΔV).\n2. Isochoric Process: System volume remains constant (ΔV = 0). Because there is no expansion\n   or compression, no work is done (W = 0), meaning any heat added goes directly into changing\n   internal energy (ΔU = Q). On a P-V graph, this appears as a perfectly vertical line.\n3. Isothermal Process: System temperature remains constant. Since temperature doesn't change,\n   the internal energy does not change (ΔU = 0), meaning all heat added to the system is\n   converted directly into work (Q = W).\n4. Adiabatic Process: A process in which no heat is exchanged with the surroundings (Q = 0),\n   meaning the change in internal energy is entirely due to work done (ΔU = -W).", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Thermodynamics", "difficulty": "Science", "questionId": "1.5", "topic": "THERMODYNAMICS - FIRST LAW & P-V SYSTEM PROCESSES", "q": "If a closed thermodynamic system releases 3,000 J of heat to its environment while\nhaving 1,000 J of work done ON it by an external piston, what is the resulting ΔU?", "options": ["-4,000 J", "-2,000 J", "+2,000 J", "+4,000 J", "0 J"], "answer": 1, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Releasing heat means Q = -3,000 J. Having work done ON the system means\nW = -1,000 J. Applying the First Law: ΔU = Q - W = (-3,000 J) - (-1,000 J) = -3,000 + 1,000 = -2,000 J.", "passage": "The First Law of Thermodynamics is an extension of the Law of Conservation of Energy:\nthe change in a closed system's internal energy (ΔU) is equal to the heat added to the\nsystem (Q) minus the work done by the system (W): ΔU = Q - W. On the test, you may have to\nanalyze four specific thermodynamic processes, often displayed on Pressure (P) vs. Volume (V)\ngraphs:\n1. Isobaric Process: System pressure remains constant, but volume changes. Because volume\n   changes, the system does work (W = P·ΔV).\n2. Isochoric Process: System volume remains constant (ΔV = 0). Because there is no expansion\n   or compression, no work is done (W = 0), meaning any heat added goes directly into changing\n   internal energy (ΔU = Q). On a P-V graph, this appears as a perfectly vertical line.\n3. Isothermal Process: System temperature remains constant. Since temperature doesn't change,\n   the internal energy does not change (ΔU = 0), meaning all heat added to the system is\n   converted directly into work (Q = W).\n4. Adiabatic Process: A process in which no heat is exchanged with the surroundings (Q = 0),\n   meaning the change in internal energy is entirely due to work done (ΔU = -W).", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Thermodynamics", "difficulty": "Science", "questionId": "2.1", "topic": "THERMODYNAMICS - SPECIFIC HEAT CAPACITY & THERMAL EQUILIBRIUM", "q": "How much heat energy (ΔQ) is required to raise the temperature of 2.0 kg of water\nfrom 20°C to 70°C? (Specific heat of water = 4,186 J/kg·°C)", "options": ["83,720 J", "209,300 J", "418,600 J", "586,040 J", "837,200 J"], "answer": 2, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "ΔT = 70°C - 20°C = 50°C. Using ΔQ = m · C · ΔT:\nΔQ = (2.0 kg) × (4,186 J/kg·°C) × (50°C) = 418,600 J.", "passage": "Specific heat (C) is the exact amount of heat required to raise the temperature of a unit\nmass (1 kg or 1 g) of a substance by 1°C or 1 K. Water has an exceptionally high specific heat\ncapacity (4,186 J/kg·°C), which makes it vital for regulating climate and body temperature.\nThe mathematical formula for specific heat is C = ΔQ / (m · ΔT), where ΔQ is heat energy\nin Joules, m is mass, and ΔT is temperature change (T_final - T_initial). When two substances\nat different temperatures are placed in direct contact within an insulated container, heat\nflows from the warmer object to the cooler object until they reach thermal equilibrium (equal\ntemperatures). By conservation of energy, Heat Released = Heat Absorbed:\nm_1 · C_1 · (T_1_initial - T_final) = m_2 · C_2 · (T_final - T_2_initial).", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Thermodynamics", "difficulty": "Science", "questionId": "2.2", "topic": "THERMODYNAMICS - SPECIFIC HEAT CAPACITY & THERMAL EQUILIBRIUM", "q": "A 0.5 kg block of metal absorbs 9,000 J of heat energy, causing its temperature to rise\nfrom 25°C to 75°C. What is the specific heat capacity (C) of this metal?", "options": ["180 J/kg·°C", "360 J/kg·°C", "450 J/kg·°C", "900 J/kg·°C", "1,800 J/kg·°C"], "answer": 1, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "ΔT = 75°C - 25°C = 50°C. Rearranging C = ΔQ / (m · ΔT):\nC = 9,000 J / (0.5 kg × 50°C) = 9,000 / 25 = 360 J/kg·°C.", "passage": "Specific heat (C) is the exact amount of heat required to raise the temperature of a unit\nmass (1 kg or 1 g) of a substance by 1°C or 1 K. Water has an exceptionally high specific heat\ncapacity (4,186 J/kg·°C), which makes it vital for regulating climate and body temperature.\nThe mathematical formula for specific heat is C = ΔQ / (m · ΔT), where ΔQ is heat energy\nin Joules, m is mass, and ΔT is temperature change (T_final - T_initial). When two substances\nat different temperatures are placed in direct contact within an insulated container, heat\nflows from the warmer object to the cooler object until they reach thermal equilibrium (equal\ntemperatures). By conservation of energy, Heat Released = Heat Absorbed:\nm_1 · C_1 · (T_1_initial - T_final) = m_2 · C_2 · (T_final - T_2_initial).", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Thermodynamics", "difficulty": "Science", "questionId": "2.3", "topic": "THERMODYNAMICS - SPECIFIC HEAT CAPACITY & THERMAL EQUILIBRIUM", "q": "Why does coastal air experience milder temperature fluctuations between day and night\ncompared to inland desert air, based on physical thermal properties?", "options": ["Desert sand has a higher specific heat capacity than liquid water.", "Water has a very high specific heat capacity, requiring large amounts of thermal energy to change its temperature.", "Water undergoes rapid endothermic phase changes that destroy thermal energy.", "Sand reflects 100% of solar radiation back into space via conduction.", "Air over the ocean is subject to higher atmospheric pressure, preventing heat transfer."], "answer": 1, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Liquid water's high specific heat capacity (4,186 J/kg·°C) allows oceans to absorb\nlarge amounts of solar radiation with minimal temperature change, moderating nearby coastal regions.", "passage": "Specific heat (C) is the exact amount of heat required to raise the temperature of a unit\nmass (1 kg or 1 g) of a substance by 1°C or 1 K. Water has an exceptionally high specific heat\ncapacity (4,186 J/kg·°C), which makes it vital for regulating climate and body temperature.\nThe mathematical formula for specific heat is C = ΔQ / (m · ΔT), where ΔQ is heat energy\nin Joules, m is mass, and ΔT is temperature change (T_final - T_initial). When two substances\nat different temperatures are placed in direct contact within an insulated container, heat\nflows from the warmer object to the cooler object until they reach thermal equilibrium (equal\ntemperatures). By conservation of energy, Heat Released = Heat Absorbed:\nm_1 · C_1 · (T_1_initial - T_final) = m_2 · C_2 · (T_final - T_2_initial).", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Thermodynamics", "difficulty": "Science", "questionId": "2.4", "topic": "THERMODYNAMICS - SPECIFIC HEAT CAPACITY & THERMAL EQUILIBRIUM", "q": "A 0.10 kg piece of hot copper (C = 390 J/kg·°C) at 100°C is dropped into 0.20 kg of water\n(C = 4,186 J/kg·°C) at 20°C in an insulated calorimeter. What is the thermal equilibrium temperature?", "options": ["21.1°C", "23.6°C", "35.0°C", "50.0°C", "60.0°C"], "answer": 1, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Heat lost by copper = Heat gained by water: m_c C_c (100 - T_f) = m_w C_w (T_f - 20).\n39 (100 - T_f) = 837.2 (T_f - 20) =&gt; 3900 - 39 T_f = 837.2 T_f - 16744 =&gt; 20644 = 876.2 T_f =&gt; T_f = 23.6°C.", "passage": "Specific heat (C) is the exact amount of heat required to raise the temperature of a unit\nmass (1 kg or 1 g) of a substance by 1°C or 1 K. Water has an exceptionally high specific heat\ncapacity (4,186 J/kg·°C), which makes it vital for regulating climate and body temperature.\nThe mathematical formula for specific heat is C = ΔQ / (m · ΔT), where ΔQ is heat energy\nin Joules, m is mass, and ΔT is temperature change (T_final - T_initial). When two substances\nat different temperatures are placed in direct contact within an insulated container, heat\nflows from the warmer object to the cooler object until they reach thermal equilibrium (equal\ntemperatures). By conservation of energy, Heat Released = Heat Absorbed:\nm_1 · C_1 · (T_1_initial - T_final) = m_2 · C_2 · (T_final - T_2_initial).", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Thermodynamics", "difficulty": "Science", "questionId": "2.5", "topic": "THERMODYNAMICS - SPECIFIC HEAT CAPACITY & THERMAL EQUILIBRIUM", "q": "Two equal mass blocks, Block X (C = 900 J/kg·°C) and Block Y (C = 450 J/kg·°C), are both\nheated to 80°C and dropped into identical beakers containing 1.0 kg of water at 20°C. Which statement\ncorrectly describes the final equilibrium state?", "options": ["Block Y will raise the water temperature more because it releases heat faster.", "Block X will raise the water temperature more because it stored more heat energy at 80°C.", "Both blocks will result in the exact same final water temperature.", "Neither block will release heat because water has a higher heat capacity.", "Block Y will absorb heat from the water until its temperature drops to 0°C."], "answer": 1, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Because Block X has a higher specific heat capacity (900 vs 450 J/kg·°C), it holds\ntwice as much thermal energy per degree of temperature at 80°C. Releasing this energy raises\nthe water's temperature more than Block Y.", "passage": "Specific heat (C) is the exact amount of heat required to raise the temperature of a unit\nmass (1 kg or 1 g) of a substance by 1°C or 1 K. Water has an exceptionally high specific heat\ncapacity (4,186 J/kg·°C), which makes it vital for regulating climate and body temperature.\nThe mathematical formula for specific heat is C = ΔQ / (m · ΔT), where ΔQ is heat energy\nin Joules, m is mass, and ΔT is temperature change (T_final - T_initial). When two substances\nat different temperatures are placed in direct contact within an insulated container, heat\nflows from the warmer object to the cooler object until they reach thermal equilibrium (equal\ntemperatures). By conservation of energy, Heat Released = Heat Absorbed:\nm_1 · C_1 · (T_1_initial - T_final) = m_2 · C_2 · (T_final - T_2_initial).", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Physical Science", "difficulty": "Science", "questionId": "3.1", "topic": "PHYSICAL SCIENCE - NEWTON'S LAWS & MOMENTUM CONSERVATION", "q": "A 3.0 kg object moving east at 4.0 m/s collides head-on with a stationary 1.0 kg object.\nAfter the collision, the two objects stick together. What is their combined final velocity?", "options": ["1.0 m/s east", "2.0 m/s east", "3.0 m/s east", "4.0 m/s east", "12.0 m/s east"], "answer": 2, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Initial momentum = m_1·v_1 + m_2·v_2 = (3.0 kg)(4.0 m/s) + (1.0 kg)(0 m/s) = 12.0 kg·m/s.\nCombined mass = 3.0 + 1.0 = 4.0 kg. Final velocity v_f = Total Momentum / Combined Mass = 12.0 / 4.0 = 3.0 m/s east.", "passage": "Newton's First Law (Inertia): An object remains at rest or in constant motion unless acted\nupon by an unbalanced force. Inertia is an object's resistance to changes in motion, directly\nproportional to its mass. Newton's Second Law: Acceleration depends on net force and mass\n(a = F_net / m or F_net = m·a). Newton's Third Law: For every action force, there is an equal\nand opposite reaction force acting on a different object. Momentum (p) is the product of mass\nand velocity (p = m·v). The Law of Conservation of Momentum states that in an isolated system\nwith no external forces, total initial momentum equals total final momentum:\nm_1·v_1_i + m_2·v_2_i = m_1·v_1_f + m_2·v_2_f.", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Physical Science", "difficulty": "Science", "questionId": "3.2", "topic": "PHYSICAL SCIENCE - NEWTON'S LAWS & MOMENTUM CONSERVATION", "q": "A 2.0 kg ball moving forward at 5.0 m/s strikes a wall and rebounds backward at 3.0 m/s.\nTaking the forward direction as positive (+), what is the total change in momentum (Δp) of the ball?", "options": ["+4.0 kg·m/s", "-4.0 kg·m/s", "+16.0 kg·m/s", "-16.0 kg·m/s", "-10.0 kg·m/s"], "answer": 3, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Initial momentum p_i = m·v_i = (2.0 kg)(+5.0 m/s) = +10.0 kg·m/s.\nFinal momentum p_f = m·v_f = (2.0 kg)(-3.0 m/s) = -6.0 kg·m/s.\nChange in momentum Δp = p_f - p_i = (-6.0) - (+10.0) = -16.0 kg·m/s.", "passage": "Newton's First Law (Inertia): An object remains at rest or in constant motion unless acted\nupon by an unbalanced force. Inertia is an object's resistance to changes in motion, directly\nproportional to its mass. Newton's Second Law: Acceleration depends on net force and mass\n(a = F_net / m or F_net = m·a). Newton's Third Law: For every action force, there is an equal\nand opposite reaction force acting on a different object. Momentum (p) is the product of mass\nand velocity (p = m·v). The Law of Conservation of Momentum states that in an isolated system\nwith no external forces, total initial momentum equals total final momentum:\nm_1·v_1_i + m_2·v_2_i = m_1·v_1_f + m_2·v_2_f.", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Physical Science", "difficulty": "Science", "questionId": "3.3", "topic": "PHYSICAL SCIENCE - NEWTON'S LAWS & MOMENTUM CONSERVATION", "q": "A heavy 5,000 kg truck collides head-on with a 1,000 kg compact car. According to Newton's\nThird Law of Motion, how does the magnitude of force exerted by the truck on the car compare\nto the force exerted by the car on the truck?", "options": ["The truck exerts 5 times more force on the car.", "The car exerts 5 times more force on the truck.", "The forces are equal in magnitude and opposite in direction.", "The truck exerts force, but the car exerts no reaction force.", "The relative force depends entirely on the speed prior to collision."], "answer": 2, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Newton's Third Law states that action and reaction forces are always equal in\nmagnitude and opposite in direction, regardless of the masses of the colliding objects.", "passage": "Newton's First Law (Inertia): An object remains at rest or in constant motion unless acted\nupon by an unbalanced force. Inertia is an object's resistance to changes in motion, directly\nproportional to its mass. Newton's Second Law: Acceleration depends on net force and mass\n(a = F_net / m or F_net = m·a). Newton's Third Law: For every action force, there is an equal\nand opposite reaction force acting on a different object. Momentum (p) is the product of mass\nand velocity (p = m·v). The Law of Conservation of Momentum states that in an isolated system\nwith no external forces, total initial momentum equals total final momentum:\nm_1·v_1_i + m_2·v_2_i = m_1·v_1_f + m_2·v_2_f.", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Physical Science", "difficulty": "Science", "questionId": "3.4", "topic": "PHYSICAL SCIENCE - NEWTON'S LAWS & MOMENTUM CONSERVATION", "q": "A 1,200 kg vehicle traveling at 20 m/s applies its brakes and comes to a complete stop\nin 4.0 seconds. What is the magnitude of the average net braking force acting on the car?", "options": ["1,200 N", "2,400 N", "4,800 N", "6,000 N", "24,000 N"], "answer": 3, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Acceleration a = (v_f - v_i) / t = (0 - 20 m/s) / 4.0 s = -5.0 m/s².\nMagnitude of net force F = m·|a| = (1,200 kg) × (5.0 m/s²) = 6,000 N.", "passage": "Newton's First Law (Inertia): An object remains at rest or in constant motion unless acted\nupon by an unbalanced force. Inertia is an object's resistance to changes in motion, directly\nproportional to its mass. Newton's Second Law: Acceleration depends on net force and mass\n(a = F_net / m or F_net = m·a). Newton's Third Law: For every action force, there is an equal\nand opposite reaction force acting on a different object. Momentum (p) is the product of mass\nand velocity (p = m·v). The Law of Conservation of Momentum states that in an isolated system\nwith no external forces, total initial momentum equals total final momentum:\nm_1·v_1_i + m_2·v_2_i = m_1·v_1_f + m_2·v_2_f.", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Physical Science", "difficulty": "Science", "questionId": "3.5", "topic": "PHYSICAL SCIENCE - NEWTON'S LAWS & MOMENTUM CONSERVATION", "q": "Why does a passenger lurch forward in their seat when a fast-moving bus suddenly slams on its brakes?", "options": ["An active forward force pulls the passenger toward the front windshield.", "The passenger's body possesses inertia, causing it to maintain its forward velocity.", "The bus's momentum transfers directly into the passenger's mass.", "Friction between the seat and passenger creates an unbalanced forward acceleration.", "Gravitational attraction increases rapidly when speed decreases."], "answer": 1, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "According to Newton's First Law (Law of Inertia), an object in motion stays in motion.\nWhen the bus brakes, the passenger's body continues moving forward at the original speed due to inertia.", "passage": "Newton's First Law (Inertia): An object remains at rest or in constant motion unless acted\nupon by an unbalanced force. Inertia is an object's resistance to changes in motion, directly\nproportional to its mass. Newton's Second Law: Acceleration depends on net force and mass\n(a = F_net / m or F_net = m·a). Newton's Third Law: For every action force, there is an equal\nand opposite reaction force acting on a different object. Momentum (p) is the product of mass\nand velocity (p = m·v). The Law of Conservation of Momentum states that in an isolated system\nwith no external forces, total initial momentum equals total final momentum:\nm_1·v_1_i + m_2·v_2_i = m_1·v_1_f + m_2·v_2_f.", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Life Science", "difficulty": "Science", "questionId": "4.1", "topic": "LIFE SCIENCE - CELLULAR DIVISION (MITOSIS VS. MEIOSIS)", "q": "Human somatic (body) cells contain 46 chromosomes (2n = 46). If a human skin cell undergoes\nmitosis to repair a wound, how many chromosomes will be present in each resulting daughter cell?", "options": ["11 chromosomes", "23 chromosomes", "46 chromosomes", "69 chromosomes", "92 chromosomes"], "answer": 2, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Mitosis maintains chromosome number by producing genetically identical diploid (2n)\ncells. Therefore, skin daughter cells will each have 46 chromosomes.", "passage": "Cell division occurs through two distinct biological pathways: Mitosis and Meiosis.\nMitosis is a single division cycle used for somatic (body) cell growth, tissue repair, and asexual\nreproduction. It produces two genetically identical diploid (2n) daughter cells containing the\nexact same number of chromosomes as the parent cell (e.g., 46 chromosomes in humans). Meiosis is a\ntwo-step division process (Meiosis I and Meiosis II) occurring in reproductive organs to produce\ngametes (sperm and egg cells). Meiosis reduces the chromosome number by half, producing four\ngenetically unique haploid (n) cells (e.g., 23 chromosomes in human gametes). Genetic variation in\nmeiosis is driven by two key events: 'Crossing Over' (homologous chromosomes exchange gene segments\nduring Prophase I) and 'Independent Assortment' (random alignment of maternal and paternal\nchromosomes during Metaphase I).", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Life Science", "difficulty": "Science", "questionId": "4.2", "topic": "LIFE SCIENCE - CELLULAR DIVISION (MITOSIS VS. MEIOSIS)", "q": "Which process is uniquely responsible for creating haploid (n) sex cells containing 23\nchromosomes in human testes and ovaries?", "options": ["Binary fission", "Mitosis", "Meiosis", "Cytokinesis", "DNA replication"], "answer": 2, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Meiosis is the specialized two-step cell division process that reduces chromosome\nnumber by half to form haploid gametes (sperm/egg).", "passage": "Cell division occurs through two distinct biological pathways: Mitosis and Meiosis.\nMitosis is a single division cycle used for somatic (body) cell growth, tissue repair, and asexual\nreproduction. It produces two genetically identical diploid (2n) daughter cells containing the\nexact same number of chromosomes as the parent cell (e.g., 46 chromosomes in humans). Meiosis is a\ntwo-step division process (Meiosis I and Meiosis II) occurring in reproductive organs to produce\ngametes (sperm and egg cells). Meiosis reduces the chromosome number by half, producing four\ngenetically unique haploid (n) cells (e.g., 23 chromosomes in human gametes). Genetic variation in\nmeiosis is driven by two key events: 'Crossing Over' (homologous chromosomes exchange gene segments\nduring Prophase I) and 'Independent Assortment' (random alignment of maternal and paternal\nchromosomes during Metaphase I).", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Life Science", "difficulty": "Science", "questionId": "4.3", "topic": "LIFE SCIENCE - CELLULAR DIVISION (MITOSIS VS. MEIOSIS)", "q": "During Prophase I of meiosis, homologous chromosomes pair up and exchange segments of\ngenetic material. What is the biological term and primary significance of this event?", "options": ["Nondisjunction; it causes genetic mutations.", "Crossing over; it generates novel combinations of alleles, increasing genetic diversity.", "Transcription; it synthesizes messenger RNA.", "DNA Replication; it doubles chromosome count.", "Fertilization; it restores the diploid chromosome number."], "answer": 1, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Crossing over occurs during Prophase I of meiosis when homologous chromosomes\nexchange genetic segments, creating new recombinant allele combinations that foster genetic variation.", "passage": "Cell division occurs through two distinct biological pathways: Mitosis and Meiosis.\nMitosis is a single division cycle used for somatic (body) cell growth, tissue repair, and asexual\nreproduction. It produces two genetically identical diploid (2n) daughter cells containing the\nexact same number of chromosomes as the parent cell (e.g., 46 chromosomes in humans). Meiosis is a\ntwo-step division process (Meiosis I and Meiosis II) occurring in reproductive organs to produce\ngametes (sperm and egg cells). Meiosis reduces the chromosome number by half, producing four\ngenetically unique haploid (n) cells (e.g., 23 chromosomes in human gametes). Genetic variation in\nmeiosis is driven by two key events: 'Crossing Over' (homologous chromosomes exchange gene segments\nduring Prophase I) and 'Independent Assortment' (random alignment of maternal and paternal\nchromosomes during Metaphase I).", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Life Science", "difficulty": "Science", "questionId": "4.4", "topic": "LIFE SCIENCE - CELLULAR DIVISION (MITOSIS VS. MEIOSIS)", "q": "A cell with 2n = 12 chromosomes undergoes complete meiotic division. What is the total\nnumber of daughter cells produced, and how many chromosomes does each daughter cell contain?", "options": ["2 daughter cells with 12 chromosomes each", "2 daughter cells with 6 chromosomes each", "4 daughter cells with 12 chromosomes each", "4 daughter cells with 6 chromosomes each", "8 daughter cells with 3 chromosomes each"], "answer": 3, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Meiosis consists of two successive nuclear divisions resulting in 4 haploid daughter\ncells. If 2n = 12, the haploid number n = 6 chromosomes per cell.", "passage": "Cell division occurs through two distinct biological pathways: Mitosis and Meiosis.\nMitosis is a single division cycle used for somatic (body) cell growth, tissue repair, and asexual\nreproduction. It produces two genetically identical diploid (2n) daughter cells containing the\nexact same number of chromosomes as the parent cell (e.g., 46 chromosomes in humans). Meiosis is a\ntwo-step division process (Meiosis I and Meiosis II) occurring in reproductive organs to produce\ngametes (sperm and egg cells). Meiosis reduces the chromosome number by half, producing four\ngenetically unique haploid (n) cells (e.g., 23 chromosomes in human gametes). Genetic variation in\nmeiosis is driven by two key events: 'Crossing Over' (homologous chromosomes exchange gene segments\nduring Prophase I) and 'Independent Assortment' (random alignment of maternal and paternal\nchromosomes during Metaphase I).", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Life Science", "difficulty": "Science", "questionId": "4.5", "topic": "LIFE SCIENCE - CELLULAR DIVISION (MITOSIS VS. MEIOSIS)", "q": "Which statement correctly contrasts the biological outcomes of Mitosis and Meiosis?", "options": ["Mitosis generates 4 haploid cells; Meiosis generates 2 diploid cells.", "Mitosis produces genetically unique cells; Meiosis produces identical clones.", "Mitosis occurs in germ cells; Meiosis occurs in all somatic tissues.", "Mitosis maintains chromosome number (2n -&gt; 2n); Meiosis reduces chromosome number (2n -&gt; n).", "Mitosis involves two rounds of division; Meiosis involves one round of division."], "answer": 3, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Mitosis preserves the diploid (2n) chromosome count across somatic cell cycles,\nwhereas Meiosis halves the chromosome count to produce haploid (n) gametes.", "passage": "Cell division occurs through two distinct biological pathways: Mitosis and Meiosis.\nMitosis is a single division cycle used for somatic (body) cell growth, tissue repair, and asexual\nreproduction. It produces two genetically identical diploid (2n) daughter cells containing the\nexact same number of chromosomes as the parent cell (e.g., 46 chromosomes in humans). Meiosis is a\ntwo-step division process (Meiosis I and Meiosis II) occurring in reproductive organs to produce\ngametes (sperm and egg cells). Meiosis reduces the chromosome number by half, producing four\ngenetically unique haploid (n) cells (e.g., 23 chromosomes in human gametes). Genetic variation in\nmeiosis is driven by two key events: 'Crossing Over' (homologous chromosomes exchange gene segments\nduring Prophase I) and 'Independent Assortment' (random alignment of maternal and paternal\nchromosomes during Metaphase I).", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Life Science", "difficulty": "Science", "questionId": "5.1", "topic": "LIFE SCIENCE - HEREDITY & PUNNETT SQUARE RATIO PREDICTIONS", "q": "In pea plants, the allele for tall stems (T) is dominant over the allele for dwarf stems (t).\nIf two heterozygous tall pea plants (Tt × Tt) are crossed, what is the expected phenotypic ratio\nof the offspring?", "options": ["100% Tall", "75% Tall : 25% Dwarf (3:1)", "50% Tall : 50% Dwarf (1:1)", "25% Tall : 75% Dwarf (1:3)", "100% Dwarf"], "answer": 1, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Crossing Tt × Tt yields genotypes: TT (25%), Tt (50%), and tt (25%).\nPhenotypically, TT and Tt express tall stems (75%), while tt expresses dwarf stems (25%), giving a 3:1 ratio.", "passage": "Genotype refers to the specific allele combination of an organism (e.g., SS, Ss, or ss),\nwhile Phenotype refers to the observable physical trait (e.g., spherical vs. dented seeds).\nAlleles can be Dominant (expressed whenever present, represented by uppercase letters) or\nRecessive (expressed only when two copies are present, represented by lowercase letters).\nOrganisms with identical alleles (SS or ss) are Homozygous, while those with different alleles (Ss)\nare Heterozygous. A Punnett Square is a grid model used to calculate the statistical probability\nof offspring inheriting specific genotypes and phenotypes from parent organisms.", "passageSource": "Genetics: Genotype, Phenotype, Dominance"}, {"type": "mcq", "category": "Life Science", "difficulty": "Science", "questionId": "5.2", "topic": "LIFE SCIENCE - HEREDITY & PUNNETT SQUARE RATIO PREDICTIONS", "q": "A geneticist crosses a homozygous dominant black guinea pig (BB) with a homozygous recessive\nwhite guinea pig (bb). What percentage of the F1 generation offspring will possess the black phenotype?", "options": ["0%", "25%", "50%", "75%", "100%"], "answer": 4, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Crossing BB × bb results in 100% Bb (heterozygous) genotypes. Since B is dominant,\n100% of the offspring will display the black fur phenotype.", "passage": "Genotype refers to the specific allele combination of an organism (e.g., SS, Ss, or ss),\nwhile Phenotype refers to the observable physical trait (e.g., spherical vs. dented seeds).\nAlleles can be Dominant (expressed whenever present, represented by uppercase letters) or\nRecessive (expressed only when two copies are present, represented by lowercase letters).\nOrganisms with identical alleles (SS or ss) are Homozygous, while those with different alleles (Ss)\nare Heterozygous. A Punnett Square is a grid model used to calculate the statistical probability\nof offspring inheriting specific genotypes and phenotypes from parent organisms.", "passageSource": "Genetics: Genotype, Phenotype, Dominance"}, {"type": "mcq", "category": "Life Science", "difficulty": "Science", "questionId": "5.3", "topic": "LIFE SCIENCE - HEREDITY & PUNNETT SQUARE RATIO PREDICTIONS", "q": "In human genetics, freckles (F) are dominant over no freckles (f). A man with no freckles (ff)\nhas children with a woman who is heterozygous for freckles (Ff). What is the probability that their\nfirst child will NOT have freckles?", "options": ["0% (0.0)", "25% (0.25)", "50% (0.50)", "75% (0.75)", "100% (1.0)"], "answer": 2, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Crossing ff × Ff produces genotypes Ff (50%) and ff (50%). The probability of\nan ff offspring (no freckles) is 50%.", "passage": "Genotype refers to the specific allele combination of an organism (e.g., SS, Ss, or ss),\nwhile Phenotype refers to the observable physical trait (e.g., spherical vs. dented seeds).\nAlleles can be Dominant (expressed whenever present, represented by uppercase letters) or\nRecessive (expressed only when two copies are present, represented by lowercase letters).\nOrganisms with identical alleles (SS or ss) are Homozygous, while those with different alleles (Ss)\nare Heterozygous. A Punnett Square is a grid model used to calculate the statistical probability\nof offspring inheriting specific genotypes and phenotypes from parent organisms.", "passageSource": "Genetics: Genotype, Phenotype, Dominance"}, {"type": "mcq", "category": "Life Science", "difficulty": "Science", "questionId": "5.4", "topic": "LIFE SCIENCE - HEREDITY & PUNNETT SQUARE RATIO PREDICTIONS", "q": "What is the expected genotypic ratio when crossing two heterozygous parents (Aa × Aa)?", "options": ["1 AA : 2 Aa : 1 aa", "3 AA : 1 aa", "2 AA : 2 aa", "1 AA : 3 aa", "All Aa"], "answer": 0, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "The Punnett square for Aa × Aa yields 1/4 AA (25%), 2/4 Aa (50%), and 1/4 aa (25%),\ngiving the classic genotypic ratio of 1:2:1.", "passage": "Genotype refers to the specific allele combination of an organism (e.g., SS, Ss, or ss),\nwhile Phenotype refers to the observable physical trait (e.g., spherical vs. dented seeds).\nAlleles can be Dominant (expressed whenever present, represented by uppercase letters) or\nRecessive (expressed only when two copies are present, represented by lowercase letters).\nOrganisms with identical alleles (SS or ss) are Homozygous, while those with different alleles (Ss)\nare Heterozygous. A Punnett Square is a grid model used to calculate the statistical probability\nof offspring inheriting specific genotypes and phenotypes from parent organisms.", "passageSource": "Genetics: Genotype, Phenotype, Dominance"}, {"type": "mcq", "category": "Life Science", "difficulty": "Science", "questionId": "5.5", "topic": "LIFE SCIENCE - HEREDITY & PUNNETT SQUARE RATIO PREDICTIONS", "q": "A plant with red flowers is crossed with a plant with white flowers. If flower color exhibits\nIncomplete Dominance, what phenotype will be observed in heterozygous offspring (Rr)?", "options": ["Red flowers only", "White flowers only", "Pink flowers (an intermediate blend of red and white)", "Red and white spotted petals simultaneously", "Colorless transparent flowers"], "answer": 2, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "In incomplete dominance, neither allele is fully dominant, so heterozygous genotypes\n(Rr) express an intermediate physical blend (pink) between the two homozygous phenotypes (red and white).", "passage": "Genotype refers to the specific allele combination of an organism (e.g., SS, Ss, or ss),\nwhile Phenotype refers to the observable physical trait (e.g., spherical vs. dented seeds).\nAlleles can be Dominant (expressed whenever present, represented by uppercase letters) or\nRecessive (expressed only when two copies are present, represented by lowercase letters).\nOrganisms with identical alleles (SS or ss) are Homozygous, while those with different alleles (Ss)\nare Heterozygous. A Punnett Square is a grid model used to calculate the statistical probability\nof offspring inheriting specific genotypes and phenotypes from parent organisms.", "passageSource": "Genetics: Genotype, Phenotype, Dominance"}, {"type": "mcq", "category": "Physical Science", "difficulty": "Science", "questionId": "6.1", "topic": "PHYSICAL SCIENCE - WAVE MECHANICS & FREQUENCY CALCULATIONS", "q": "A sound wave traveling through air at 20°C has a frequency of 262 Hz (middle C). If the speed\nof sound in air is 343 m/s, what is the wavelength (λ) of this sound wave?", "options": ["0.76 m", "1.31 m", "2.62 m", "89.8 m", "89,866 m"], "answer": 1, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Using v = f · λ, rearrange to solve for wavelength: λ = v / f = 343 m/s / 262 Hz = 1.309 m ≈ 1.31 m.", "passage": "A wave is an oscillation that transports energy through space or a medium without transferring\nmatter. Waves are classified by movement: Transverse Waves feature particle displacement\nperpendicular to wave propagation (e.g., light, water ripples), while Longitudinal Waves feature\nparticle displacement parallel to wave propagation (e.g., sound waves with compressions and\nrarefactions). Key wave parameters include Wavelength (λ, distance between consecutive crests),\nFrequency (f, number of wave cycles per second in Hertz, Hz), and Amplitude (height from rest to crest,\nproportional to wave energy). Wave speed (v) is calculated using the wave equation: v = f · λ.", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Physical Science", "difficulty": "Science", "questionId": "6.2", "topic": "PHYSICAL SCIENCE - WAVE MECHANICS & FREQUENCY CALCULATIONS", "q": "An oceanic tsunami wave has a wavelength of 200,000 meters (200 km) and travels at a speed\nof 200 m/s. What is the frequency of this tsunami wave?", "options": ["0.001 Hz", "0.01 Hz", "1.0 Hz", "100 Hz", "1,000 Hz"], "answer": 0, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Rearranging v = f · λ to solve for frequency: f = v / λ = 200 m/s / 200,000 m = 0.001 Hz.", "passage": "A wave is an oscillation that transports energy through space or a medium without transferring\nmatter. Waves are classified by movement: Transverse Waves feature particle displacement\nperpendicular to wave propagation (e.g., light, water ripples), while Longitudinal Waves feature\nparticle displacement parallel to wave propagation (e.g., sound waves with compressions and\nrarefactions). Key wave parameters include Wavelength (λ, distance between consecutive crests),\nFrequency (f, number of wave cycles per second in Hertz, Hz), and Amplitude (height from rest to crest,\nproportional to wave energy). Wave speed (v) is calculated using the wave equation: v = f · λ.", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Physical Science", "difficulty": "Science", "questionId": "6.3", "topic": "PHYSICAL SCIENCE - WAVE MECHANICS & FREQUENCY CALCULATIONS", "q": "If a speaker increases its acoustic output so that the amplitude of a sound wave doubles,\nwhat happens to the total energy transported by the wave?", "options": ["Energy remains unchanged.", "Energy doubles (2×).", "Energy increases fourfold (4×).", "Energy increases eightfold (8×).", "Energy drops by half (0.5×)."], "answer": 2, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "The energy transported by a wave is directly proportional to the square of its\namplitude (E ∝ A²). Doubling the amplitude (2²) increases the transported energy by 4 times.", "passage": "A wave is an oscillation that transports energy through space or a medium without transferring\nmatter. Waves are classified by movement: Transverse Waves feature particle displacement\nperpendicular to wave propagation (e.g., light, water ripples), while Longitudinal Waves feature\nparticle displacement parallel to wave propagation (e.g., sound waves with compressions and\nrarefactions). Key wave parameters include Wavelength (λ, distance between consecutive crests),\nFrequency (f, number of wave cycles per second in Hertz, Hz), and Amplitude (height from rest to crest,\nproportional to wave energy). Wave speed (v) is calculated using the wave equation: v = f · λ.", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Physical Science", "difficulty": "Science", "questionId": "6.4", "topic": "PHYSICAL SCIENCE - WAVE MECHANICS & FREQUENCY CALCULATIONS", "q": "Which wave type requires a physical material medium (solid, liquid, or gas) to propagate,\nexplaining why sound cannot travel through the vacuum of outer space?", "options": ["Electromagnetic wave", "Transverse light wave", "Mechanical wave", "Gravitational radiation wave", "Gamma ray wave"], "answer": 2, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Mechanical waves (such as sound or seismic waves) require particle collisions in a\nphysical medium to transmit energy. In the vacuum of space, lacking matter, sound cannot propagate.", "passage": "A wave is an oscillation that transports energy through space or a medium without transferring\nmatter. Waves are classified by movement: Transverse Waves feature particle displacement\nperpendicular to wave propagation (e.g., light, water ripples), while Longitudinal Waves feature\nparticle displacement parallel to wave propagation (e.g., sound waves with compressions and\nrarefactions). Key wave parameters include Wavelength (λ, distance between consecutive crests),\nFrequency (f, number of wave cycles per second in Hertz, Hz), and Amplitude (height from rest to crest,\nproportional to wave energy). Wave speed (v) is calculated using the wave equation: v = f · λ.", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Physical Science", "difficulty": "Science", "questionId": "6.5", "topic": "PHYSICAL SCIENCE - WAVE MECHANICS & FREQUENCY CALCULATIONS", "q": "Electromagnetic radiation travels through a vacuum at a constant speed of c = 3.0 × 10⁸ m/s.\nIf red light has a wavelength of 7.0 × 10⁻⁷ meters, what is its frequency?", "options": ["2.1 × 10¹4 Hz", "4.29 × 10¹4 Hz", "5.0 × 10¹4 Hz", "7.0 × 10¹4 Hz", "2.1 × 10¹5 Hz"], "answer": 1, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Frequency f = c / λ = (3.0 × 10⁸ m/s) / (7.0 × 10⁻⁷ m) = 0.42857 × 10¹⁵ Hz = 4.29 × 10¹⁴ Hz.", "passage": "A wave is an oscillation that transports energy through space or a medium without transferring\nmatter. Waves are classified by movement: Transverse Waves feature particle displacement\nperpendicular to wave propagation (e.g., light, water ripples), while Longitudinal Waves feature\nparticle displacement parallel to wave propagation (e.g., sound waves with compressions and\nrarefactions). Key wave parameters include Wavelength (λ, distance between consecutive crests),\nFrequency (f, number of wave cycles per second in Hertz, Hz), and Amplitude (height from rest to crest,\nproportional to wave energy). Wave speed (v) is calculated using the wave equation: v = f · λ.", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Life Science", "difficulty": "Science", "questionId": "7.1", "topic": "LIFE SCIENCE - ECOSYSTEM DYNAMICS & 10% TROPHIC ENERGY RULE", "q": "In a grassland ecosystem, green plants capture 50,000 Joules of solar energy as biomass.\nAccording to the 10% Trophic Rule, how much energy will be available to the secondary consumers\n(e.g., snakes that eat mice)?", "options": ["50,000 J", "5,000 J", "500 J", "50 J", "5 J"], "answer": 2, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Primary Producers = 50,000 J. Primary Consumers (Mice) receive 10% = 5,000 J.\nSecondary Consumers (Snakes) receive 10% of 5,000 J = 500 J.", "passage": "An ecosystem encompasses all biotic (living) organisms and abiotic (non-living) environmental\nfactors interacting within a specific area. Carrying Capacity (K) represents the maximum population\nsize of a species that an ecosystem can sustainably support given available resources (food, water,\nhabitat). Trophic structure describes energy flow across feeding levels: Primary Producers\n(autotrophs/plants) capture solar energy via photosynthesis. Primary Consumers (herbivores) eat\nproducers, Secondary Consumers (carnivores) eat herbivores, and Tertiary Consumers eat secondary\nconsumers. The '10% Trophic Rule' dictates that only approximately 10% of energy stored as\nbiomass at one trophic level is transferred to the next level; the remaining 90% is lost as\nmetabolic heat, waste, and respiration.", "passageSource": "Energy Flow Models and the 10% Rule"}, {"type": "mcq", "category": "Life Science", "difficulty": "Science", "questionId": "7.2", "topic": "LIFE SCIENCE - ECOSYSTEM DYNAMICS & 10% TROPHIC ENERGY RULE", "q": "Why are top apex predators (such as wolves, eagles, or killer whales) generally low in population density\nand extremely vulnerable to habitat disruptions?", "options": ["Apex predators undergo slower mitosis rates than herbivores.", "90% energy loss at each trophic step leaves very little total biomass/energy to support large apex populations.", "Primary producers actively synthesize toxic chemicals that accumulate at the apex level.", "Apex predators obtain energy through anaerobic fermentation rather than cellular respiration.", "Carrying capacity applies exclusively to autotrophic plants."], "answer": 1, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Because 90% of energy is dissipated as heat at each progressive trophic transition,\nvery little usable energy reaches the 4th or 5th trophic levels, constraining apex predator populations.", "passage": "An ecosystem encompasses all biotic (living) organisms and abiotic (non-living) environmental\nfactors interacting within a specific area. Carrying Capacity (K) represents the maximum population\nsize of a species that an ecosystem can sustainably support given available resources (food, water,\nhabitat). Trophic structure describes energy flow across feeding levels: Primary Producers\n(autotrophs/plants) capture solar energy via photosynthesis. Primary Consumers (herbivores) eat\nproducers, Secondary Consumers (carnivores) eat herbivores, and Tertiary Consumers eat secondary\nconsumers. The '10% Trophic Rule' dictates that only approximately 10% of energy stored as\nbiomass at one trophic level is transferred to the next level; the remaining 90% is lost as\nmetabolic heat, waste, and respiration.", "passageSource": "Energy Flow Models and the 10% Rule"}, {"type": "mcq", "category": "Life Science", "difficulty": "Science", "questionId": "7.3", "topic": "LIFE SCIENCE - ECOSYSTEM DYNAMICS & 10% TROPHIC ENERGY RULE", "q": "A population of deer in a forest preserve grows rapidly until it reaches 1,200 individuals,\nafter which the birth rate equals the death rate and population growth levels off. What ecological\nconcept explains this stabilization?", "options": ["Exponential overshoot", "Carrying capacity (K)", "Competitive exclusion principle", "Biomagnification", "Primary succession"], "answer": 1, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Carrying capacity is the maximum population limit an environment can support.\nWhen population reaches K, resource limitations balance birth and death rates into logistic stability.", "passage": "An ecosystem encompasses all biotic (living) organisms and abiotic (non-living) environmental\nfactors interacting within a specific area. Carrying Capacity (K) represents the maximum population\nsize of a species that an ecosystem can sustainably support given available resources (food, water,\nhabitat). Trophic structure describes energy flow across feeding levels: Primary Producers\n(autotrophs/plants) capture solar energy via photosynthesis. Primary Consumers (herbivores) eat\nproducers, Secondary Consumers (carnivores) eat herbivores, and Tertiary Consumers eat secondary\nconsumers. The '10% Trophic Rule' dictates that only approximately 10% of energy stored as\nbiomass at one trophic level is transferred to the next level; the remaining 90% is lost as\nmetabolic heat, waste, and respiration.", "passageSource": "Energy Flow Models and the 10% Rule"}, {"type": "mcq", "category": "Life Science", "difficulty": "Science", "questionId": "7.4", "topic": "LIFE SCIENCE - ECOSYSTEM DYNAMICS & 10% TROPHIC ENERGY RULE", "q": "If a disease wipes out 80% of the primary consumers (herbivorous rabbits) in an ecosystem,\nwhat immediate secondary effect is expected in the food web?", "options": ["Primary producer biomass will decrease rapidly due to overgrazing.", "Secondary consumer (fox) populations will decline due to starvation.", "Solar energy capture by autotrophs will drop to zero.", "Tertiary consumers will switch entirely to photosynthesis.", "Decomposers will cease breaking down organic matter."], "answer": 1, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Rabbits are the primary prey for secondary consumers (foxes). A sharp drop in rabbit\ndensity starves foxes, causing their population to drop.", "passage": "An ecosystem encompasses all biotic (living) organisms and abiotic (non-living) environmental\nfactors interacting within a specific area. Carrying Capacity (K) represents the maximum population\nsize of a species that an ecosystem can sustainably support given available resources (food, water,\nhabitat). Trophic structure describes energy flow across feeding levels: Primary Producers\n(autotrophs/plants) capture solar energy via photosynthesis. Primary Consumers (herbivores) eat\nproducers, Secondary Consumers (carnivores) eat herbivores, and Tertiary Consumers eat secondary\nconsumers. The '10% Trophic Rule' dictates that only approximately 10% of energy stored as\nbiomass at one trophic level is transferred to the next level; the remaining 90% is lost as\nmetabolic heat, waste, and respiration.", "passageSource": "Energy Flow Models and the 10% Rule"}, {"type": "mcq", "category": "Life Science", "difficulty": "Science", "questionId": "7.5", "topic": "LIFE SCIENCE - ECOSYSTEM DYNAMICS & 10% TROPHIC ENERGY RULE", "q": "What is the ultimate source of energy that fuels nearly all terrestrial and marine ecosystems on Earth?", "options": ["Geothermal magma vents", "Solar radiation captured by autotrophs", "Chemical energy stored in fossil fuels", "Gravitational tidal forces from the Moon", "Atmospheric nitrogen fixation"], "answer": 1, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Photosynthetic autotrophs absorb solar radiation to synthesize organic sugars,\nforming the foundational energy base for terrestrial and aquatic ecosystems.", "passage": "An ecosystem encompasses all biotic (living) organisms and abiotic (non-living) environmental\nfactors interacting within a specific area. Carrying Capacity (K) represents the maximum population\nsize of a species that an ecosystem can sustainably support given available resources (food, water,\nhabitat). Trophic structure describes energy flow across feeding levels: Primary Producers\n(autotrophs/plants) capture solar energy via photosynthesis. Primary Consumers (herbivores) eat\nproducers, Secondary Consumers (carnivores) eat herbivores, and Tertiary Consumers eat secondary\nconsumers. The '10% Trophic Rule' dictates that only approximately 10% of energy stored as\nbiomass at one trophic level is transferred to the next level; the remaining 90% is lost as\nmetabolic heat, waste, and respiration.", "passageSource": "Energy Flow Models and the 10% Rule"}, {"type": "mcq", "category": "Earth & Space Science", "difficulty": "Science", "questionId": "8.1", "topic": "EARTH & SPACE SCIENCE - KEPLER'S LAWS & GRAVITATIONAL MECHANICS", "q": "An asteroid orbits the Sun at an average distance (a) of 4.0 Astronomical Units (AU).\nUsing Kepler's Third Law (T² = a³), what is the orbital period (T) of this asteroid in Earth years?", "options": ["2.0 years", "4.0 years", "8.0 years", "16.0 years", "64.0 years"], "answer": 2, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Apply T² = a³: T² = (4.0)³ = 64. Taking the square root gives T = √64 = 8.0 Earth years.", "passage": "Johannes Kepler formulated three laws of planetary motion:\n1. Law of Ellipses: Planets orbit the Sun in elliptical (oval) paths with the Sun at one focus.\n2. Law of Equal Areas: An imaginary line connecting a planet to the Sun sweeps out equal areas\n   in equal intervals of time. Consequently, a planet travels fastest when closest to the Sun\n   (Perihelion) and slowest when farthest away (Aphelion).\n3. Law of Harmonies: The square of a planet's orbital period (T²) is directly proportional to\n   the cube of its average distance from the Sun (a³), written as T² = a³.\nSir Isaac Newton explained these orbits using his Law of Universal Gravitation: F_g = G·(m_1·m_2) / r²,\nshowing that gravitational attraction increases with mass and decreases rapidly with the square\nof distance (r).", "passageSource": "Solar System Mechanics & McGraw-Hill Science Workbook"}, {"type": "mcq", "category": "Earth & Space Science", "difficulty": "Science", "questionId": "8.2", "topic": "EARTH & SPACE SCIENCE - KEPLER'S LAWS & GRAVITATIONAL MECHANICS", "q": "Earth's orbit is slightly elliptical. At Perihelion (January, closest to Sun at 147 million km),\nhow does Earth's orbital speed compare to its speed at Aphelion (July, farthest at 152 million km)?", "options": ["Orbital speed is fastest at Perihelion.", "Orbital speed is fastest at Aphelion.", "Orbital speed remains perfectly constant year-round.", "Orbital speed drops to zero at Perihelion.", "Orbital speed fluctuates randomly independent of distance."], "answer": 0, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "According to Kepler's Second Law (Law of Equal Areas), a planet moves fastest when\nclosest to its star (Perihelion) because the gravitational pull is strongest.", "passage": "Johannes Kepler formulated three laws of planetary motion:\n1. Law of Ellipses: Planets orbit the Sun in elliptical (oval) paths with the Sun at one focus.\n2. Law of Equal Areas: An imaginary line connecting a planet to the Sun sweeps out equal areas\n   in equal intervals of time. Consequently, a planet travels fastest when closest to the Sun\n   (Perihelion) and slowest when farthest away (Aphelion).\n3. Law of Harmonies: The square of a planet's orbital period (T²) is directly proportional to\n   the cube of its average distance from the Sun (a³), written as T² = a³.\nSir Isaac Newton explained these orbits using his Law of Universal Gravitation: F_g = G·(m_1·m_2) / r²,\nshowing that gravitational attraction increases with mass and decreases rapidly with the square\nof distance (r).", "passageSource": "Solar System Mechanics & McGraw-Hill Science Workbook"}, {"type": "mcq", "category": "Earth & Space Science", "difficulty": "Science", "questionId": "8.3", "topic": "EARTH & SPACE SCIENCE - KEPLER'S LAWS & GRAVITATIONAL MECHANICS", "q": "If the distance (r) between two gravitating space probes is tripled (3×), what happens to\nthe gravitational force (F_g) acting between them?", "options": ["Force decreases to 1/3 of original value.", "Force decreases to 1/6 of original value.", "Force decreases to 1/9 of original value.", "Force increases by 3 times.", "Force increases by 9 times."], "answer": 2, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Newton's Law of Gravitation features an inverse-square relationship with distance\n(F_g ∝ 1/r²). Tripling distance (3²) reduces gravitational force to 1/9 of its initial value.", "passage": "Johannes Kepler formulated three laws of planetary motion:\n1. Law of Ellipses: Planets orbit the Sun in elliptical (oval) paths with the Sun at one focus.\n2. Law of Equal Areas: An imaginary line connecting a planet to the Sun sweeps out equal areas\n   in equal intervals of time. Consequently, a planet travels fastest when closest to the Sun\n   (Perihelion) and slowest when farthest away (Aphelion).\n3. Law of Harmonies: The square of a planet's orbital period (T²) is directly proportional to\n   the cube of its average distance from the Sun (a³), written as T² = a³.\nSir Isaac Newton explained these orbits using his Law of Universal Gravitation: F_g = G·(m_1·m_2) / r²,\nshowing that gravitational attraction increases with mass and decreases rapidly with the square\nof distance (r).", "passageSource": "Solar System Mechanics & McGraw-Hill Science Workbook"}, {"type": "mcq", "category": "Earth & Space Science", "difficulty": "Science", "questionId": "8.4", "topic": "EARTH & SPACE SCIENCE - KEPLER'S LAWS & GRAVITATIONAL MECHANICS", "q": "Which model correctly places the Sun at the center of the solar system, superseding the\nancient geocentric model that placed Earth at the center?", "options": ["Astrological model", "Heliocentric model", "Big Bang model", "Nebular hypothesis", "Steady State model"], "answer": 1, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "The Heliocentric model (advanced by Copernicus, Kepler, and Galileo) correctly identifies\nthe Sun as the central body around which planets revolve.", "passage": "Johannes Kepler formulated three laws of planetary motion:\n1. Law of Ellipses: Planets orbit the Sun in elliptical (oval) paths with the Sun at one focus.\n2. Law of Equal Areas: An imaginary line connecting a planet to the Sun sweeps out equal areas\n   in equal intervals of time. Consequently, a planet travels fastest when closest to the Sun\n   (Perihelion) and slowest when farthest away (Aphelion).\n3. Law of Harmonies: The square of a planet's orbital period (T²) is directly proportional to\n   the cube of its average distance from the Sun (a³), written as T² = a³.\nSir Isaac Newton explained these orbits using his Law of Universal Gravitation: F_g = G·(m_1·m_2) / r²,\nshowing that gravitational attraction increases with mass and decreases rapidly with the square\nof distance (r).", "passageSource": "Solar System Mechanics & McGraw-Hill Science Workbook"}, {"type": "mcq", "category": "Earth & Space Science", "difficulty": "Science", "questionId": "8.5", "topic": "EARTH & SPACE SCIENCE - KEPLER'S LAWS & GRAVITATIONAL MECHANICS", "q": "What two competing factors keep the Moon in a stable elliptical orbit around Earth without\ncrashing into Earth or flying off into outer space?", "options": ["Solar radiation pressure and magnetic repulsion", "Earth's gravitational pull and the Moon's forward inertial momentum", "Atmospheric drag and ocean tidal friction", "Nuclear fusion energy and dark energy expansion", "Centripetal electrostatic force and geothermal venting"], "answer": 1, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "The Moon's forward inertial velocity pulls it straight into space, while Earth's\ngravitational force pulls it inward. The balance creates a stable orbital curve.", "passage": "Johannes Kepler formulated three laws of planetary motion:\n1. Law of Ellipses: Planets orbit the Sun in elliptical (oval) paths with the Sun at one focus.\n2. Law of Equal Areas: An imaginary line connecting a planet to the Sun sweeps out equal areas\n   in equal intervals of time. Consequently, a planet travels fastest when closest to the Sun\n   (Perihelion) and slowest when farthest away (Aphelion).\n3. Law of Harmonies: The square of a planet's orbital period (T²) is directly proportional to\n   the cube of its average distance from the Sun (a³), written as T² = a³.\nSir Isaac Newton explained these orbits using his Law of Universal Gravitation: F_g = G·(m_1·m_2) / r²,\nshowing that gravitational attraction increases with mass and decreases rapidly with the square\nof distance (r).", "passageSource": "Solar System Mechanics & McGraw-Hill Science Workbook"}, {"type": "mcq", "category": "Earth & Space Science", "difficulty": "Science", "questionId": "9.1", "topic": "EARTH & SPACE SCIENCE - STELLAR EVOLUTION & SUPERNOVA NUCLEOSYNTHESIS", "q": "Our Sun is a medium-mass star currently fusing hydrogen in its core. What is the next major\nevolutionary stage our Sun will enter in approximately 5 billion years?", "options": ["Supernova explosion", "Black hole", "Red Giant", "Neutron star", "Protostar"], "answer": 2, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Medium-mass stars like our Sun expand into Red Giants after exhausting hydrogen in\ntheir cores, before shedding outer layers into planetary nebulae.", "passage": "A star's entire life cycle and ultimate fate are dictated almost exclusively by its initial mass.\nStars form inside nebulae (giant clouds of interstellar hydrogen gas) when gravity collapses\ngas until core pressure and temperature trigger Nuclear Fusion (fusing hydrogen into helium,\nreleasing immense thermal radiation). Average Mass Stars (like our Sun) spend billions of years\non the Main Sequence, expand into Red Giants after exhausting core hydrogen, cast off outer gas\nas Planetary Nebulae, and cool into dense White Dwarfs. Massive Stars (over 8 solar masses) expand\ninto Red Supergiants, exhaust core fuels up to iron, and suffer a catastrophic gravitational collapse\nresulting in a Supernova explosion. Supernovae undergo intense Nucleosynthesis (creating elements\nheavier than iron like gold and uranium) and leave behind super-dense Neutron Stars or Black Holes.", "passageSource": "Stellar Life Cycles: Birth to Death"}, {"type": "mcq", "category": "Earth & Space Science", "difficulty": "Science", "questionId": "9.2", "topic": "EARTH & SPACE SCIENCE - STELLAR EVOLUTION & SUPERNOVA NUCLEOSYNTHESIS", "q": "What single fundamental property of a protostar determines whether it will eventually end\nits life as a quiet White Dwarf or as a violent Supernova?", "options": ["Its surface magnetic field strength", "Its distance from the center of the galaxy", "Its initial mass", "Its rotational speed on its axis", "The number of orbiting planets"], "answer": 2, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Stellar evolution is dictated by initial mass. Low/medium mass stars (&lt;8 M_sun)\nbecome White Dwarfs; massive stars (&gt;8 M_sun) end in Supernovae.", "passage": "A star's entire life cycle and ultimate fate are dictated almost exclusively by its initial mass.\nStars form inside nebulae (giant clouds of interstellar hydrogen gas) when gravity collapses\ngas until core pressure and temperature trigger Nuclear Fusion (fusing hydrogen into helium,\nreleasing immense thermal radiation). Average Mass Stars (like our Sun) spend billions of years\non the Main Sequence, expand into Red Giants after exhausting core hydrogen, cast off outer gas\nas Planetary Nebulae, and cool into dense White Dwarfs. Massive Stars (over 8 solar masses) expand\ninto Red Supergiants, exhaust core fuels up to iron, and suffer a catastrophic gravitational collapse\nresulting in a Supernova explosion. Supernovae undergo intense Nucleosynthesis (creating elements\nheavier than iron like gold and uranium) and leave behind super-dense Neutron Stars or Black Holes.", "passageSource": "Stellar Life Cycles: Birth to Death"}, {"type": "mcq", "category": "Earth & Space Science", "difficulty": "Science", "questionId": "9.3", "topic": "EARTH & SPACE SCIENCE - STELLAR EVOLUTION & SUPERNOVA NUCLEOSYNTHESIS", "q": "Heavy elements like gold, platinum, and uranium cannot be synthesized during normal stellar\ncore fusion. Where in the universe do these heavy elements originate?", "options": ["During big bang primordial cooling", "Inside planetary nebulae surrounding white dwarfs", "During extreme temperature/neutron-capture conditions of Supernova explosions", "Through chemical weathering on rocky planets", "Within solar flare coronal loops"], "answer": 2, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Supernova explosions generate extreme temperatures and free neutron fluxes required\nfor explosive nucleosynthesis, creating elements heavier than iron.", "passage": "A star's entire life cycle and ultimate fate are dictated almost exclusively by its initial mass.\nStars form inside nebulae (giant clouds of interstellar hydrogen gas) when gravity collapses\ngas until core pressure and temperature trigger Nuclear Fusion (fusing hydrogen into helium,\nreleasing immense thermal radiation). Average Mass Stars (like our Sun) spend billions of years\non the Main Sequence, expand into Red Giants after exhausting core hydrogen, cast off outer gas\nas Planetary Nebulae, and cool into dense White Dwarfs. Massive Stars (over 8 solar masses) expand\ninto Red Supergiants, exhaust core fuels up to iron, and suffer a catastrophic gravitational collapse\nresulting in a Supernova explosion. Supernovae undergo intense Nucleosynthesis (creating elements\nheavier than iron like gold and uranium) and leave behind super-dense Neutron Stars or Black Holes.", "passageSource": "Stellar Life Cycles: Birth to Death"}, {"type": "mcq", "category": "Earth & Space Science", "difficulty": "Science", "questionId": "9.4", "topic": "EARTH & SPACE SCIENCE - STELLAR EVOLUTION & SUPERNOVA NUCLEOSYNTHESIS", "q": "What extreme stellar remnant is formed when a massive collapsing star's gravity is so\nimmense that not even light can escape its event horizon?", "options": ["White Dwarf", "Red Supergiant", "Black Hole", "Pulsar", "Brown Dwarf"], "answer": 2, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "If a collapsing core exceeds ~3 solar masses (the Tolman-Oppenheimer-Volkoff limit),\ngravitational collapse continues infinitely, forming a Black Hole.", "passage": "A star's entire life cycle and ultimate fate are dictated almost exclusively by its initial mass.\nStars form inside nebulae (giant clouds of interstellar hydrogen gas) when gravity collapses\ngas until core pressure and temperature trigger Nuclear Fusion (fusing hydrogen into helium,\nreleasing immense thermal radiation). Average Mass Stars (like our Sun) spend billions of years\non the Main Sequence, expand into Red Giants after exhausting core hydrogen, cast off outer gas\nas Planetary Nebulae, and cool into dense White Dwarfs. Massive Stars (over 8 solar masses) expand\ninto Red Supergiants, exhaust core fuels up to iron, and suffer a catastrophic gravitational collapse\nresulting in a Supernova explosion. Supernovae undergo intense Nucleosynthesis (creating elements\nheavier than iron like gold and uranium) and leave behind super-dense Neutron Stars or Black Holes.", "passageSource": "Stellar Life Cycles: Birth to Death"}, {"type": "mcq", "category": "Earth & Space Science", "difficulty": "Science", "questionId": "9.5", "topic": "EARTH & SPACE SCIENCE - STELLAR EVOLUTION & SUPERNOVA NUCLEOSYNTHESIS", "q": "How do astronomers determine the chemical composition and surface temperature of distant\nstars billions of light-years away?", "options": ["By measuring ocean tide variations on Earth", "By analyzing spectral absorption and emission lines in the star's emitted Light Spectrum", "By capturing cosmic solar winds in high-altitude satellites", "By calculating the star's orbital period using radar pulses", "By analyzing meteorite impacts on the Lunar surface"], "answer": 1, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Spectroscopy breaks starlight into spectral lines. Each chemical element absorbs\nand emits specific wavelengths, revealing elemental composition and temperature.", "passage": "A star's entire life cycle and ultimate fate are dictated almost exclusively by its initial mass.\nStars form inside nebulae (giant clouds of interstellar hydrogen gas) when gravity collapses\ngas until core pressure and temperature trigger Nuclear Fusion (fusing hydrogen into helium,\nreleasing immense thermal radiation). Average Mass Stars (like our Sun) spend billions of years\non the Main Sequence, expand into Red Giants after exhausting core hydrogen, cast off outer gas\nas Planetary Nebulae, and cool into dense White Dwarfs. Massive Stars (over 8 solar masses) expand\ninto Red Supergiants, exhaust core fuels up to iron, and suffer a catastrophic gravitational collapse\nresulting in a Supernova explosion. Supernovae undergo intense Nucleosynthesis (creating elements\nheavier than iron like gold and uranium) and leave behind super-dense Neutron Stars or Black Holes.", "passageSource": "Stellar Life Cycles: Birth to Death"}, {"type": "mcq", "category": "Thermodynamics", "difficulty": "Science", "questionId": "10.1", "topic": "PHYSICAL SCIENCE - HEAT ENGINE EFFICIENCY & WORK CALCULATIONS", "q": "A heat engine absorbs 5,000 Joules of heat (Q_Hot) from a furnace and performs 1,500 Joules\nof useful mechanical work (W). What is the thermal efficiency (%e) of this engine?", "options": ["15%", "30%", "45%", "70%", "100%"], "answer": 1, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "%e = (W / Q_Hot) × 100 = (1,500 J / 5,000 J) × 100 = 0.30 × 100 = 30%.", "passage": "A Heat Engine is a thermodynamic device that absorbs thermal energy from a high-temperature\nheat reservoir (Q_Hot), converts a portion of that energy into mechanical Work (W), and discharges\nthe remaining unused thermal energy as waste heat into a low-temperature cold reservoir (Q_Cold).\nBy the Law of Conservation of Energy, Total Heat Input equals Work plus Waste Heat: Q_Hot = W + Q_Cold,\nor W = Q_Hot - Q_Cold. The Thermal Efficiency (%e) of a heat engine measures the percentage of\nabsorbed heat successfully converted into mechanical work: %e = (W / Q_Hot) × 100 = [(Q_Hot - Q_Cold) / Q_Hot] × 100.\nAccording to the Second Law of Thermodynamics, no heat engine can ever be 100% efficient (%e < 100%)\nbecause some thermal energy must always be dissipated into the cold environment.", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Thermodynamics", "difficulty": "Science", "questionId": "10.2", "topic": "PHYSICAL SCIENCE - HEAT ENGINE EFFICIENCY & WORK CALCULATIONS", "q": "An internal combustion car engine operates at 25% thermal efficiency. If the engine\nperforms 10,000 Joules of work, how much waste heat (Q_Cold) is discharged into the exhaust environment?", "options": ["2,500 J", "7,500 J", "10,000 J", "30,000 J", "40,000 J"], "answer": 3, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Efficiency %e = W / Q_Hot =&gt; 0.25 = 10,000 / Q_Hot =&gt; Q_Hot = 40,000 J.\nWaste Heat Q_Cold = Q_Hot - W = 40,000 J - 10,000 J = 30,000 J.", "passage": "A Heat Engine is a thermodynamic device that absorbs thermal energy from a high-temperature\nheat reservoir (Q_Hot), converts a portion of that energy into mechanical Work (W), and discharges\nthe remaining unused thermal energy as waste heat into a low-temperature cold reservoir (Q_Cold).\nBy the Law of Conservation of Energy, Total Heat Input equals Work plus Waste Heat: Q_Hot = W + Q_Cold,\nor W = Q_Hot - Q_Cold. The Thermal Efficiency (%e) of a heat engine measures the percentage of\nabsorbed heat successfully converted into mechanical work: %e = (W / Q_Hot) × 100 = [(Q_Hot - Q_Cold) / Q_Hot] × 100.\nAccording to the Second Law of Thermodynamics, no heat engine can ever be 100% efficient (%e < 100%)\nbecause some thermal energy must always be dissipated into the cold environment.", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Thermodynamics", "difficulty": "Science", "questionId": "10.3", "topic": "PHYSICAL SCIENCE - HEAT ENGINE EFFICIENCY & WORK CALCULATIONS", "q": "Why is it impossible for any real-world engine or machine to operate at 100% thermal efficiency?", "options": ["The First Law of Thermodynamics prohibits heat from doing mechanical work.", "Friction, thermal dissipation, and the Second Law of Thermodynamics mandate that some energy is always lost as waste heat.", "Specific heat capacity drops to zero at high temperatures.", "High-temperature reservoirs destroy kinetic energy.", "Pressure changes cancel out internal gas expansion."], "answer": 1, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "The Second Law of Thermodynamics dictates that energy transformations are never 100%\nefficient; entropy increases and unusable waste heat must be dumped into a cold sink.", "passage": "A Heat Engine is a thermodynamic device that absorbs thermal energy from a high-temperature\nheat reservoir (Q_Hot), converts a portion of that energy into mechanical Work (W), and discharges\nthe remaining unused thermal energy as waste heat into a low-temperature cold reservoir (Q_Cold).\nBy the Law of Conservation of Energy, Total Heat Input equals Work plus Waste Heat: Q_Hot = W + Q_Cold,\nor W = Q_Hot - Q_Cold. The Thermal Efficiency (%e) of a heat engine measures the percentage of\nabsorbed heat successfully converted into mechanical work: %e = (W / Q_Hot) × 100 = [(Q_Hot - Q_Cold) / Q_Hot] × 100.\nAccording to the Second Law of Thermodynamics, no heat engine can ever be 100% efficient (%e < 100%)\nbecause some thermal energy must always be dissipated into the cold environment.", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Thermodynamics", "difficulty": "Science", "questionId": "10.4", "topic": "PHYSICAL SCIENCE - HEAT ENGINE EFFICIENCY & WORK CALCULATIONS", "q": "A steam turbine absorbs 8,000 J of heat from a boiler and releases 5,000 J of waste heat\ninto a cooling tower. How much mechanical work (W) does the turbine produce?", "options": ["1,600 J", "3,000 J", "5,000 J", "8,000 J", "13,000 J"], "answer": 1, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Work W = Q_Hot - Q_Cold = 8,000 J - 5,000 J = 3,000 J.", "passage": "A Heat Engine is a thermodynamic device that absorbs thermal energy from a high-temperature\nheat reservoir (Q_Hot), converts a portion of that energy into mechanical Work (W), and discharges\nthe remaining unused thermal energy as waste heat into a low-temperature cold reservoir (Q_Cold).\nBy the Law of Conservation of Energy, Total Heat Input equals Work plus Waste Heat: Q_Hot = W + Q_Cold,\nor W = Q_Hot - Q_Cold. The Thermal Efficiency (%e) of a heat engine measures the percentage of\nabsorbed heat successfully converted into mechanical work: %e = (W / Q_Hot) × 100 = [(Q_Hot - Q_Cold) / Q_Hot] × 100.\nAccording to the Second Law of Thermodynamics, no heat engine can ever be 100% efficient (%e < 100%)\nbecause some thermal energy must always be dissipated into the cold environment.", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}, {"type": "mcq", "category": "Thermodynamics", "difficulty": "Science", "questionId": "10.5", "topic": "PHYSICAL SCIENCE - HEAT ENGINE EFFICIENCY & WORK CALCULATIONS", "q": "If an engineer increases the temperature of the hot reservoir while holding the cold\nreservoir temperature constant, what happens to the maximum theoretical (Carnot) efficiency of the heat engine?", "options": ["Efficiency decreases toward zero.", "Efficiency remains completely unchanged.", "Efficiency increases.", "The engine immediately halts operation.", "Efficiency fluctuates without mathematical relationship."], "answer": 2, "hint": "Use the reading passage to identify the relevant scientific principle, then apply it to the question.", "explanation": "Carnot efficiency e = 1 - (T_Cold / T_Hot). Increasing T_Hot decreases the ratio\n(T_Cold / T_Hot), thereby increasing the theoretical efficiency of the heat engine.\n================================================================================\nEND OF 50-QUESTION ADVANCED GED SCIENCE STUDY FILE\n================================================================================\n```", "passage": "A Heat Engine is a thermodynamic device that absorbs thermal energy from a high-temperature\nheat reservoir (Q_Hot), converts a portion of that energy into mechanical Work (W), and discharges\nthe remaining unused thermal energy as waste heat into a low-temperature cold reservoir (Q_Cold).\nBy the Law of Conservation of Energy, Total Heat Input equals Work plus Waste Heat: Q_Hot = W + Q_Cold,\nor W = Q_Hot - Q_Cold. The Thermal Efficiency (%e) of a heat engine measures the percentage of\nabsorbed heat successfully converted into mechanical work: %e = (W / Q_Hot) × 100 = [(Q_Hot - Q_Cold) / Q_Hot] × 100.\nAccording to the Second Law of Thermodynamics, no heat engine can ever be 100% efficient (%e < 100%)\nbecause some thermal energy must always be dissipated into the cold environment.", "passageSource": "McGraw-Hill Education Science Workbook for the GED Test"}];
+const $=id=>document.getElementById(id);
+const letters=['A','B','C','D','E'];
+const QUESTION_SECONDS=180;
+
+let questions=[],responses=[],current=0,streak=0,bestStreak=0;
+let timeLeft=QUESTION_SECONDS,timerId=null,finished=false,player='';
+
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+function fmt(s){
+  return String(s??'').replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g,'<span class="frac"><span class="num">$1</span><span class="den">$2</span></span>');
+}
+function answerDisplay(q){
+  return q.type==='mcq' ? `${letters[q.answer]}. ${q.options[q.answer]}` : q.answerText;
+}
+function normText(s){
+  return String(s??'').toLowerCase().trim()
+    .replace(/<[^>]*>/g,'')
+    .replace(/[₀₁₂₃₄₅₆₇₈₉]/g,c=>'₀₁₂₃₄₅₆₇₈₉'.indexOf(c))
+    .replace(/[·⋅•*]/g,'.')
+    .replace(/\s+/g,'');
+}
+function parseNumber(raw){
+  let s=String(raw??'').trim().toLowerCase().replace(/,/g,'').replace(/−/g,'-').replace(/×/g,'x');
+  const sci=s.match(/([-+]?\d*\.?\d+)\s*x\s*10\s*\^?\s*([-+]?\d+)/);
+  if(sci) return Number(sci[1])*Math.pow(10,Number(sci[2]));
+  const m=s.match(/[-+]?(?:\d+\.?\d*|\.\d+)(?:e[-+]?\d+)?/);
+  return m?Number(m[0]):NaN;
+}
+function checkTyped(q,raw){
+  if(Object.prototype.hasOwnProperty.call(q,'numeric')){
+    const v=parseNumber(raw);
+    return Number.isFinite(v) && Math.abs(v-q.numeric)<=q.tol;
+  }
+  const n=normText(raw);
+  return (q.accept||[]).some(a=>normText(a)===n);
+}
+function scoreNow(){return responses.filter(r=>r&&r.isCorrect).length;}
+function firstPending(){return responses.findIndex(r=>!r);}
+
+function triggerCheer(){
+  const b=$('studyBuddy');
+  const cheerName=(player||'Student').trim()||'Student';
+  $('correctPopLabel').textContent=`${cheerName} nailed it!`;
+  $('cheerBubble').textContent=`${cheerName} nailed it!`;
+  b.classList.remove('cheer');void b.offsetWidth;b.classList.add('cheer');
+  $('correctPop').classList.remove('show');void $('correctPop').offsetWidth;$('correctPop').classList.add('show');
+  document.body.classList.remove('correct-cheer');void document.body.offsetWidth;document.body.classList.add('correct-cheer');
+  setTimeout(()=>{b.classList.remove('cheer');$('correctPop').classList.remove('show');document.body.classList.remove('correct-cheer')},2000);
+}
+function buzz(){
+  document.body.classList.remove('wrong-buzz');void document.body.offsetWidth;document.body.classList.add('wrong-buzz');
+  setTimeout(()=>document.body.classList.remove('wrong-buzz'),500);
+}
+function gainStreak(){streak++;bestStreak=Math.max(bestStreak,streak);triggerCheer();}
+function loseStreak(){streak=0;}
+
+function stopTimer(){if(timerId)clearInterval(timerId);timerId=null;}
+function startTimer(){
+  stopTimer();
+  if(responses[current]||$('quizView').classList.contains('hidden'))return;
+  timerId=setInterval(()=>{
+    timeLeft--;
+    updateTimerUI();
+    if(timeLeft<=0)timeoutCurrent();
+  },1000);
+}
+function updateTimerUI(){
+  const t=Math.max(0,timeLeft),m=Math.floor(t/60),s=String(t%60).padStart(2,'0');
+  $('timerText').textContent=`${m}:${s}`;
+  $('streakCount').textContent=streak;
+  const ring=$('timerRing');ring.style.setProperty('--p',Math.max(0,t/QUESTION_SECONDS*100));
+  ring.classList.toggle('warn',t<=60&&t>20);ring.classList.toggle('danger',t<=20);ring.classList.toggle('critical',t<=10);
+}
+function timeoutCurrent(){
+  if(responses[current])return;
+  stopTimer();const q=questions[current];
+  responses[current]={selected:null,userText:'',isCorrect:false,category:q.category,skipped:false,timeout:true};
+  loseStreak();buzz();render();
+}
+
+function showQuizSideControls(){$('sideControls').classList.remove('hidden');setTimerPanel(false);}
+function hideQuizSideControls(){stopTimer();$('sideControls').classList.add('hidden');setTimerPanel(false);}
+function setTimerPanel(open){
+  $('timerSidePanel').classList.toggle('open',open);$('timerSideShow').classList.toggle('tabHidden',open);$('timerSideShow').setAttribute('aria-expanded',open?'true':'false');
+  document.body.classList.toggle('timer-panel-open',open && window.innerWidth>=1180);
+}
+function jumpTo(i){stopTimer();current=i;timeLeft=QUESTION_SECONDS;render();$('questionText').scrollIntoView({behavior:'smooth',block:'center'});}
+
+function passageIdentity(q){return `${q.topic||''}\u0000${q.passageSource||''}\u0000${q.passage||''}`;}
+function passageQuestionLabel(q){
+  const key=passageIdentity(q),group=BANK.filter(item=>item.passage&&passageIdentity(item)===key);
+  const passageNumber=[...new Set(BANK.filter(item=>item.passage).map(passageIdentity))].indexOf(key);
+  const questionNumber=group.findIndex(item=>item.questionId===q.questionId)+1;
+  return `Passage ${passageNumber+1} · Question ${questionNumber} of ${group.length}`;
+}
+
+function updateNavigator(){
+  const grid=$('navigatorGrid');grid.innerHTML='';
+  questions.forEach((q,i)=>{
+    const r=responses[i],b=document.createElement('button');b.type='button';b.className='navQ';b.textContent=i+1;
+    if(r){if(r.skipped)b.classList.add('skipped');else if(r.isCorrect)b.classList.add('correct');else b.classList.add('wrong');}
+    if(i===current)b.classList.add('current');b.onclick=()=>jumpTo(i);grid.appendChild(b);
+  });
+}
+
+function startNew(){
+  player=$('playerName').value.trim()||'Student';
+  questions=BANK.map(q=>JSON.parse(JSON.stringify(q)));
+  responses=Array(questions.length).fill(null);current=0;streak=0;bestStreak=0;timeLeft=QUESTION_SECONDS;finished=false;
+  $('startView').classList.add('hidden');$('resultsView').classList.add('hidden');$('quizView').classList.remove('hidden');
+  $('missedReview').classList.add('hidden');$('answerKey').classList.add('hidden');showQuizSideControls();render();
+}
+function retrySame(){
+  responses=Array(questions.length).fill(null);current=0;streak=0;bestStreak=0;timeLeft=QUESTION_SECONDS;finished=false;
+  $('resultsView').classList.add('hidden');$('quizView').classList.remove('hidden');$('missedReview').classList.add('hidden');$('answerKey').classList.add('hidden');showQuizSideControls();render();
+}
+
+function render(){
+  stopTimer();
+  const q=questions[current],resp=responses[current];
+  $('counter').textContent=`Question ${current+1} of ${questions.length}`;
+  $('category').textContent=q.category;$('difficulty').textContent=q.difficulty;
+  $('typeBadge').textContent=q.type==='mcq'?'MCQ':'TYPE ANSWER';
+  $('questionNo').textContent=`Question ${current+1}`;
+  const passageBox=$('sourcePassageBox');
+  if(q.passage){$('sourcePassageTitle').textContent=q.topic||'Reading passage';$('passageQuestionLabel').textContent=passageQuestionLabel(q);$('sourcePassageText').textContent=q.passage;$('sourceAttribution').textContent=q.passageSource?`Source: ${q.passageSource}`:'';passageBox.classList.remove('hidden');}
+  else{passageBox.classList.add('hidden');$('sourcePassageTitle').textContent='Reading passage';$('passageQuestionLabel').textContent='';$('sourcePassageText').textContent='';$('sourceAttribution').textContent='';}
+  $('questionText').innerHTML=fmt(q.q);
+  $('progress').style.width=`${((current+1)/questions.length)*100}%`;
+  document.querySelector('.progressTrack').setAttribute('aria-valuemax',questions.length);
+  document.querySelector('.progressTrack').setAttribute('aria-valuenow',current+1);
+
+  const dg=$('diagram');
+  if(q.diagram){dg.innerHTML=q.diagram;dg.classList.remove('hidden')}else{dg.innerHTML='';dg.classList.add('hidden')}
+
+  const f=$('answers');f.innerHTML='<legend class="hidden">Answer area</legend>';
+  if(q.type==='mcq'){
+    q.options.forEach((o,i)=>{
+      const b=document.createElement('button');b.type='button';b.className='answer';
+      b.innerHTML=`<span class="letter">${letters[i]}</span><span>${fmt(o)}</span>`;
+      b.onclick=()=>chooseMCQ(i);f.appendChild(b);
+    });
+    $('keyboardHint').textContent='Keyboard: A–E to answer • H for hint • Enter for next';
+  }else{
+    const wrap=document.createElement('div');wrap.className='typeWrap';
+    wrap.innerHTML=`<label class="typeLabel" for="typedAnswer">Type your answer</label>
+      <div class="typeInputRow"><input class="typeInput" id="typedAnswer" autocomplete="off" inputmode="text" placeholder="Enter answer"/>
+      <button class="btn btnTeal" id="checkTypedBtn" type="button">Check Answer</button></div>
+      <div class="typeNote">Numbers may be entered in decimal or scientific notation. Add units only if you want to; formula questions accept normal digits.</div>`;
+    f.appendChild(wrap);
+    $('checkTypedBtn').onclick=submitTyped;
+    $('keyboardHint').textContent='Keyboard: type your answer • Enter to check • H for hint';
+  }
+
+  $('hintBox').className='hintBox';$('hintBox').innerHTML='';
+  $('feedback').className='feedback';$('feedbackTitle').textContent='';$('explanation').innerHTML='';
+  $('skipBtn').disabled=!!resp;
+
+  if(resp){
+    if(q.type==='mcq'){
+      const bs=[...f.querySelectorAll('.answer')];
+      bs.forEach((b,j)=>{b.disabled=true;if(j===q.answer)b.classList.add('correct');else if(resp.selected===j)b.classList.add('wrong');else b.classList.add('dim');});
+    }else{
+      const inp=$('typedAnswer'),btn=$('checkTypedBtn');
+      if(inp){inp.value=resp.userText||'';inp.disabled=true;inp.classList.add(resp.isCorrect?'correct':'wrong');}
+      if(btn)btn.disabled=true;
+    }
+    $('feedback').className=`feedback show ${resp.isCorrect?'correct':'wrong'}`;
+    if(resp.timeout)$('feedbackTitle').innerHTML=`Time’s up — correct answer: <strong>${fmt(answerDisplay(q))}</strong>`;
+    else if(resp.skipped)$('feedbackTitle').innerHTML=`Skipped — correct answer: <strong>${fmt(answerDisplay(q))}</strong>`;
+    else $('feedbackTitle').innerHTML=resp.isCorrect?'Correct — your study buddy cheered!':`Not quite — correct answer: <strong>${fmt(answerDisplay(q))}</strong>`;
+    $('explanation').innerHTML=(resp.timeout?'<div class="timeoutNote">3 minutes expired. The streak reset to 0.</div>':'')+fmt(q.explanation);
+  }
+
+  const pending=firstPending();$('nextBtn').disabled=!resp;
+  $('nextBtn').textContent=(current===questions.length-1&&pending===-1)?'See Results':'Next Question';
+  updateNavigator();updateTimerUI();
+  timeLeft=resp?timeLeft:QUESTION_SECONDS;
+  if(!resp){updateTimerUI();startTimer();setTimeout(()=>{if(q.type==='typed'&&$('typedAnswer'))$('typedAnswer').focus();},80);}
+}
+
+function showHint(){
+  const q=questions[current],box=$('hintBox');box.innerHTML='<strong>Hint:</strong> '+fmt(q.hint);box.classList.add('show');
+}
+function chooseMCQ(i){
+  if(responses[current])return;stopTimer();
+  const q=questions[current],ok=i===q.answer;
+  responses[current]={selected:i,userText:'',isCorrect:ok,category:q.category,skipped:false,timeout:false};
+  if(ok)gainStreak();else{loseStreak();buzz();}
+  render();$('nextBtn').focus();
+}
+function submitTyped(){
+  if(responses[current])return;
+  const q=questions[current],inp=$('typedAnswer');if(!inp)return;
+  const raw=inp.value.trim();if(!raw){inp.focus();return;}
+  stopTimer();const ok=checkTyped(q,raw);
+  responses[current]={selected:null,userText:raw,isCorrect:ok,category:q.category,skipped:false,timeout:false};
+  if(ok)gainStreak();else{loseStreak();buzz();}
+  render();$('nextBtn').focus();
+}
+function skip(){
+  if(responses[current])return;stopTimer();
+  const q=questions[current];responses[current]={selected:null,userText:'',isCorrect:false,category:q.category,skipped:true,timeout:false};
+  loseStreak();render();
+}
+function next(){
+  if(!responses[current])return;stopTimer();
+  if(current<questions.length-1){current++;timeLeft=QUESTION_SECONDS;render();return;}
+  const pending=firstPending();if(pending!==-1){current=pending;timeLeft=QUESTION_SECONDS;render();return;}
+  finish();
+}
+
+function categoryStats(){
+  const s={};responses.forEach(r=>{if(!r)return;s[r.category]??={right:0,total:0};s[r.category].total++;if(r.isCorrect)s[r.category].right++;});return s;
+}
+function finish(){
+  stopTimer();const pending=firstPending();if(pending!==-1){current=pending;render();return;}
+  finished=true;hideQuizSideControls();$('quizView').classList.add('hidden');$('resultsView').classList.remove('hidden');
+  const total=questions.length,score=scoreNow(),pct=Math.round(score/total*100);
+  $('scorePercent').textContent=pct+'%';$('scoreFraction').textContent=`${score} of ${total}`;
+  $('scoreRing').style.background=`conic-gradient(var(--teal) 0 ${pct*3.6}deg,var(--gold) ${pct*3.6}deg ${Math.min(360,pct*3.6+8)}deg,#e7edf3 ${Math.min(360,pct*3.6+8)}deg)`;
+  $('correctStat').textContent=score;$('missedStat').textContent=total-score;$('bestStreakStat').textContent=bestStreak;
+  const stats=categoryStats(),weak=Object.entries(stats).sort((a,b)=>(a[1].right/a[1].total)-(b[1].right/b[1].total))[0];
+  $('weakStat').textContent=weak?weak[0]:'—';
+  $('resultMessage').textContent=pct>=90?`${player}, outstanding mastery of these calculations!`:pct>=75?`${player}, strong work — review the missed topics and go again.`:pct>=60?`${player}, good progress — use the topic tracker for targeted revision.`:`${player}, this set is intentionally difficult. Review the explanations, then retry.`;
+  buildResultNavigator();buildMissedTopics();buildTopics(stats);buildReview();buildKey();$('reviewBtn').disabled=score===total;
+  const endpoint=getResultEndpoint();
+  if(endpoint){
+    saveResultToSharedAndLocal({silent:true});
+  }
+  $('resultsView').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function buildResultNavigator(){
+  const grid=$('resultNavigatorGrid');grid.innerHTML='';
+  responses.forEach((r,i)=>{const b=document.createElement('button');b.type='button';b.className='navQ';b.textContent=i+1;if(r.skipped)b.classList.add('skipped');else if(r.isCorrect)b.classList.add('correct');else b.classList.add('wrong');b.onclick=()=>reviewFromResults(i);grid.appendChild(b);});
+}
+function reviewFromResults(i){finished=false;current=i;$('resultsView').classList.add('hidden');$('quizView').classList.remove('hidden');showQuizSideControls();render();$('questionText').scrollIntoView({behavior:'smooth',block:'center'});}
+function buildMissedTopics(){
+  const el=$('missedTopicsList');el.innerHTML='';const counts={};
+  responses.filter(r=>r&&!r.isCorrect).forEach(r=>counts[r.category]=(counts[r.category]||0)+1);
+  const entries=Object.entries(counts).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
+  if(!entries.length){el.innerHTML='<span class="noMissedTopics">No missed topics — perfect score!</span>';return;}
+  entries.forEach(([t,c])=>{const chip=document.createElement('span');chip.className='missedTopicChip';chip.innerHTML=`<strong>${esc(t)}</strong> • ${c} missed`;el.appendChild(chip);});
+}
+function buildTopics(stats){
+  const el=$('topicGrid');el.innerHTML='';
+  Object.entries(stats).sort((a,b)=>(a[1].right/a[1].total)-(b[1].right/b[1].total)).forEach(([n,s])=>{
+    const pct=Math.round(s.right/s.total*100),d=document.createElement('div');d.className='topicRow';
+    d.innerHTML=`<div class="topicHead"><span>${esc(n)}</span><span>${s.right} of ${s.total} • ${pct}%</span></div><div class="meter"><div class="meterFill" style="width:${pct}%"></div></div>`;
+    el.appendChild(d);
+  });
+}
+function buildReview(){
+  const list=$('reviewList');list.innerHTML='';const missed=responses.map((r,i)=>({r,i})).filter(x=>x.r&&!x.r.isCorrect);
+  if(!missed.length){list.innerHTML='<p>Perfect score — no missed questions.</p>';return;}
+  missed.forEach(({r,i})=>{
+    const q=questions[i],d=document.createElement('details');
+    const your=r.timeout?'Time expired':(r.skipped?'Skipped':(q.type==='mcq'?`${letters[r.selected]}. ${fmt(q.options[r.selected])}`:esc(r.userText||'')));
+    d.innerHTML=`<summary>Q${i+1} • ${esc(q.category)} • ${q.type==='mcq'?'MCQ':'Typed'} — ${fmt(q.q)}</summary>
+      <p><strong>Your answer:</strong> ${your}<br><strong>Correct answer:</strong> ${fmt(answerDisplay(q))}</p><p>${fmt(q.explanation)}</p>`;
+    list.appendChild(d);
+  });
+}
+function buildKey(){
+  const body=$('keyBody');body.innerHTML='';
+  questions.forEach((q,i)=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${i+1}</td><td>${q.type==='mcq'?'MCQ':'Typed'}</td><td>${esc(q.category)}</td><td><strong>${fmt(answerDisplay(q))}</strong></td><td>${fmt(q.explanation)}</td>`;body.appendChild(tr);});
+}
+
+const RESULT_STORAGE_KEY='gedScienceCandidateResults';
+function getResultEndpoint(){
+  const params=new URLSearchParams(window.location.search);
+  const urlEndpoint=params.get('sheet') || params.get('endpoint') || '';
+  const inputEndpoint=(document.getElementById('resultEndpoint')?.value || '').trim();
+  return (urlEndpoint || inputEndpoint).trim();
+}
+function populateResultEndpointFromUrl(){
+  const params=new URLSearchParams(window.location.search);
+  const endpoint=params.get('sheet') || params.get('endpoint');
+  if(endpoint && document.getElementById('resultEndpoint')){
+    document.getElementById('resultEndpoint').value=endpoint;
+  }
+}
+async function sendResultToEndpoint(record, endpoint){
+  const response=await fetch(endpoint, {
+    method:'POST',
+    mode:'cors',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({
+      candidate: record.candidate,
+      date: record.date,
+      score: record.score,
+      total: record.total,
+      percentage: record.percentage,
+      bestStreak: record.bestStreak,
+      missedTopics: record.missedTopics,
+      responses: record.responses
+    })
+  });
+  if(!response.ok){
+    throw new Error(`HTTP ${response.status}`);
+  }
+  return response;
+}
+function collectCurrentCandidate(){
+  const record={
+    candidate: (player||'Student').trim() || 'Student',
+    date: new Date().toISOString(),
+    score: scoreNow(),
+    total: questions.length,
+    percentage: Math.round((scoreNow()/questions.length)*100),
+    bestStreak: bestStreak,
+    missedTopics: Object.entries(categoryStats()).filter(([_,info])=>info.right < info.total).map(([name,info])=>({name, missed: info.total - info.right, total: info.total})),
+    responses: responses.map((r,i)=>({
+      question: i + 1,
+      category: questions[i].category,
+      type: questions[i].type,
+      answered: !!r,
+      correct: !!(r && r.isCorrect),
+      skipped: !!(r && r.skipped),
+      timeout: !!(r && r.timeout),
+      selected: r ? r.selected ?? null : null,
+      userText: r ? r.userText ?? '' : '',
+      key: answerDisplay(questions[i])
+    }))
+  };
+  const existing=JSON.parse(localStorage.getItem(RESULT_STORAGE_KEY) || '[]');
+  existing.push(record);
+  localStorage.setItem(RESULT_STORAGE_KEY, JSON.stringify(existing));
+  return record;
+}
+
+function showSaveNotice(message){
+  const n=$('saveNotice');
+  n.textContent=message;
+  n.classList.remove('hidden');
+  setTimeout(()=>n.classList.add('hidden'), 4000);
+}
+
+async function saveResultToSharedAndLocal({ silent=false }={}){
+  const record=collectCurrentCandidate();
+  const endpoint=getResultEndpoint();
+  if(endpoint){
+    try{
+      await sendResultToEndpoint(record, endpoint);
+      if(!silent){showSaveNotice(`Saved result for ${record.candidate}: ${record.percentage}% and sent to the shared sheet.`);}
+      return;
+    }catch(err){
+      if(!silent){showSaveNotice(`Saved locally for ${record.candidate}: ${record.percentage}%. Shared send failed: ${err.message}`);}
+      return;
+    }
+  }
+  if(!silent){showSaveNotice(`Saved locally for ${record.candidate}: ${record.percentage}%`);}
+}
+
+function downloadCandidateCsv(){
+  const rows=JSON.parse(localStorage.getItem(RESULT_STORAGE_KEY) || '[]');
+  if(!rows.length){showSaveNotice('No candidate results have been collected yet.');return;}
+  const headers=['candidate','date','score','total','percentage','bestStreak'];
+  const csv=[headers.join(',')].concat(rows.map(r=>[
+    `"${String(r.candidate).replace(/"/g,'""')}"`,
+    `"${r.date}"`,
+    r.score,
+    r.total,
+    r.percentage,
+    r.bestStreak
+  ].join(','))).join('\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='candidate-results.csv';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+  showSaveNotice(`Downloaded ${rows.length} saved result(s).`);
+}
+
+$('saveResultBtn').onclick=()=>saveResultToSharedAndLocal();
+$('downloadCsvBtn').onclick=downloadCandidateCsv;
+populateResultEndpointFromUrl();
+
+$('startBtn').onclick=startNew;$('nextBtn').onclick=next;$('hintBtn').onclick=showHint;$('skipBtn').onclick=skip;
+$('timerSideShow').onclick=()=>setTimerPanel(true);$('timerSideHide').onclick=()=>setTimerPanel(false);
+$('newBtn').onclick=()=>{stopTimer();hideQuizSideControls();$('resultsView').classList.add('hidden');$('startView').classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'});};
+$('restartBtn').onclick=retrySame;
+$('reviewBtn').onclick=()=>{$('missedReview').classList.toggle('hidden');$('answerKey').classList.add('hidden')};
+$('keyBtn').onclick=()=>{$('answerKey').classList.toggle('hidden');$('missedReview').classList.add('hidden')};
+
+document.addEventListener('keydown',e=>{
+  if($('quizView').classList.contains('hidden'))return;
+  const q=questions[current],k=e.key.toUpperCase();
+  if(!responses[current]&&q.type==='mcq'&&letters.includes(k))chooseMCQ(letters.indexOf(k));
+  else if(!responses[current]&&q.type==='typed'&&e.key==='Enter'){e.preventDefault();submitTyped();}
+  else if(k==='H'&&document.activeElement?.id!=='typedAnswer')showHint();
+  else if(responses[current]&&e.key==='Enter'){e.preventDefault();next();}
+});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stopTimer();else if(!$('quizView').classList.contains('hidden')&&!responses[current])startTimer();});
+window.addEventListener('resize',()=>{if($('sideControls')?.classList.contains('hidden'))return;const open=$('timerSidePanel')?.classList.contains('open');document.body.classList.toggle('timer-panel-open',!!open&&window.innerWidth>=1180);});
+</script>
+</body>
+</html>

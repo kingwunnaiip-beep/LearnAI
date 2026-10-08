@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IGCSE Physics — Forces & Motion Interactive Lab</title>
+<style>
+  :root{
+    --bg:#07111f;
+    --bg2:#0f1f38;
+    --glass:rgba(255,255,255,.10);
+    --glass-strong:rgba(255,255,255,.16);
+    --border:rgba(255,255,255,.19);
+    --text:#f4f8ff;
+    --muted:#a8b7cf;
+    --accent:#7c9cff;
+    --accent2:#62e6d7;
+    --good:#6ee7a8;
+    --bad:#ff7f97;
+    --warn:#ffd36e;
+    --shadow:0 22px 60px rgba(0,0,0,.32);
+  }
+  [data-theme="light"]{
+    --bg:#eaf2ff;
+    --bg2:#f7fbff;
+    --glass:rgba(255,255,255,.64);
+    --glass-strong:rgba(255,255,255,.80);
+    --border:rgba(63,91,140,.16);
+    --text:#14213d;
+    --muted:#5f6f89;
+    --accent:#496cff;
+    --accent2:#0ebaaa;
+    --good:#14965d;
+    --bad:#d94b68;
+    --warn:#a86b00;
+    --shadow:0 22px 60px rgba(61,89,138,.16);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:1rem;
+    color:var(--text);
+    background:
+      radial-gradient(circle at 12% 15%,rgba(124,156,255,.24),transparent 28%),
+      radial-gradient(circle at 86% 10%,rgba(98,230,215,.18),transparent 24%),
+      radial-gradient(circle at 75% 82%,rgba(195,108,255,.18),transparent 28%),
+      linear-gradient(145deg,var(--bg),var(--bg2));
+    min-height:100vh;
+    transition:.25s ease;
+  }
+  body:before{
+    content:"";
+    position:fixed;inset:0;pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size:32px 32px;
+    mask-image:linear-gradient(to bottom,rgba(0,0,0,.65),transparent 86%);
+  }
+  button,input,select{font:inherit}
+  button{cursor:pointer}
+  .app{max-width:1480px;margin:auto;padding:20px}
+  .glass{
+    background:var(--glass);
+    border:1px solid var(--border);
+    box-shadow:var(--shadow);
+    backdrop-filter:blur(20px) saturate(140%);
+    -webkit-backdrop-filter:blur(20px) saturate(140%);
+  }
+  .topbar{
+    display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;
+    border-radius:26px;padding:18px 20px;position:sticky;top:12px;z-index:20;
+  }
+  .brand{display:flex;gap:14px;align-items:center;min-width:0}
+  .logo{
+    width:50px;height:50px;border-radius:17px;display:grid;place-items:center;
+    background:linear-gradient(145deg,rgba(124,156,255,.95),rgba(98,230,215,.85));
+    color:#06111d;font-weight:900;box-shadow:inset 0 1px 0 rgba(255,255,255,.5);
+  }
+  .brand h1{font-size:clamp(18px,2.2vw,28px);margin:0;letter-spacing:-.03em}
+  .brand p{margin:4px 0 0;color:var(--muted);font-size:13px}
+  .settings-wrap{position:relative;justify-self:end}
+  .settings-toggle{display:grid;place-items:center;width:48px;padding:10px}
+  .settings-toggle svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+  .settings-panel{
+    position:absolute;top:calc(100% + 10px);right:0;z-index:30;width:min(300px,calc(100vw - 40px));
+    display:none;gap:10px;padding:14px;border-radius:18px;
+  }
+  .settings-panel.open{display:grid}
+  .setting-row{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:42px}
+  .setting-label{font-size:13px;font-weight:750}
+  .glass-switch{
+    position:relative;width:82px;height:38px;flex:none;padding:3px;border:1px solid var(--border);
+    border-radius:999px;color:var(--text);background:rgba(255,255,255,.08);
+    box-shadow:inset 0 1px 3px rgba(0,0,0,.16);backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);transition:background .2s,border-color .2s;
+  }
+  .glass-switch[aria-checked="true"]{background:rgba(98,230,215,.20);border-color:rgba(98,230,215,.5)}
+  .switch-thumb{
+    position:absolute;left:3px;top:3px;width:30px;height:30px;border-radius:50%;
+    background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(205,229,244,.72));
+    border:1px solid rgba(255,255,255,.7);box-shadow:0 2px 9px rgba(0,0,0,.24);
+    transition:transform .22s cubic-bezier(.2,.8,.2,1);
+  }
+  .glass-switch[aria-checked="true"] .switch-thumb{transform:translateX(44px);background:linear-gradient(145deg,#fff,#aaf7ed)}
+  .switch-caption{position:absolute;top:50%;transform:translateY(-50%);font-size:9px;line-height:1;font-weight:900;letter-spacing:.04em}
+  .glass-switch[aria-checked="false"] .switch-caption{right:8px}
+  .glass-switch[aria-checked="true"] .switch-caption{left:8px}
+  .font-adjuster{display:grid;grid-template-columns:1fr auto auto auto;align-items:center;gap:8px}
+  .font-adjuster-label{font-size:13px;font-weight:750}
+  .font-adjuster-value{min-width:42px;text-align:center;color:var(--muted);font-size:12px}
+  .font-adjuster .btn{min-width:44px;padding:8px}
+  .settings-divider{height:1px;background:var(--border)}
+  .btn{
+    border:1px solid var(--border);color:var(--text);background:var(--glass);
+    border-radius:14px;padding:10px 14px;font-weight:750;min-height:44px;
+  }
+  .btn:hover{background:var(--glass-strong)}
+  .btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#06111d;border:0}
+  .btn.danger{color:var(--bad)}
+  .layout{display:grid;grid-template-columns:250px 1fr;gap:18px;margin-top:18px}
+  .sidebar{padding:16px;border-radius:24px;align-self:start;position:sticky;top:100px}
+  .sidebar-toggle{display:flex;align-items:center;justify-content:center;width:38px;height:38px;min-height:38px;margin:0 0 10px auto;padding:0;border-radius:12px}
+  .sidebar-toggle-icon{font-size:16px;line-height:1}
+  .creator-badge{
+    position:fixed;right:20px;bottom:18px;z-index:40;display:flex;align-items:center;gap:10px;
+    padding:11px 15px;border:1px solid rgba(98,230,215,.35);border-radius:999px;
+    background:var(--bg2);color:var(--text);box-shadow:var(--shadow);font-size:13px;font-weight:800;
+  }
+  .creator-badge-dot{width:9px;height:9px;border-radius:50%;background:#43f5e0;box-shadow:0 0 10px #43f5e0;animation:cyan-pulse 1.4s ease-in-out infinite}
+  @keyframes cyan-pulse{50%{opacity:.35;box-shadow:0 0 3px #43f5e0}}
+  .nav-title{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);font-weight:800;margin:4px 8px 10px}
+  .nav a{
+    display:flex;align-items:center;gap:10px;color:var(--text);text-decoration:none;
+    padding:10px 12px;border-radius:13px;margin:3px 0;font-size:14px;font-weight:700;
+  }
+  .nav a:hover{background:var(--glass-strong)}
+  .nav .pill{margin-left:auto;font-size:11px;color:var(--muted)}
+  .progress-card{margin-top:14px;padding:14px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid var(--border)}
+  .progress-row{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--muted);margin-bottom:8px}
+  .bar{height:8px;background:rgba(255,255,255,.09);border-radius:999px;overflow:hidden}
+  .bar>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:inherit;transition:.35s}
+  main{min-width:0}
+  section{scroll-margin-top:110px;margin-bottom:18px}
+  .hero{
+    padding:30px;border-radius:28px;display:grid;grid-template-columns:1.25fr .75fr;gap:22px;overflow:hidden;position:relative;
+  }
+  .eyebrow{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.16em;color:var(--accent2)}
+  .hero h2{font-size:clamp(32px,5vw,60px);line-height:.98;letter-spacing:-.055em;margin:10px 0 14px;max-width:800px}
+  .hero p{color:var(--muted);max-width:720px;line-height:1.7}
+  .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+  .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;align-content:center}
+  .stat{padding:16px;border-radius:20px;background:rgba(255,255,255,.07);border:1px solid var(--border)}
+  .stat b{display:block;font-size:26px}
+  .stat span{font-size:12px;color:var(--muted)}
+  .section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin:26px 4px 12px}
+  .section-head h3{margin:0;font-size:24px}
+  .section-head p{margin:5px 0 0;color:var(--muted);font-size:13px}
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .lesson{
+    border-radius:22px;padding:18px;min-width:0;position:relative;overflow:hidden;
+  }
+  .lesson h4{margin:0 0 8px;font-size:18px}
+  .lesson p,.lesson li{color:var(--muted);font-size:13px;line-height:1.6}
+  .formula{
+    display:inline-block;margin:8px 0;padding:8px 12px;border-radius:12px;
+    background:rgba(124,156,255,.12);border:1px solid rgba(124,156,255,.24);font-weight:900;
+  }
+  .mini-svg{width:100%;height:auto;display:block;margin:10px 0 8px}
+  .reveal{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+  .lesson.open .reveal{display:block}
+  #learn .grid{grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);align-items:stretch}
+  .flash-panel{border-radius:22px;padding:18px;min-width:0;display:flex;flex-direction:column;position:relative;overflow:hidden}
+  .flash-panel::before{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(124,156,255,.20),transparent 68%);right:-70px;top:-80px;pointer-events:none}
+  .flash-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px;position:relative;z-index:1}
+  .flash-count{font-size:12px;color:var(--muted);font-weight:800}
+  .flash-card{flex:1;min-height:300px;border:1px solid var(--border);border-radius:20px;background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.035));display:flex;align-items:center;justify-content:center;text-align:center;padding:26px;cursor:pointer;position:relative;overflow:hidden;transition:.25s transform,.25s border-color}
+  .flash-card:hover{transform:translateY(-2px);border-color:rgba(98,230,215,.42)}
+  .flash-side{max-width:420px}
+  .flash-kicker{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--accent2);font-weight:900;margin-bottom:12px}
+  .flash-q{font-size:clamp(20px,2.4vw,30px);font-weight:900;line-height:1.25;letter-spacing:-.025em}
+  .flash-a{display:none;font-size:18px;line-height:1.55;color:var(--text)}
+  .flash-card.revealed .flash-q{display:none}.flash-card.revealed .flash-a{display:block}
+  .flash-hint{position:absolute;bottom:14px;left:0;right:0;font-size:11px;color:var(--muted)}
+  .flash-nav{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px}
+  .flash-dot{width:9px;height:9px;border:0;border-radius:50%;padding:0;background:rgba(255,255,255,.20);cursor:pointer;transition:.2s}
+  .flash-dot.active{width:24px;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+  @media(max-width:900px){#learn .grid{grid-template-columns:1fr}.flash-card{min-height:240px}}
+
+  .activity-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .card{border-radius:22px;padding:18px;min-width:0}
+  .card h4{margin:0 0 4px}
+  .meta{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-weight:900}
+  .question{font-size:16px;line-height:1.55;margin:14px 0}
+  .option-list{display:grid;gap:9px}
+  .option{
+    border:1px solid var(--border);background:rgba(255,255,255,.05);color:var(--text);
+    border-radius:14px;padding:11px 12px;text-align:left;min-height:46px;font-weight:650;
+  }
+  .option:hover{background:var(--glass-strong)}
+  .option.correct{border-color:var(--good);box-shadow:inset 0 0 0 1px var(--good)}
+  .option.wrong{border-color:var(--bad);box-shadow:inset 0 0 0 1px var(--bad)}
+  .feedback{min-height:24px;margin-top:11px;font-size:13px;color:var(--muted);line-height:1.5}
+  .feedback.good{color:var(--good)}
+  .feedback.bad{color:var(--bad)}
+  .input-row{display:flex;gap:9px;flex-wrap:wrap}
+  .text-input,.select{
+    flex:1;min-width:150px;border:1px solid var(--border);border-radius:13px;padding:11px 12px;
+    background:rgba(255,255,255,.08);color:var(--text);outline:none;
+  }
+  .select option{color:#111}
+  .text-input:focus,.select:focus{box-shadow:0 0 0 3px rgba(124,156,255,.25);border-color:var(--accent)}
+  .match-board{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .match-col{display:grid;gap:8px}
+  .match-btn{
+    border:1px solid var(--border);border-radius:13px;background:rgba(255,255,255,.05);
+    color:var(--text);padding:10px;text-align:left;min-height:44px;
+  }
+  .match-btn.active{outline:2px solid var(--accent)}
+  .match-btn.done{opacity:.5;text-decoration:line-through}
+  .checkline{display:flex;align-items:flex-start;gap:9px;margin:9px 0}
+  .checkline input{margin-top:4px;transform:scale(1.2)}
+  .hotspot-wrap{position:relative;max-width:480px;margin:10px auto}
+  .hotspot-svg{width:100%;display:block;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid var(--border)}
+  .hotspot{
+    position:absolute;width:46px;height:46px;border-radius:50%;border:2px solid rgba(255,255,255,.75);
+    background:rgba(124,156,255,.26);color:white;font-weight:900;display:grid;place-items:center;
+    box-shadow:0 0 0 7px rgba(124,156,255,.12);
+  }
+  .hotspot:hover,.hotspot:focus{background:var(--accent)}
+  .hs-up{left:46%;top:14%}.hs-down{left:46%;bottom:11%}.hs-side{right:7%;top:45%}
+  .matrix{width:100%;border-collapse:separate;border-spacing:0 8px;font-size:13px}
+  .matrix th{color:var(--muted);text-align:left;padding:6px}
+  .matrix td{background:rgba(255,255,255,.05);padding:10px;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .matrix td:first-child{border-left:1px solid var(--border);border-radius:12px 0 0 12px}
+  .matrix td:last-child{border-right:1px solid var(--border);border-radius:0 12px 12px 0}
+  .matrix input{transform:scale(1.2)}
+  .lab{display:grid;grid-template-columns:.8fr 1.2fr;gap:14px}
+  .calc-result{
+    min-height:220px;border-radius:20px;padding:18px;background:
+    radial-gradient(circle at 25% 20%,rgba(124,156,255,.20),transparent 35%),
+    rgba(255,255,255,.05);border:1px solid var(--border);display:grid;place-items:center;text-align:center;
+  }
+  .big-number{font-size:clamp(36px,7vw,72px);font-weight:950;letter-spacing:-.05em}
+  .small{font-size:12px;color:var(--muted)}
+  .exam-wrap{display:grid;grid-template-columns:1fr 280px;gap:14px}
+  .exam-q{font-size:18px;line-height:1.55}
+  .exam-side{display:grid;gap:10px;align-content:start}
+  .score-box{text-align:center;padding:20px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid var(--border)}
+  .score-box b{display:block;font-size:36px}
+  .tag{display:inline-flex;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:850;background:rgba(124,156,255,.15);border:1px solid rgba(124,156,255,.22);margin:2px}
+  .kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;background:rgba(255,255,255,.08);border:1px solid var(--border);padding:2px 6px;border-radius:6px}
+  .footer{padding:20px;text-align:center;color:var(--muted);font-size:12px}
+  .toast{
+    position:fixed;right:20px;bottom:78px;z-index:50;max-width:320px;padding:12px 14px;border-radius:14px;
+    background:rgba(12,21,37,.88);color:#fff;border:1px solid rgba(255,255,255,.15);box-shadow:var(--shadow);
+    transform:translateY(20px);opacity:0;pointer-events:none;transition:.25s;
+  }
+  .toast.show{transform:translateY(0);opacity:1}
+  @media (max-width:980px){
+    .layout{grid-template-columns:1fr}
+    .sidebar{position:static}
+    .nav{display:flex;overflow-x:auto;gap:6px;padding-bottom:4px}
+    .nav-title,.progress-card{display:none}
+    .nav a{white-space:nowrap}
+    .hero,.lab,.exam-wrap{grid-template-columns:1fr}
+    .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  }
+  @media (max-width:640px){
+    .app{padding:10px}
+    .topbar{position:relative;top:auto;z-index:20;grid-template-columns:1fr;border-radius:20px}
+    .top-actions{justify-content:flex-start}
+    .hero{padding:20px}
+    .grid,.activity-grid{grid-template-columns:1fr}
+    .stats{grid-template-columns:1fr 1fr}
+    .match-board{grid-template-columns:1fr}
+    .matrix{font-size:12px}
+    .matrix td{padding:8px 6px}
+  }
+  .topic-navigator{margin:0 0 18px;padding:12px 16px;display:flex;align-items:center;justify-content:center;gap:12px;position:sticky;top:84px;z-index:18}
+  .topic-edge-control{
+    position:fixed;top:50%;z-index:22;display:flex;flex-direction:column;
+    align-items:center;gap:5px;transform:translateY(-50%);
+  }
+  #prevTopicControl{left:8px}
+  #nextTopicControl{right:20px}
+  .topic-edge-button{
+    width:58px;height:92px;min-height:92px;padding:8px;
+    display:grid;place-items:center;box-shadow:var(--shadow);
+  }
+  .topic-button-icon{font-size:26px;line-height:1}
+  .topic-button-label{font-size:10px;line-height:1.1;white-space:nowrap;color:var(--muted);text-align:center}
+  .topic-navigator .topic-center{text-align:center;flex:1}.topic-navigator .topic-center b{display:block;font-size:1.02rem}.topic-navigator .topic-center span{font-size:.82rem;color:var(--muted)}
+  .topic-dots{display:flex;gap:7px;justify-content:center;margin-top:8px}.topic-dot{width:9px;height:9px;border-radius:50%;border:0;background:rgba(255,255,255,.18);padding:0}.topic-dot.active{background:var(--accent);box-shadow:0 0 0 4px rgba(98,230,215,.12)}
+  .topic-hidden{display:none!important}
+  .layout.sidebar-collapsed{grid-template-columns:58px 1fr}
+  .sidebar-collapsed .sidebar{padding:10px}
+  .sidebar-collapsed .sidebar-content{display:none}
+  .sidebar-collapsed .sidebar-toggle{width:34px;height:34px;min-height:34px;margin:0 auto;padding:0}
+  @media(max-width:650px){
+    .topic-navigator{top:70px}
+    .topic-edge-button{width:52px;height:78px;min-height:78px}
+  }
+  @media(max-width:980px){
+    .layout.sidebar-collapsed{grid-template-columns:1fr}
+    .sidebar-collapsed .sidebar{padding:10px}
+    .sidebar-toggle{margin:0 auto 10px}
+    .sidebar-collapsed .sidebar-toggle{width:34px;height:34px;margin:0 auto}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+  }
+  @media(max-width:640px){.creator-badge{right:12px;bottom:12px}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header class="topbar glass">
+    <div class="brand">
+      <div class="logo">F→</div>
+      <div>
+        <h1>Forces & Motion Interactive Lab</h1>
+        <p>Cambridge IGCSE Physics • Chapter 3 • premium glass learning studio</p>
+      </div>
+    </div>
+    <div class="settings-wrap">
+      <button class="btn settings-toggle" id="settingsToggle" type="button" aria-controls="settingsPanel" aria-expanded="false" aria-label="Open controls">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <div class="settings-panel glass" id="settingsPanel" role="group" aria-label="Page controls">
+        <div class="setting-row">
+          <span class="setting-label">Theme</span>
+          <button class="glass-switch" id="themeBtn" type="button" role="switch" aria-label="Light theme" aria-checked="false">
+            <span class="switch-caption">DARK</span><span class="switch-thumb" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="setting-row">
+          <span class="setting-label">Sound</span>
+          <button class="glass-switch" id="soundBtn" type="button" role="switch" aria-label="Sound" aria-checked="true">
+            <span class="switch-caption">ON</span><span class="switch-thumb" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="settings-divider" aria-hidden="true"></div>
+        <div class="font-adjuster" aria-label="Font size controls">
+          <span class="font-adjuster-label">Font size</span>
+          <button class="btn" id="fontDecrease" type="button" aria-label="Decrease font size">A−</button>
+          <span class="font-adjuster-value" id="fontSizeValue" aria-live="polite">100%</span>
+          <button class="btn" id="fontIncrease" type="button" aria-label="Increase font size">A+</button>
+        </div>
+        <div class="settings-divider" aria-hidden="true"></div>
+        <button class="btn danger" id="resetBtn" type="button">Reset Progress</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar glass">
+      <button class="btn sidebar-toggle" id="sidebarToggle" type="button" aria-controls="sidebarContent" aria-expanded="true" aria-label="Hide side panel">
+        <span class="sidebar-toggle-icon" aria-hidden="true">‹</span>
+      </button>
+      <div class="sidebar-content" id="sidebarContent">
+        <div class="nav-title">Navigate</div>
+        <nav class="nav">
+          <a href="#home">✦ Overview</a>
+          <a href="#learn">◫ Teaching <span class="pill">6</span></a>
+          <a href="#practice">✓ Practice <span class="pill">8 modes</span></a>
+          <a href="#lab">ƒ Formula Lab</a>
+          <a href="#exam">⚡ Exam Sprint</a>
+        </nav>
+        <div class="progress-card">
+          <div class="progress-row"><span>Mastery</span><strong id="masteryText">0%</strong></div>
+          <div class="bar"><span id="masteryBar"></span></div>
+          <div class="progress-row" style="margin-top:12px"><span>Correct</span><strong id="correctText">0</strong></div>
+          <div class="progress-row"><span>Attempts</span><strong id="attemptText">0</strong></div>
+          <div class="progress-row"><span>Best streak</span><strong id="bestStreakText">0</strong></div>
+        </div>
+      </div>
+    </aside>
+
+    <main>
+      <div class="topic-navigator glass" id="topicNavigator">
+        <div class="topic-center"><b id="activeTopicTitle">Topic 1</b><span id="activeTopicSub">One topic at a time</span><div class="topic-dots" id="topicDots"></div></div>
+      </div>
+
+      <section id="home" class="hero glass">
+        <div>
+          <div class="eyebrow">Chapter 3 mastery system</div>
+          <h2>Learn the force. See the motion. Beat the distractor.</h2>
+          <p>
+            Study resultant force, mass and weight, terminal velocity, circular motion, momentum,
+            impulse, conservation of momentum, and vectors — then practise them in eight interactive formats.
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#learn" style="text-decoration:none;display:inline-flex;align-items:center">Start teaching session</a>
+            <a class="btn" href="#practice" style="text-decoration:none;display:inline-flex;align-items:center">Jump to practice</a>
+            <a class="btn" href="#exam" style="text-decoration:none;display:inline-flex;align-items:center">10-question sprint</a>
+          </div>
+          <div style="margin-top:18px">
+            <span class="tag">Resultant force</span><span class="tag">F = ma</span><span class="tag">W = mg</span>
+            <span class="tag">Terminal velocity</span><span class="tag">Circular motion</span>
+            <span class="tag">p = mv</span><span class="tag">Impulse</span><span class="tag">Vectors</span>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>6</b><span>teaching modules</span></div>
+          <div class="stat"><b>8</b><span>interactive question styles</span></div>
+          <div class="stat"><b id="streakHero">0</b><span>current streak</span></div>
+          <div class="stat"><b id="scoreHero">0%</b><span>session accuracy</span></div>
+        </div>
+      </section>
+
+      <section id="learn">
+        <div class="section-head">
+          <div><h3>Teaching sessions</h3><p>Short explanations + diagrams + exam traps. Open each card for the deeper note.</p></div>
+        </div>
+        <div class="grid">
+          <article class="lesson glass">
+            <div class="meta">3.1</div>
+            <h4>Resultant Forces</h4>
+            <div class="formula">F<sub>res</sub> = forces in one direction − forces in the opposite direction</div>
+            <svg class="mini-svg" viewBox="0 0 420 180" role="img" aria-label="Car with forward thrust and backward drag arrows">
+              <defs><marker id="arr1" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#62e6d7"/></marker><marker id="arr2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#ff7f97"/></marker></defs>
+              <rect x="125" y="76" width="170" height="48" rx="18" fill="rgba(255,255,255,.16)" stroke="rgba(255,255,255,.4)"/>
+              <circle cx="165" cy="130" r="17" fill="rgba(255,255,255,.35)"/><circle cx="255" cy="130" r="17" fill="rgba(255,255,255,.35)"/>
+              <line x1="295" y1="94" x2="390" y2="94" stroke="#62e6d7" stroke-width="6" marker-end="url(#arr1)"/>
+              <line x1="125" y1="108" x2="30" y2="108" stroke="#ff7f97" stroke-width="6" marker-end="url(#arr2)"/>
+              <text x="318" y="78" fill="currentColor" font-size="14">thrust</text><text x="42" y="92" fill="currentColor" font-size="14">drag</text>
+            </svg>
+            <p>A resultant force is the single force with the same effect as all the forces acting together. Same direction → add. Opposite directions → subtract.</p>
+            <button class="btn lesson-toggle" type="button">Open exam note</button>
+            <div class="reveal"><p><strong>Exam habit:</strong> decide the direction first. Balanced forces give a resultant force of 0 N; unbalanced forces give a non-zero resultant in the direction of the larger force.</p></div>
+          </article>
+
+          <article class="lesson glass">
+            <div class="meta">3.2</div>
+            <h4>Mass, weight & gravity</h4>
+            <div class="formula">W = m × g</div>
+            <svg class="mini-svg" viewBox="0 0 420 180" role="img" aria-label="Object on Earth and Moon showing same mass but different weight">
+              <circle cx="110" cy="95" r="55" fill="rgba(124,156,255,.28)"/><circle cx="310" cy="95" r="37" fill="rgba(255,255,255,.13)"/>
+              <text x="75" y="30" fill="currentColor" font-size="14">Earth</text><text x="288" y="45" fill="currentColor" font-size="14">Moon</text>
+              <rect x="90" y="78" width="40" height="35" rx="7" fill="#62e6d7"/><rect x="290" y="78" width="40" height="35" rx="7" fill="#62e6d7"/>
+              <text x="63" y="165" fill="currentColor" font-size="13">same mass</text><text x="275" y="165" fill="currentColor" font-size="13">same mass</text>
+            </svg>
+            <p>Mass is the amount of matter / inertia and stays constant. Weight is a gravitational force and changes when g changes.</p>
+            <button class="btn lesson-toggle" type="button">Open exam note</button>
+            <div class="reveal"><p><strong>Units:</strong> mass in kg, weight in N, g in N/kg. Convert grams to kilograms before substitution.</p></div>
+          </article>
+
+          <article class="lesson glass">
+            <div class="meta">3.3</div>
+            <h4>Terminal velocity</h4>
+            <div class="formula">F<sub>res</sub> = W − drag</div>
+            <svg class="mini-svg" viewBox="0 0 420 180" role="img" aria-label="Parachutist with weight and drag force arrows">
+              <defs><marker id="upA" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#62e6d7"/></marker><marker id="dnA" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#ff7f97"/></marker></defs>
+              <circle cx="210" cy="75" r="20" fill="rgba(255,255,255,.40)"/>
+              <line x1="210" y1="95" x2="210" y2="130" stroke="currentColor" stroke-width="7"/>
+              <line x1="210" y1="70" x2="210" y2="25" stroke="#62e6d7" stroke-width="6" marker-end="url(#upA)"/>
+              <line x1="210" y1="132" x2="210" y2="170" stroke="#ff7f97" stroke-width="6" marker-end="url(#dnA)"/>
+              <text x="228" y="35" fill="currentColor" font-size="13">drag</text><text x="228" y="164" fill="currentColor" font-size="13">weight</text>
+            </svg>
+            <p>As speed rises, drag rises. When drag = weight, resultant force = 0, acceleration = 0 and speed becomes constant.</p>
+            <button class="btn lesson-toggle" type="button">Open 5-stage story</button>
+            <div class="reveal"><p>Release → accelerate → first terminal velocity → parachute opens and drag becomes larger than weight → slow down to a new lower terminal velocity.</p></div>
+          </article>
+
+          <article class="lesson glass">
+            <div class="meta">3.3</div>
+            <h4>Circular motion</h4>
+            <div class="formula">resultant force → centre</div>
+            <svg class="mini-svg" viewBox="0 0 420 180" role="img" aria-label="Object moving in a circle with inward force">
+              <circle cx="210" cy="90" r="63" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="3" stroke-dasharray="8 8"/>
+              <circle cx="273" cy="90" r="16" fill="#7c9cff"/>
+              <line x1="270" y1="90" x2="225" y2="90" stroke="#62e6d7" stroke-width="6"/>
+              <polygon points="225,90 238,83 238,97" fill="#62e6d7"/>
+              <line x1="273" y1="75" x2="273" y2="28" stroke="#ffcf6e" stroke-width="5"/>
+              <polygon points="273,22 266,35 280,35" fill="#ffcf6e"/>
+              <text x="145" y="97" fill="currentColor" font-size="13">force inward</text><text x="289" y="48" fill="currentColor" font-size="13">velocity tangent</text>
+            </svg>
+            <p>Constant speed does not mean constant velocity. The direction changes continuously, so velocity changes and the object accelerates toward the centre.</p>
+            <button class="btn lesson-toggle" type="button">Open exam note</button>
+            <div class="reveal"><p>A larger mass or higher speed needs more inward force. A smaller radius (tighter turn) also needs more inward force.</p></div>
+          </article>
+
+          <article class="lesson glass">
+            <div class="meta">3.4</div>
+            <h4>Force, Mass & Acceleration</h4>
+            <div class="formula">F = m × a</div>
+            <svg class="mini-svg" viewBox="0 0 420 180" role="img" aria-label="Trolley accelerating because of a resultant force">
+              <rect x="125" y="78" width="150" height="48" rx="16" fill="rgba(124,156,255,.35)"/><circle cx="160" cy="135" r="14" fill="rgba(255,255,255,.45)"/><circle cx="240" cy="135" r="14" fill="rgba(255,255,255,.45)"/>
+              <line x1="275" y1="101" x2="382" y2="101" stroke="#62e6d7" stroke-width="7"/><polygon points="392,101 376,92 376,110" fill="#62e6d7"/><text x="290" y="82" fill="currentColor" font-size="13">resultant F</text>
+            </svg>
+            <p>Acceleration depends on resultant force and mass. For the same mass, a larger resultant force gives a larger acceleration. For the same force, a larger mass gives a smaller acceleration.</p>
+            <button class="btn lesson-toggle" type="button">Open exam note</button>
+            <div class="reveal"><p>Use SI units: force in N, mass in kg and acceleration in m/s². Rearrange when needed: <strong>a = F/m</strong> and <strong>m = F/a</strong>.</p></div>
+          </article>
+
+          <article class="lesson glass">
+            <div class="meta">3.5</div>
+            <h4>Momentum & impulse</h4>
+            <div class="formula">p = mv &nbsp; • &nbsp; FΔt = Δp</div>
+            <svg class="mini-svg" viewBox="0 0 420 180" role="img" aria-label="Two trolley collision diagram">
+              <rect x="55" y="82" width="90" height="46" rx="12" fill="rgba(124,156,255,.45)"/><rect x="270" y="82" width="90" height="46" rx="12" fill="rgba(98,230,215,.45)"/>
+              <circle cx="78" cy="135" r="10" fill="rgba(255,255,255,.45)"/><circle cx="123" cy="135" r="10" fill="rgba(255,255,255,.45)"/>
+              <circle cx="293" cy="135" r="10" fill="rgba(255,255,255,.45)"/><circle cx="338" cy="135" r="10" fill="rgba(255,255,255,.45)"/>
+              <line x1="150" y1="104" x2="245" y2="104" stroke="#ffcf6e" stroke-width="5"/><polygon points="254,104 239,96 239,112" fill="#ffcf6e"/>
+              <text x="90" y="70" fill="currentColor" font-size="13">moving</text><text x="290" y="70" fill="currentColor" font-size="13">stationary</text>
+            </svg>
+            <p>Momentum is a vector. Impulse equals the change in momentum. Increasing stopping time reduces average force for the same Δp.</p>
+            <button class="btn lesson-toggle" type="button">Open collision note</button>
+            <div class="reveal"><p>For objects that stick together: total momentum before = total momentum after. Rebounds require a sign convention because direction changes.</p></div>
+          </article>
+
+          <article class="lesson glass">
+            <div class="meta">3.6</div>
+            <h4>Scalars & vectors</h4>
+            <div class="formula">vector = magnitude + direction</div>
+            <svg class="mini-svg" viewBox="0 0 420 180" role="img" aria-label="Perpendicular vectors and diagonal resultant">
+              <defs><marker id="vA" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#62e6d7"/></marker></defs>
+              <line x1="80" y1="140" x2="300" y2="140" stroke="rgba(255,255,255,.40)" stroke-width="5" marker-end="url(#vA)"/>
+              <line x1="80" y1="140" x2="80" y2="35" stroke="rgba(255,255,255,.40)" stroke-width="5" marker-end="url(#vA)"/>
+              <line x1="80" y1="140" x2="300" y2="35" stroke="#7c9cff" stroke-width="6" marker-end="url(#vA)"/>
+              <text x="174" y="164" fill="currentColor" font-size="13">horizontal</text><text x="98" y="45" fill="currentColor" font-size="13">vertical</text><text x="190" y="72" fill="currentColor" font-size="13">resultant</text>
+            </svg>
+            <p>Scalars have magnitude only. Vectors have magnitude and direction. Perpendicular vectors combine using Pythagoras and trigonometry.</p>
+            <button class="btn lesson-toggle" type="button">Open examples</button>
+            <div class="reveal"><p><strong>Scalars:</strong> distance, speed, mass, time, energy. <strong>Vectors:</strong> displacement, velocity, force/weight, acceleration, momentum.</p></div>
+          </article>
+          <article class="flash-panel glass" id="topicFlashPanel">
+            <div class="flash-head"><div><div class="meta">Quick recall</div><h4 style="margin:3px 0 0">Topic Flash Cards</h4></div><div class="flash-count" id="flashCount">1 / 4</div></div>
+            <div class="flash-card" id="flashCard" role="button" tabindex="0" aria-label="Flash card. Click to reveal answer">
+              <div class="flash-side"><div class="flash-kicker" id="flashKicker">Key idea</div><div class="flash-q" id="flashQ"></div><div class="flash-a" id="flashA"></div></div>
+              <div class="flash-hint" id="flashHint">Click card to reveal answer</div>
+            </div>
+            <div class="flash-nav" id="flashDots" aria-label="Flash card navigation"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="practice">
+        <div class="section-head">
+          <div><h3 id="practiceSectionTitle">Topic practice</h3><p>Complete all eight activity types for the current topic before moving on.</p></div>
+        </div>
+        <div class="card glass" style="margin-bottom:14px">
+          <div class="input-row">
+            <select class="select" id="topicSelect" style="display:none"></select>
+            <select class="select" id="typeSelect"></select>
+            <button class="btn" id="randomQuestion" type="button" style="display:none">🎲 Random</button>
+            <button class="btn primary" id="nextQuestion" type="button">Next Type →</button>
+          </div>
+          <div id="coverageGrid" style="margin-top:16px;overflow-x:auto"></div>
+        </div>
+        <article class="card glass" id="dynamicPractice">
+          <div class="meta" id="practiceMeta"></div>
+          <h4 id="practiceTitle"></h4>
+          <div class="question" id="practiceQuestion"></div>
+          <div id="practiceBody"></div>
+          <div class="feedback" id="practiceFeedback" aria-live="polite"></div>
+        </article>
+      </section>
+
+      <section id="lab">
+        <div class="section-head">
+          <div><h3>Formula lab</h3><p>Test equations with your own numbers. The tool also shows the substitution line.</p></div>
+        </div>
+        <div class="lab">
+          <div class="card glass">
+            <div class="meta">Interactive calculator</div>
+            <h4>Choose a formula</h4>
+            <select class="select" id="formulaSelect" style="width:100%;margin:10px 0 12px">
+              <option value="fma">F = m × a</option>
+              <option value="wmg">W = m × g</option>
+              <option value="pmv">p = m × v</option>
+              <option value="impulse">Impulse = F × Δt</option>
+              <option value="resultant">Resultant = thrust − drag</option>
+            </select>
+            <div id="formulaInputs"></div>
+            <button class="btn primary" id="calcBtn" type="button" style="margin-top:10px">Calculate</button>
+          </div>
+          <div class="calc-result glass">
+            <div>
+              <div class="small" id="calcLabel">Resultant force</div>
+              <div class="big-number" id="calcValue">—</div>
+              <div id="calcWork" class="small">Enter values and press Calculate.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="exam">
+        <div class="section-head">
+          <div><h3>Exam sprint</h3><p>10 mixed questions. Your result is scored separately from practice mastery.</p></div>
+        </div>
+        <div class="exam-wrap">
+          <div class="card glass">
+            <div class="meta" id="examMeta">Question 1 of 10</div>
+            <div class="exam-q" id="examQuestion">Press Start Sprint to begin.</div>
+            <div class="option-list" id="examOptions" style="margin-top:14px"></div>
+            <div class="feedback" id="examFeedback" aria-live="polite"></div>
+            <div class="input-row" style="margin-top:12px">
+              <button class="btn primary" id="examStart" type="button">Start Sprint</button>
+              <button class="btn" id="examNext" type="button" disabled>Next</button>
+            </div>
+          </div>
+          <aside class="exam-side">
+            <div class="score-box glass"><span class="small">Sprint score</span><b id="examScore">0 / 10</b><span class="small" id="examStatus">Not started</span></div>
+            <div class="card glass">
+              <div class="meta">Exam technique</div>
+              <p class="small">• Write the equation first.<br>• Use kg, N, s, m/s.<br>• Track direction signs for rebounds.<br>• “Constant speed in a circle” still means acceleration.</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <div class="footer">Built as a self-contained HTML learning tool • progress saves in this browser</div>
+    </main>
+  </div>
+</div>
+<nav aria-label="Topic navigation">
+  <div class="topic-edge-control" id="prevTopicControl">
+    <button class="btn topic-edge-button" id="prevTopic" type="button" aria-label="Previous topic">
+      <span class="topic-button-icon" aria-hidden="true">←</span>
+    </button>
+    <span class="topic-button-label">Previous</span>
+  </div>
+  <div class="topic-edge-control" id="nextTopicControl">
+    <button class="btn primary topic-edge-button" id="nextTopic" type="button" aria-label="Next topic">
+      <span class="topic-button-icon" aria-hidden="true">→</span>
+    </button>
+    <span class="topic-button-label" id="nextTopicLabel">Next Topic</span>
+  </div>
+</nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="creator-badge"><span>DR King Wunna</span><span class="creator-badge-dot" aria-hidden="true"></span></div>
+
+<script>
+(() => {
+  const app = document.getElementById('app');
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+
+  const state = JSON.parse(localStorage.getItem('physicsGlassProgress') || '{"attempts":0,"correct":0,"streak":0,"best":0,"completed":{}}');
+  let soundOn = true;
+  const savedFontScale=Number(localStorage.getItem('physicsGlassFontScale'));
+  let fontScale=Number.isFinite(savedFontScale)&&savedFontScale>=0.8&&savedFontScale<=1.3?savedFontScale:1;
+
+  function applyFontScale(){
+    document.documentElement.style.fontSize=`${16*fontScale}px`;
+    $('#fontSizeValue').textContent=`${Math.round(fontScale*100)}%`;
+  }
+  applyFontScale();
+
+  function save(){ localStorage.setItem('physicsGlassProgress', JSON.stringify(state)); updateStats(); }
+  function updateStats(){
+    const accuracy = state.attempts ? Math.round(state.correct/state.attempts*100) : 0;
+    const completed = Object.keys(state.completed || {}).length;
+    const mastery = Math.min(100, Math.round((completed/48)*70 + accuracy*.30));
+    $('#masteryText').textContent = mastery + '%';
+    $('#masteryBar').style.width = mastery + '%';
+    $('#correctText').textContent = state.correct;
+    $('#attemptText').textContent = state.attempts;
+    $('#bestStreakText').textContent = state.best;
+    $('#streakHero').textContent = state.streak;
+    $('#scoreHero').textContent = accuracy + '%';
+  }
+  function toast(msg){
+    const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toast._t);
+    toast._t=setTimeout(()=>t.classList.remove('show'),1800);
+  }
+  function beep(ok=true){
+    if(!soundOn || !window.AudioContext) return;
+    const ac = new AudioContext(), o=ac.createOscillator(), g=ac.createGain();
+    o.connect(g); g.connect(ac.destination); o.frequency.value=ok?660:220; g.gain.value=.045;
+    o.start(); g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+.16); o.stop(ac.currentTime+.16);
+  }
+  function record(id, ok){
+    state.attempts++; if(ok){state.correct++;state.streak++;state.best=Math.max(state.best,state.streak);state.completed[id]=true;beep(true);}
+    else{state.streak=0;beep(false);}
+    save();
+  }
+  function setFeedback(el, ok, text){
+    el.className='feedback '+(ok?'good':'bad'); el.textContent=text;
+  }
+
+  $('#themeBtn').addEventListener('click',()=>{
+    const next=document.documentElement.dataset.theme==='light'?'dark':'light';
+    document.documentElement.dataset.theme=next; localStorage.setItem('physicsGlassTheme',next);
+    const lightTheme=next==='light';
+    $('#themeBtn').setAttribute('aria-checked',String(lightTheme));
+    $('#themeBtn').setAttribute('aria-label',lightTheme?'Light theme':'Dark theme');
+    $('#themeBtn .switch-caption').textContent=lightTheme?'LIGHT':'DARK';
+  });
+  document.documentElement.dataset.theme=localStorage.getItem('physicsGlassTheme')||'dark';
+  const lightTheme=document.documentElement.dataset.theme==='light';
+  $('#themeBtn').setAttribute('aria-checked',String(lightTheme));
+  $('#themeBtn').setAttribute('aria-label',lightTheme?'Light theme':'Dark theme');
+  $('#themeBtn .switch-caption').textContent=lightTheme?'LIGHT':'DARK';
+
+  $('#soundBtn').addEventListener('click',()=>{
+    soundOn=!soundOn;
+    $('#soundBtn').setAttribute('aria-checked',String(soundOn));
+    $('#soundBtn .switch-caption').textContent=soundOn?'ON':'OFF';
+  });
+  const settingsToggle=$('#settingsToggle'), settingsPanel=$('#settingsPanel');
+  function setSettingsOpen(open){
+    settingsPanel.classList.toggle('open',open);
+    settingsToggle.setAttribute('aria-expanded',String(open));
+    settingsToggle.setAttribute('aria-label',open?'Close controls':'Open controls');
+  }
+  settingsToggle.addEventListener('click',()=>setSettingsOpen(!settingsPanel.classList.contains('open')));
+  document.addEventListener('click',event=>{
+    if(!event.target.closest('.settings-wrap')) setSettingsOpen(false);
+  });
+  document.addEventListener('keydown',event=>{
+    if(event.key==='Escape') setSettingsOpen(false);
+  });
+  $('#fontDecrease').addEventListener('click',()=>{
+    fontScale=Math.max(0.8,Math.round((fontScale-0.1)*100)/100);
+    localStorage.setItem('physicsGlassFontScale',String(fontScale));
+    applyFontScale();
+  });
+  $('#fontIncrease').addEventListener('click',()=>{
+    fontScale=Math.min(1.3,Math.round((fontScale+0.1)*100)/100);
+    localStorage.setItem('physicsGlassFontScale',String(fontScale));
+    applyFontScale();
+  });
+  $('#sidebarToggle').addEventListener('click',()=>{
+    const collapsed=$('.layout').classList.toggle('sidebar-collapsed');
+    const button=$('#sidebarToggle');
+    button.setAttribute('aria-expanded',String(!collapsed));
+    button.setAttribute('aria-label',collapsed?'Show side panel':'Hide side panel');
+    button.querySelector('.sidebar-toggle-icon').textContent=collapsed?'›':'‹';
+  });
+  $('#resetBtn').addEventListener('click',()=>{
+    if(!confirm('Reset all saved practice progress?')) return;
+    localStorage.removeItem('physicsGlassProgress'); location.reload();
+  });
+
+  $$('.lesson-toggle').forEach(btn=>btn.addEventListener('click',()=>{
+    const card=btn.closest('.lesson'); card.classList.toggle('open');
+    btn.textContent=card.classList.contains('open')?'Close note':(btn.textContent.includes('5-stage')?'Open 5-stage story':btn.textContent.includes('examples')?'Open examples':'Open exam note');
+  }));
+
+  // 48-question topic × activity practice matrix
+  const topics=[
+    ['forces','3.1 Resultant Forces'],
+    ['weight','3.2 Mass, Weight & Gravity'],
+    ['motion','3.3 Falling & Circular Motion'],
+    ['fma','3.4 Force, Mass & Acceleration'],
+    ['momentum','3.5 Momentum & Impulse'],
+    ['vectors','3.6 Scalars & Vectors']
+  ];
+  const types=[['mcq','MCQ'],['fill','Fill Blank'],['matching','Matching'],['hotspot','Hotspot'],['dropdown','Drop-down'],['multi','Multiple Selection'],['tf','True / False'],['matrix','Matrix Duel']];
+  const Q={
+    forces:{
+      mcq:{q:'A 1200 kg car has 3000 N thrust and 600 N drag. What is its acceleration?',o:['0.5 m/s²','2.0 m/s²','2.5 m/s²','3.0 m/s²'],a:1,e:'Resultant force = 3000 − 600 = 2400 N, then a = F/m = 2400/1200 = 2.0 m/s².'},
+      fill:{q:'Complete: resultant force = mass × ________.',a:['acceleration'],e:'Newton’s second-law equation is F = ma.'},
+      matching:{q:'Match each force situation to its resultant.',pairs:[['10 N right + 4 N right','14 N right'],['10 N right + 4 N left','6 N right'],['7 N up + 7 N down','0 N']],e:'Same-direction forces add; opposite-direction forces subtract.'},
+      hotspot:{q:'Which arrow represents the resultant force if thrust is greater than drag?',kind:'horizontal',a:'right',e:'The resultant acts in the direction of the larger force: forward/right.'},
+      dropdown:{q:'A stationary object has balanced forces. Its acceleration is [blank].',opts:['zero','increasing','decreasing'],a:'zero',e:'Balanced forces give resultant force = 0 N, therefore acceleration = 0.'},
+      multi:{q:'Select all statements that are correct for an unbalanced resultant force.',o:[['It can change speed',1],['It can change direction',1],['Acceleration is zero',0],['Acceleration is in the resultant-force direction',1]],e:'An unbalanced resultant force causes acceleration, which can change speed or direction.'},
+      tf:{q:'If the resultant force on a moving object is zero, the object must stop.',a:false,e:'False. It can continue at constant velocity.'},
+      matrix:{q:'Choose the correct statement in each row.',rows:[['Balanced forces','acceleration = 0','speed = 0',0],['F = ma','F is resultant force','F must be a single physical force',0],['Larger mass, same F','smaller acceleration','larger acceleration',0]],e:'Zero resultant means zero acceleration; F in F=ma is resultant force; a=F/m.'}
+    },
+    weight:{
+      mcq:{q:'A 600 kg probe is on Mars where g = 3.7 N/kg. What are its mass and weight?',o:['600 kg, 2220 N','600 kg, 5880 N','2220 kg, 2220 N','162 kg, 600 N'],a:0,e:'Mass remains 600 kg. W = mg = 600 × 3.7 = 2220 N.'},
+      fill:{q:'Weight is measured in ________.',a:['newtons','newton','n'],e:'Weight is a force, so its SI unit is the newton (N).'},
+      matching:{q:'Match the quantity to the description.',pairs:[['Mass','measure of inertia'],['Weight','gravitational force'],['g','gravitational field strength']],e:'Mass describes inertia; weight is gravitational force; g is field strength.'},
+      hotspot:{q:'On an object near Earth, select the direction of weight.',kind:'vertical',a:'down',e:'Weight acts toward the centre of Earth: downward.'},
+      dropdown:{q:'When an astronaut travels from Earth to the Moon, mass [blank] while weight changes.',opts:['stays constant','decreases','increases'],a:'stays constant',e:'Mass is intrinsic; weight changes because gravitational field strength changes.'},
+      multi:{q:'Select all correct statements about mass and weight.',o:[['Mass is measured in kg',1],['Weight is measured in N',1],['Mass is a vector',0],['Weight depends on g',1]],e:'Mass is scalar in kg; weight is a vector force in N and depends on g.'},
+      tf:{q:'A 250 g object should be entered as 250 kg in W = mg.',a:false,e:'False. 250 g = 0.250 kg.'},
+      matrix:{q:'Choose the correct alternative.',rows:[['Mass','scalar','vector',0],['Weight','scalar','vector',1],['On Moon vs Earth','mass same','weight same',0]],e:'Mass is scalar and unchanged by location; weight is a vector and depends on g.'}
+    },
+    motion:{
+      mcq:{q:'A satellite moves at constant speed in a circular orbit. Why is it accelerating?',o:['Its mass changes','Its direction changes','Its speed increases','Gravity is zero'],a:1,e:'Velocity changes because its direction changes, so it is accelerating even at constant speed.'},
+      fill:{q:'At terminal velocity, air resistance is ________ to weight.',a:['equal','equal to'],e:'Equal opposite forces give zero resultant force.'},
+      matching:{q:'Match each stage to what happens.',pairs:[['Just released','drag ≈ 0'],['Terminal velocity','drag = weight'],['Parachute opens','drag > weight']],e:'These are the key force relationships in the falling/parachute sequence.'},
+      hotspot:{q:'An object is at the right side of a circular path. Select the direction of the inward resultant force.',kind:'horizontal',a:'left',e:'The resultant force for circular motion points toward the centre of the circle.'},
+      dropdown:{q:'In uniform circular motion, velocity is [blank] because its direction changes.',opts:['changing','constant','zero'],a:'changing',e:'Speed can be constant while velocity changes because velocity includes direction.'},
+      multi:{q:'Select all correct statements for Topic 3.3.',o:[['At terminal velocity drag equals weight',1],['Circular motion needs an inward resultant force',1],['Constant speed in a circle means constant velocity',0],['Opening a parachute can make drag exceed weight',1]],e:'Topic 3.3 includes both falling motion and circular motion.'},
+      tf:{q:'At terminal velocity, the object has zero velocity.',a:false,e:'False. It has constant velocity, not zero velocity.'},
+      matrix:{q:'Choose the correct alternative.',rows:[['Terminal velocity','forces balanced','forces absent',0],['Circular resultant force','toward centre','tangent',0],['Circular velocity','tangent','toward centre',0]],e:'At terminal velocity forces balance. In circular motion force is inward while instantaneous velocity is tangent.'}
+    },
+    fma:{
+      mcq:{q:'A 340 kg motorcycle accelerates from 0 to 25 m/s in 5.0 s. What resultant force acts on it?',o:['68 N','340 N','1700 N','8500 N'],a:2,e:'a = (25−0)/5 = 5.0 m/s², so F = ma = 340 × 5.0 = 1700 N.'},
+      fill:{q:'Complete the equation: resultant force = mass × ________.',a:['acceleration'],e:'The relationship is F = ma.'},
+      matching:{q:'Match each change to its effect.',pairs:[['Double F, same mass','double acceleration'],['Double mass, same F','halve acceleration'],['Zero resultant force','zero acceleration']],e:'From a = F/m, acceleration increases with force and decreases with mass.'},
+      hotspot:{q:'A trolley accelerates to the right. Select the direction of its resultant force.',kind:'horizontal',a:'right',e:'Acceleration is in the same direction as the resultant force.'},
+      dropdown:{q:'For a fixed resultant force, increasing mass makes acceleration [blank].',opts:['smaller','larger','unchanged'],a:'smaller',e:'a = F/m, so a larger mass gives a smaller acceleration.'},
+      multi:{q:'Select all correct statements about F = ma.',o:[['F means resultant force',1],['Mass is measured in kg',1],['Acceleration is measured in m/s²',1],['Balanced forces produce increasing acceleration',0]],e:'F is resultant force; use kg and m/s². Balanced forces give zero acceleration.'},
+      tf:{q:'If the same resultant force acts on two objects, the object with smaller mass has greater acceleration.',a:true,e:'True. Since a = F/m, smaller mass gives greater acceleration.'},
+      matrix:{q:'Choose the correct alternative.',rows:[['Same m, larger F','larger a','smaller a',0],['Same F, larger m','smaller a','larger a',0],['F = 0','a = 0','a must equal g',0]],e:'These follow directly from F = ma and a = F/m.'}
+    },
+    momentum:{
+      mcq:{q:'A 0.20 kg ball changes velocity from +20 m/s to −15 m/s. What is the magnitude of its impulse?',o:['1.0 N s','3.5 N s','7.0 N s','70 N s'],a:2,e:'|Δp| = m|v−u| = 0.20 × 35 = 7.0 N s.'},
+      fill:{q:'Momentum = mass × ________.',a:['velocity'],e:'p = mv.'},
+      matching:{q:'Match the expression to the quantity.',pairs:[['m × v','momentum'],['F × Δt','impulse'],['Δp / Δt','average force']],e:'These are the core momentum/impulse relationships.'},
+      hotspot:{q:'A moving trolley collides with a stationary trolley and they stick. Select the direction they move after collision.',kind:'horizontal',a:'right',e:'Total initial momentum is to the right, so the joined trolleys move right.'},
+      dropdown:{q:'For an isolated collision, total momentum before is [blank] total momentum after.',opts:['equal to','greater than','less than'],a:'equal to',e:'This is conservation of momentum.'},
+      multi:{q:'Why do airbags/crumple zones reduce injury? Select all correct statements.',o:[['They increase stopping time',1],['They reduce average force',1],['For the same event, Δp is spread over longer time',1],['They increase average force',0]],e:'F = Δp/Δt, so increasing stopping time reduces average force.'},
+      tf:{q:'Impulse has the same units as momentum.',a:true,e:'True. Both can be expressed as N s or kg m/s.'},
+      matrix:{q:'Choose the correct alternative.',rows:[['Momentum','vector','scalar',0],['Impulse','change in momentum','momentum itself',0],['Rebound calculation','direction signs matter','direction signs do not matter',0]],e:'Momentum and impulse are vector-related quantities, so rebound direction signs matter.'}
+    },
+    vectors:{
+      mcq:{q:'Which row contains only vectors?',o:['distance, speed','mass, time','velocity, force','energy, density'],a:2,e:'Velocity and force both have magnitude and direction.'},
+      fill:{q:'A vector has magnitude and ________.',a:['direction'],e:'Direction is what distinguishes vectors from scalars.'},
+      matching:{q:'Match each quantity to its type.',pairs:[['Speed','scalar'],['Velocity','vector'],['Mass','scalar'],['Momentum','vector']],e:'Speed and mass are scalars; velocity and momentum are vectors.'},
+      hotspot:{q:'Two perpendicular vectors point right and up. Select the direction of their resultant.',kind:'diagonal',a:'upright',e:'The resultant lies diagonally between the two component directions.'},
+      dropdown:{q:'For perpendicular components A and B, resultant magnitude is [blank].',opts:['√(A² + B²)','A + B always','A − B'],a:'√(A² + B²)',e:'Perpendicular components form a right triangle, so use Pythagoras.'},
+      multi:{q:'Select all vector quantities.',o:[['Displacement',1],['Acceleration',1],['Momentum',1],['Temperature',0]],e:'Displacement, acceleration and momentum require direction; temperature does not.'},
+      tf:{q:'Speed and velocity mean exactly the same thing in vector classification.',a:false,e:'False. Speed is scalar; velocity is vector.'},
+      matrix:{q:'Choose the correct classification.',rows:[['Distance','scalar','vector',0],['Force','scalar','vector',1],['Energy','scalar','vector',0],['Displacement','scalar','vector',1]],e:'Distance and energy are scalars; force and displacement are vectors.'}
+    }
+  };
+
+  const flashcards={
+    forces:[
+      ['Definition','What is a resultant force?','The single force that has the same effect as all the forces acting together.'],
+      ['Direction','Forces act in opposite directions. What do you do?','Subtract the smaller force from the larger force. The resultant acts toward the larger force.'],
+      ['Formula','What equation links resultant force, mass and acceleration?','F₍res₎ = m × a'],
+      ['Balanced forces','What happens when the resultant force is zero?','Acceleration is zero. The object stays at rest or continues at constant velocity.']
+    ],
+    weight:[
+      ['Formula','How do you calculate weight?','W = m × g, where weight is in N, mass in kg and g in N/kg.'],
+      ['Mass vs weight','Which stays constant when an object moves to another planet: mass or weight?','Mass stays constant. Weight changes because gravitational field strength changes.'],
+      ['Units','What are the units of mass, weight and g?','Mass: kg • Weight: N • gravitational field strength: N/kg.'],
+      ['Exam trap','A mass is given in grams. What should you do before using W = mg?','Convert grams to kilograms by dividing by 1000.']
+    ],
+    motion:[
+      ['At release','Why is air resistance almost zero just after an object is released?','Its speed is almost zero, so drag is initially very small.'],
+      ['Terminal velocity','What two forces are equal at terminal velocity?','Weight downward and drag upward.'],
+      ['Acceleration','Why does acceleration decrease as a falling object speeds up?','Drag increases, so the downward resultant force becomes smaller.'],
+      ['Parachute','What happens immediately after a parachute opens?','Drag becomes greater than weight, producing an upward resultant force and causing the parachutist to decelerate.']
+    ],
+    fma:[
+      ['Equation','What equation links resultant force, mass and acceleration?','F = m × a.'],
+      ['Rearrange','How do you calculate acceleration?','a = F ÷ m.'],
+      ['Mass effect','For the same force, what happens if mass increases?','Acceleration decreases.'],
+      ['Force effect','For the same mass, what happens if resultant force increases?','Acceleration increases.']
+    ],
+    momentum:[
+      ['Formula','What is the equation for momentum?','p = m × v. Momentum is measured in kg m/s.'],
+      ['Impulse','What does impulse equal?','Impulse = FΔt = change in momentum, Δp.'],
+      ['Conservation','State the conservation of momentum rule.','In an isolated system, total momentum before an interaction equals total momentum after.'],
+      ['Safety','Why do airbags and crumple zones reduce force?','They increase the stopping time. For the same change in momentum, F = Δp/Δt becomes smaller.']
+    ],
+    vectors:[
+      ['Definition','What is the difference between a scalar and a vector?','A scalar has magnitude only. A vector has magnitude and direction.'],
+      ['Examples','Give two scalar and two vector examples.','Scalars: distance, speed. Vectors: displacement, velocity.'],
+      ['Resultant','How do you find the magnitude of two perpendicular vectors A and B?','R = √(A² + B²).'],
+      ['Direction','Which trigonometric ratio is commonly used to find the direction of a resultant vector?','tan θ = opposite / adjacent.']
+    ]
+  };
+  const flashIndexByTopic={forces:0,weight:0,motion:0,fma:0,momentum:0,vectors:0};
+  function renderFlash(){
+    const cards=flashcards[currentTopic]||[]; if(!cards.length)return;
+    let flashIndex=flashIndexByTopic[currentTopic] ?? 0;
+    flashIndex=Math.max(0,Math.min(flashIndex,cards.length-1));
+    flashIndexByTopic[currentTopic]=flashIndex;
+    const [k,q,a]=cards[flashIndex], card=$('#flashCard');
+    $('#flashKicker').textContent=k; $('#flashQ').textContent=q; $('#flashA').textContent=a;
+    $('#flashCount').textContent=`${flashIndex+1} / ${cards.length}`; card.classList.remove('revealed'); $('#flashHint').textContent='Click card to reveal answer';
+    $('#flashDots').innerHTML=cards.map((_,i)=>`<button class="flash-dot ${i===flashIndex?'active':''}" data-i="${i}" aria-label="Flash card ${i+1}"></button>`).join('');
+    $$('#flashDots .flash-dot').forEach(d=>d.onclick=()=>{flashIndexByTopic[currentTopic]=Number(d.dataset.i);renderFlash();});
+  }
+  function toggleFlash(){
+    const card=$('#flashCard'),revealed=card.classList.toggle('revealed');
+    $('#flashHint').textContent=revealed?'Click card to show question':'Click card to reveal answer';
+    card.setAttribute('aria-label',revealed?'Flash card answer. Click to show question':'Flash card question. Click to reveal answer');
+  }
+  $('#flashCard').addEventListener('click',toggleFlash);
+  $('#flashCard').addEventListener('keydown',event=>{
+    if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleFlash();}
+  });
+  let currentTopic='forces',currentType='mcq';
+  const topicSelect=$('#topicSelect'),typeSelect=$('#typeSelect');
+  topicSelect.innerHTML=topics.map(([v,n])=>`<option value="${v}">${n}</option>`).join('');
+  typeSelect.innerHTML=types.map(([v,n])=>`<option value="${v}">${n}</option>`).join('');
+  // One-topic-at-a-time learning flow
+  const lessonCards=$$('#learn .lesson');
+  const lessonTopicMap=['forces','weight','motion','motion','fma','momentum','vectors'];
+  lessonCards.forEach((card,i)=>card.dataset.topic=lessonTopicMap[i]);
+  function topicIndex(){return topics.findIndex(x=>x[0]===currentTopic)}
+  function showCurrentTopic(scroll=false){
+    const i=topicIndex(), topic=topics[i];
+    lessonCards.forEach(card=>card.classList.toggle('topic-hidden',card.dataset.topic!==currentTopic));
+    topicSelect.value=currentTopic;
+    $('#activeTopicTitle').textContent=topic[1];
+    $('#activeTopicSub').textContent=`Topic ${i+1} of ${topics.length} • Teaching + 8 practice types`;
+    $('#practiceSectionTitle').textContent=`${topic[1]} — Practice`;
+    $('#topicDots').innerHTML=topics.map((t,j)=>`<button class="topic-dot ${j===i?'active':''}" data-i="${j}" title="${t[1]}"></button>`).join('');
+    $$('#topicDots .topic-dot').forEach(b=>b.onclick=()=>goTopic(Number(b.dataset.i),true));
+    $('#prevTopic').disabled=i===0;
+    const isLastTopic=i===topics.length-1;
+    $('#nextTopic').setAttribute('aria-label',isLastTopic?'Finish chapter':'Next topic');
+    $('#nextTopicLabel').textContent=isLastTopic?'Finish Chapter':'Next Topic';
+    $('#nextTopic .topic-button-icon').textContent=isLastTopic?'✓':'→';
+    renderCoverage(); renderQuestion(); renderFlash();
+    if(scroll) document.querySelector('#learn').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  function goTopic(i,scroll=true){
+    if(i<0||i>=topics.length)return; currentTopic=topics[i][0]; currentType='mcq'; typeSelect.value=currentType; showCurrentTopic(scroll);
+  }
+  $('#prevTopic').onclick=()=>goTopic(topicIndex()-1,true);
+  $('#nextTopic').onclick=()=>{const i=topicIndex(); if(i<topics.length-1)goTopic(i+1,true); else document.querySelector('#exam').scrollIntoView({behavior:'smooth'});};
+  function qid(){return `q_${currentTopic}_${currentType}`}
+  function mark(ok,explanation){setFeedback($('#practiceFeedback'),ok,(ok?'Correct. ':'Not quite. ')+explanation);record(qid(),ok);renderCoverage();}
+  function renderCoverage(){
+    const [tv,tn]=topics.find(x=>x[0]===currentTopic);
+    let h='<div class="small" style="margin-bottom:9px"><strong>Current topic coverage</strong> — complete all 8 types</div><table class="matrix"><thead><tr>'+types.map(x=>`<th>${x[1]}</th>`).join('')+'</tr></thead><tbody><tr>';
+    types.forEach(([yv,yn])=>{const done=state.completed[`q_${tv}_${yv}`];h+=`<td><button class="btn coverage-cell" data-y="${yv}" style="padding:7px 9px;min-height:34px">${done?'✓':'○'}</button></td>`});
+    h+='</tr></tbody></table>';$('#coverageGrid').innerHTML=h;$$('.coverage-cell').forEach(b=>b.onclick=()=>{currentType=b.dataset.y;typeSelect.value=currentType;renderQuestion();});
+  }
+  function hotspotHTML(kind){
+    if(kind==='vertical')return `<div class="hotspot-wrap"><svg class="hotspot-svg" viewBox="0 0 500 250"><circle cx="250" cy="125" r="34" fill="rgba(255,255,255,.28)"/></svg><button class="hotspot hs-up dyn-hot" data-v="up">↑</button><button class="hotspot hs-down dyn-hot" data-v="down">↓</button></div>`;
+    if(kind==='diagonal')return `<div class="hotspot-wrap"><svg class="hotspot-svg" viewBox="0 0 500 250"><circle cx="250" cy="125" r="28" fill="rgba(255,255,255,.28)"/></svg><button class="hotspot dyn-hot" data-v="upright" style="right:18%;top:12%">↗</button><button class="hotspot dyn-hot" data-v="right" style="right:10%;top:43%">→</button><button class="hotspot dyn-hot" data-v="up" style="left:46%;top:8%">↑</button></div>`;
+    return `<div class="hotspot-wrap"><svg class="hotspot-svg" viewBox="0 0 500 250"><circle cx="250" cy="125" r="34" fill="rgba(255,255,255,.28)"/></svg><button class="hotspot dyn-hot" data-v="left" style="left:12%;top:43%">←</button><button class="hotspot dyn-hot" data-v="right" style="right:12%;top:43%">→</button></div>`;
+  }
+  function renderQuestion(){
+    const q=Q[currentTopic][currentType];$('#practiceMeta').textContent=`${topics.find(x=>x[0]===currentTopic)[1]} • ${types.find(x=>x[0]===currentType)[1]}`;$('#practiceTitle').textContent=types.find(x=>x[0]===currentType)[1];$('#practiceQuestion').textContent=q.q;$('#practiceFeedback').textContent='';$('#practiceFeedback').className='feedback';const b=$('#practiceBody');
+    if(currentType==='mcq'){b.innerHTML=`<div class="option-list">${q.o.map((x,i)=>`<button class="option dyn-mcq" data-i="${i}">${String.fromCharCode(65+i)}. ${x}</button>`).join('')}</div>`;$$('.dyn-mcq').forEach(x=>x.onclick=()=>{const ok=+x.dataset.i===q.a;x.classList.add(ok?'correct':'wrong');$$('.dyn-mcq')[q.a].classList.add('correct');mark(ok,q.e);});}
+    else if(currentType==='fill'){b.innerHTML=`<div class="input-row"><input class="text-input" id="dynFill" placeholder="Type your answer"><button class="btn primary" id="dynCheck">Check</button></div>`;$('#dynCheck').onclick=()=>{const v=$('#dynFill').value.trim().toLowerCase();if(!v)return toast('Type an answer first.');mark(q.a.includes(v),q.e);};}
+    else if(currentType==='matching'){let pairs=q.pairs.map((p,i)=>[...p,i]);let rights=[...pairs].sort(()=>Math.random()-.5);b.innerHTML=`<div class="match-board"><div class="match-col">${pairs.map(p=>`<button class="match-btn ml" data-i="${p[2]}">${p[0]}</button>`).join('')}</div><div class="match-col">${rights.map(p=>`<button class="match-btn mr" data-i="${p[2]}">${p[1]}</button>`).join('')}</div></div>`;let pick=null,done=0;$$('.ml').forEach(x=>x.onclick=()=>{if(x.classList.contains('done'))return;$$('.ml').forEach(y=>y.classList.remove('active'));x.classList.add('active');pick=x;});$$('.mr').forEach(x=>x.onclick=()=>{if(!pick)return toast('Choose a left item first.');if(x.dataset.i===pick.dataset.i){x.classList.add('done');pick.classList.add('done');x.classList.remove('active');pick.classList.remove('active');pick=null;done++;beep(true);if(done===pairs.length)mark(true,q.e);}else{beep(false);setFeedback($('#practiceFeedback'),false,'That pair does not match. Try again.');}});}
+    else if(currentType==='hotspot'){b.innerHTML=hotspotHTML(q.kind);$$('.dyn-hot').forEach(x=>x.onclick=()=>mark(x.dataset.v===q.a,q.e));}
+    else if(currentType==='dropdown'){b.innerHTML=`<div class="input-row"><select class="select" id="dynDrop"><option value="">Choose…</option>${q.opts.map(x=>`<option>${x}</option>`).join('')}</select><button class="btn primary" id="dynCheck">Check</button></div>`;$('#dynCheck').onclick=()=>{if(!$('#dynDrop').value)return toast('Choose an answer first.');mark($('#dynDrop').value===q.a,q.e);};}
+    else if(currentType==='multi'){b.innerHTML=q.o.map((x,i)=>`<label class="checkline"><input type="checkbox" class="dynMulti" data-i="${i}"><span>${x[0]}</span></label>`).join('')+`<button class="btn primary" id="dynCheck">Check selection</button>`;$('#dynCheck').onclick=()=>{const ok=q.o.every((x,i)=>$$('.dynMulti')[i].checked===!!x[1]);mark(ok,q.e);};}
+    else if(currentType==='tf'){b.innerHTML=`<div class="input-row"><button class="option dynTF" data-v="true">True</button><button class="option dynTF" data-v="false">False</button></div>`;$$('.dynTF').forEach(x=>x.onclick=()=>mark((x.dataset.v==='true')===q.a,q.e));}
+    else if(currentType==='matrix'){b.innerHTML=`<div style="overflow-x:auto"><table class="matrix"><thead><tr><th>Prompt</th><th>A</th><th>B</th></tr></thead><tbody>${q.rows.map((r,i)=>`<tr><td>${r[0]}</td><td><label><input type="radio" name="dm${i}" value="0"> ${r[1]}</label></td><td><label><input type="radio" name="dm${i}" value="1"> ${r[2]}</label></td></tr>`).join('')}</tbody></table></div><button class="btn primary" id="dynCheck">Check grid</button>`;$('#dynCheck').onclick=()=>{let all=true,ok=true;q.rows.forEach((r,i)=>{const c=document.querySelector(`input[name="dm${i}"]:checked`);if(!c)all=false;else if(+c.value!==r[3])ok=false;});if(!all)return toast('Answer every row first.');mark(ok,q.e);};}
+  }
+  topicSelect.onchange=()=>{currentTopic=topicSelect.value;currentType='mcq';typeSelect.value=currentType;showCurrentTopic();};typeSelect.onchange=()=>{currentType=typeSelect.value;renderQuestion();};
+  $('#randomQuestion').onclick=()=>{currentType=types[Math.floor(Math.random()*types.length)][0];typeSelect.value=currentType;renderQuestion();};
+  $('#nextQuestion').onclick=()=>{let yi=types.findIndex(x=>x[0]===currentType);yi++;if(yi>=types.length){const ti=topicIndex(); if(ti<topics.length-1){goTopic(ti+1,true);return;} yi=0;}currentType=types[yi][0];typeSelect.value=currentType;renderQuestion();};
+  renderCoverage();renderQuestion();
+
+  // Formula lab
+  const formulaConfig={
+    fma:{label:'Resultant force',unit:'N',fields:[['m','Mass (kg)',5],['a','Acceleration (m/s²)',3]],calc:v=>v.m*v.a,work:v=>`F = m × a = ${v.m} × ${v.a}`},
+    wmg:{label:'Weight',unit:'N',fields:[['m','Mass (kg)',60],['g','g (N/kg)',9.8]],calc:v=>v.m*v.g,work:v=>`W = m × g = ${v.m} × ${v.g}`},
+    pmv:{label:'Momentum',unit:'kg m/s',fields:[['m','Mass (kg)',2],['v','Velocity (m/s)',6]],calc:v=>v.m*v.v,work:v=>`p = m × v = ${v.m} × ${v.v}`},
+    impulse:{label:'Impulse',unit:'N s',fields:[['f','Force (N)',24],['t','Time (s)',0.12]],calc:v=>v.f*v.t,work:v=>`I = F × Δt = ${v.f} × ${v.t}`},
+    resultant:{label:'Resultant force',unit:'N',fields:[['thrust','Thrust (N)',3000],['drag','Drag (N)',600]],calc:v=>v.thrust-v.drag,work:v=>`Fᵣ = thrust − drag = ${v.thrust} − ${v.drag}`}
+  };
+  function renderFormula(){
+    const cfg=formulaConfig[$('#formulaSelect').value];
+    $('#formulaInputs').innerHTML=cfg.fields.map(([id,label,val])=>`<label class="small" style="display:block;margin:8px 0 4px">${label}</label><input class="text-input calc-in" data-id="${id}" type="number" step="any" value="${val}" style="width:100%">`).join('');
+    $('#calcLabel').textContent=cfg.label;$('#calcValue').textContent='—';$('#calcWork').textContent='Enter values and press Calculate.';
+  }
+  $('#formulaSelect').addEventListener('change',renderFormula);
+  $('#calcBtn').addEventListener('click',()=>{
+    const cfg=formulaConfig[$('#formulaSelect').value],vals={};
+    for(const el of $$('.calc-in')){const n=Number(el.value);if(!Number.isFinite(n)){toast('Enter valid numbers.');return;}vals[el.dataset.id]=n;}
+    const result=cfg.calc(vals);$('#calcValue').textContent=`${Math.round(result*1000)/1000} ${cfg.unit}`;$('#calcWork').textContent=cfg.work(vals)+` = ${Math.round(result*1000)/1000} ${cfg.unit}`;
+  });
+  renderFormula();
+
+  // Exam sprint
+  const examBank=[
+    {q:'A 600 kg probe is on Mars where g = 3.7 N/kg. What is its weight?',o:['600 N','1620 N','2220 N','5880 N'],a:2,e:'W = mg = 600 × 3.7 = 2220 N.'},
+    {q:'As a falling object speeds up through air, what happens to its acceleration before terminal velocity?',o:['It increases','It decreases','It stays exactly 9.8 m/s²','It becomes zero immediately'],a:1,e:'Drag increases, so the downward resultant force becomes smaller.'},
+    {q:'Which is a vector quantity?',o:['Mass','Time','Speed','Velocity'],a:3,e:'Velocity has magnitude and direction.'},
+    {q:'A 340 kg motorcycle accelerates at 5.0 m/s². What resultant force acts?',o:['68 N','340 N','1700 N','6800 N'],a:2,e:'F = ma = 340 × 5 = 1700 N.'},
+    {q:'At terminal velocity, which statement is correct?',o:['Weight > drag','Drag > weight','Drag = weight','There is no weight'],a:2,e:'Equal opposite forces give zero resultant force.'},
+    {q:'A ball of mass 0.20 kg changes velocity from +20 m/s to −15 m/s. What is the magnitude of its change in momentum?',o:['1 N s','3 N s','7 N s','35 N s'],a:2,e:'|Δp| = m|v−u| = 0.20 × 35 = 7 N s.'},
+    {q:'A satellite moves in a circular orbit at constant speed. Why is it accelerating?',o:['Its mass changes','Its direction changes','Its speed must increase','Gravity is zero'],a:1,e:'Velocity changes because direction changes.'},
+    {q:'What does moving the hands backwards while catching a ball do?',o:['Decreases stopping time','Increases stopping time','Increases Δp','Makes momentum zero before impact'],a:1,e:'A longer stopping time reduces average force for the same Δp.'},
+    {q:'Two perpendicular velocity components are 0.54 m/s and 0.72 m/s. What is the resultant speed?',o:['0.18 m/s','0.63 m/s','0.90 m/s','1.26 m/s'],a:2,e:'Pythagoras: √(0.54²+0.72²)=0.90 m/s.'},
+    {q:'Which statement about mass and weight is correct?',o:['Mass changes with g','Weight is measured in kg','Mass is scalar and weight is vector','Weight is constant everywhere'],a:2,e:'Mass is scalar; weight is a force and therefore a vector.'},
+    {q:'Impulse is equal to…',o:['force ÷ time','change in momentum','momentum ÷ mass','mass × acceleration'],a:1,e:'Impulse = FΔt = Δp.'},
+    {q:'For the same mass, doubling the resultant force does what to acceleration?',o:['Halves it','Leaves it unchanged','Doubles it','Quadruples it'],a:2,e:'From F = ma, a = F/m.'}
+  ];
+  let sprint=[],examIndex=0,examPoints=0,examLocked=false;
+  function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+  function showExam(){
+    const item=sprint[examIndex]; examLocked=false;$('#examNext').disabled=true;$('#examFeedback').textContent='';$('#examFeedback').className='feedback';
+    $('#examMeta').textContent=`Question ${examIndex+1} of ${sprint.length}`;
+    $('#examQuestion').textContent=item.q;
+    $('#examOptions').innerHTML=item.o.map((x,i)=>`<button class="option exam-opt" data-i="${i}">${String.fromCharCode(65+i)}. ${x}</button>`).join('');
+    $$('.exam-opt').forEach(b=>b.addEventListener('click',()=>answerExam(b)));
+  }
+  function answerExam(btn){
+    if(examLocked)return;examLocked=true;
+    const item=sprint[examIndex],idx=Number(btn.dataset.i),ok=idx===item.a;if(ok)examPoints++;
+    btn.classList.add(ok?'correct':'wrong');$$('.exam-opt')[item.a].classList.add('correct');
+    setFeedback($('#examFeedback'),ok,(ok?'Correct. ':'Not quite. ')+item.e);
+    $('#examScore').textContent=`${examPoints} / 10`;$('#examNext').disabled=false;
+  }
+  $('#examStart').addEventListener('click',()=>{
+    sprint=shuffle(examBank).slice(0,10);examIndex=0;examPoints=0;$('#examScore').textContent='0 / 10';$('#examStatus').textContent='In progress';$('#examStart').textContent='Restart Sprint';showExam();
+  });
+  $('#examNext').addEventListener('click',()=>{
+    if(!sprint.length)return;
+    if(examIndex<sprint.length-1){examIndex++;showExam();}
+    else{
+      $('#examStatus').textContent=`Finished • ${examPoints*10}%`;
+      $('#examQuestion').textContent=examPoints>=8?'Strong exam readiness. Review any explanations you missed.':examPoints>=6?'Good base. Revisit the teaching cards for the topics you missed.':'Rebuild the core formulas and force ideas, then try again.';
+      $('#examOptions').innerHTML='';$('#examFeedback').textContent='';$('#examNext').disabled=true;toast('Sprint complete');
+    }
+  });
+
+  showCurrentTopic(false);
+  updateStats();
+})();
+</script>
+</body>
+</html>

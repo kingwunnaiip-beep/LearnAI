@@ -1184,13 +1184,18 @@ function renderFeedbackPanel() {
   const selectedMath = q.selected.map(id => q.pool.find(step => step.id === id)?.math || '');
   const isCorrect = JSON.stringify(selectedMath) === JSON.stringify(q.answer);
 
-  if (!q.hasChecked) {
+  if (!q.hasChecked && !(modeState.mode === 'study' && q.solutionShown)) {
     feedbackPanel.classList.add('hidden');
     feedbackPanel.innerHTML = '';
     return;
   }
 
   if (modeState.mode === 'study') {
+    const feedbackMarkup = q.hasChecked ? `
+      <div class="feedback-title">${isCorrect ? 'Correct sequence' : 'Approximate order'}</div>
+      <div class="feedback-text">${getQuestionExplanation(q)}</div>
+      <div class="feedback-hint"><strong>Hint:</strong> ${getQuestionHint(q)}</div>
+    ` : '';
     const solutionMarkup = `
       <div class="study-solution">
         <strong>Worked solution:</strong>
@@ -1198,12 +1203,7 @@ function renderFeedbackPanel() {
       </div>
     `;
 
-    feedbackPanel.innerHTML = `
-      <div class="feedback-title">${isCorrect ? 'Correct sequence' : 'Approximate order'}</div>
-      <div class="feedback-text">${getQuestionExplanation(q)}</div>
-      <div class="feedback-hint"><strong>Hint:</strong> ${getQuestionHint(q)}</div>
-      ${solutionMarkup}
-    `;
+    feedbackPanel.innerHTML = `${feedbackMarkup}${solutionMarkup}`;
     feedbackPanel.classList.remove('hidden');
     return;
   }
@@ -1579,6 +1579,7 @@ document.getElementById('hintBtn').addEventListener('click', () => {
 });
 document.getElementById('showSolutionBtn').addEventListener('click', () => {
   modeState.mode = 'study';
+  questions[currentIndex].solutionShown = true;
   updateModeButtons();
   renderQuestion();
 });
