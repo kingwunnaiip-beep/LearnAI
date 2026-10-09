@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chapter 18 Organisms and Their Environment</title>
+<style>
+:root{
+  --bg1:#0b1020;--bg2:#121a33;--text:#eef3ff;--muted:#b9c4ec;
+  --aqua:#76f2e2;--cyan:#54b8ff;--violet:#a77cff;--pink:#ff7fd1;
+  --gold:#ffd77a;--green:#7dffb1;--panel:rgba(255,255,255,.08);
+  --panel2:rgba(255,255,255,.12);--shadow:0 20px 50px rgba(0,0,0,.35);
+  --radius:24px;--max:1180px
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,sans-serif;color:var(--text);
+background:radial-gradient(circle at 15% 20%,rgba(84,184,255,.18),transparent 28%),
+radial-gradient(circle at 85% 15%,rgba(167,124,255,.18),transparent 28%),
+radial-gradient(circle at 50% 80%,rgba(118,242,226,.15),transparent 32%),
+linear-gradient(160deg,var(--bg1),var(--bg2));overflow-x:hidden;transition:.28s ease}
+body::before,body::after{content:"";position:fixed;width:34rem;height:34rem;border-radius:50%;
+filter:blur(55px);z-index:-2;opacity:.25;animation:drift 16s ease-in-out infinite alternate}
+body::before{top:-10rem;right:-10rem;background:linear-gradient(135deg,var(--violet),var(--cyan))}
+body::after{bottom:-12rem;left:-12rem;background:linear-gradient(135deg,var(--aqua),var(--pink));animation-duration:22s}
+@keyframes drift{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-30px,25px,0) scale(1.08)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes floatAlt{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+@keyframes pulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(118,242,226,.18)}
+50%{transform:scale(1.06);box-shadow:0 0 0 14px rgba(118,242,226,0)}}
+.wrap{width:min(var(--max),calc(100% - 32px));margin:0 auto}
+.topbar{position:sticky;top:0;z-index:50;backdrop-filter:blur(18px);background:rgba(7,12,27,.58);
+border-bottom:1px solid rgba(255,255,255,.08);--topbar-fg:var(--text);--topbar-link:var(--muted)}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 0}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.02em;white-space:nowrap;color:var(--topbar-fg)}
+.nav-links{display:flex;gap:10px;flex-wrap:wrap}
+.nav-links a,.badge{color:var(--topbar-link);text-decoration:none;padding:10px 14px;border-radius:999px;
+background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);transition:.32s ease;font-size:.95rem}
+.nav-links a:hover,.badge:hover{color:#fff;background:rgba(255,255,255,.12)}
+.hero{padding:82px 0 34px;min-height:92vh;display:grid;align-items:center}
+.hero-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:28px;align-items:center}
+.hero-copy,.hero-visual,.panel,.timeline,.q-card,.formula-card,.diagram-card,.foot{animation:fadeUp .9s ease both}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;
+background:rgba(255,255,255,.06);color:var(--aqua);font-weight:700;letter-spacing:.03em;margin-bottom:18px}
+h1{margin:0;font-size:clamp(2.8rem,5vw,5.2rem);line-height:.95;letter-spacing:-.04em}
+.gradient-text{background:linear-gradient(135deg,#fff,#bde9ff 35%,#97fff1 70%,#ffd0f4 100%);
+-webkit-background-clip:text;background-clip:text;color:transparent}
+.subtitle{margin:20px 0 24px;font-size:1.1rem;line-height:1.75;color:var(--muted);max-width:64ch}
+.nameplate{display:inline-flex;gap:10px;align-items:center;padding:12px 16px;border-radius:16px;
+background:linear-gradient(135deg,rgba(255,255,255,.11),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.12);
+box-shadow:var(--shadow);font-weight:700;color:#fff;margin-bottom:24px}
+.nameplate-status{width:12px;height:12px;border-radius:50%;background:var(--cyan);animation:pulse 3s infinite}
+.pinned-nameplate{position:fixed;top:0;left:16px;z-index:49;opacity:0;visibility:hidden;pointer-events:none;
+transform:translateY(-8px);transition:.18s ease;margin:0}.pinned-nameplate.is-visible{opacity:1;visibility:visible;
+transform:translateY(0);pointer-events:auto}body.nameplate-pinned .hero .nameplate{opacity:0;visibility:hidden}
+.interactive{cursor:pointer;transition:transform .32s ease,box-shadow .32s ease,border-color .32s ease,background .32s ease;
+transform-origin:center;will-change:transform}.interactive:hover{transform:translateY(-10px) scale(1.03);
+box-shadow:0 22px 60px rgba(0,0,0,.38),0 0 0 1px rgba(118,242,226,.18),0 0 28px rgba(118,242,226,.18);
+border-color:rgba(118,242,226,.34)}.interactive.is-active{z-index:60;transform:translateY(-8px) scale(1.04);
+box-shadow:0 30px 90px rgba(0,0,0,.46),0 0 0 1px rgba(255,255,255,.14),0 0 56px rgba(118,242,226,.2)}
+.hero-stats,.grid-2,.grid-3,.timeline,.checklist{display:grid;gap:18px}
+.hero-stats{grid-template-columns:repeat(3,1fr);gap:14px}.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}.timeline{grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+.stat,.panel,.formula-card,.q-card,.diagram-card,.timeline-card,.foot{
+background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.05));
+border:1px solid rgba(255,255,255,.1);border-radius:var(--radius);box-shadow:var(--shadow)}
+.stat,.panel,.formula-card,.q-card,.diagram-card{padding:22px}
+.panel h3,.formula-card h3,.q-card h3,.diagram-card h3,.timeline-card h3{margin:0 0 12px;font-size:1.2rem}
+.panel p,.formula-card p,.q-card p,.diagram-card p,.timeline-card p,.panel li,ol,li{color:var(--muted);line-height:1.7}
+.stat strong{display:block;color:#fff;font-size:1.5rem;margin-bottom:4px}
+.hero-visual{position:relative;min-height:560px;display:grid;place-items:center}
+.hero-constellation{position:relative;width:min(640px,100%);min-height:690px;display:grid;place-items:center;padding:22px 0}
+.constellation-glow,.constellation-glow-two{position:absolute;border-radius:50%;filter:blur(26px);pointer-events:none}
+.constellation-glow{width:310px;height:310px;background:radial-gradient(circle,rgba(118,242,226,.24),transparent 68%);top:17%;left:16%}
+.constellation-glow-two{width:290px;height:290px;background:radial-gradient(circle,rgba(167,124,255,.2),transparent 70%);right:10%;bottom:11%}
+.hero-feature-card{position:relative;z-index:5;width:min(360px,76%);padding:24px;border-radius:32px;
+background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.07));border:1px solid rgba(255,255,255,.16);
+box-shadow:0 28px 70px rgba(0,0,0,.28);backdrop-filter:blur(18px)}
+.hero-feature-icon{width:150px;height:150px;margin:0 auto 16px;border-radius:30px;display:grid;place-items:center;
+background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.16)}
+.hero-feature-icon svg{width:100%;height:100%}.hero-feature-card h3{margin:0 0 10px;font-size:clamp(1.7rem,3vw,2.25rem);text-align:center}
+.hero-feature-card p{margin:0 0 16px;color:var(--muted);line-height:1.7;text-align:center}
+.hero-feature-flow{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}.flow-step{padding:8px 12px;border-radius:999px;
+background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);font-weight:700}
+.float-panel{position:absolute;z-index:4;max-width:214px;min-height:82px;padding:18px;border-radius:24px;
+background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.08));border:1px solid rgba(255,255,255,.16);
+box-shadow:0 20px 48px rgba(0,0,0,.24);backdrop-filter:blur(18px);display:flex;align-items:center;justify-content:center;
+text-align:center}.float-panel strong{display:block;font-size:1rem;line-height:1.2;color:#f8fbff}
+.fp1{top:2%;left:0;animation:floatY 6s ease-in-out infinite}.fp2{top:4%;left:35%;animation:floatAlt 6.4s ease-in-out infinite}
+.fp3{top:11%;right:0;animation:floatY 7s ease-in-out infinite}.fp4{top:35%;left:-3%;animation:floatAlt 6.7s ease-in-out infinite}
+.fp5{top:37%;right:-4%;animation:floatY 6.2s ease-in-out infinite}.fp6{bottom:18%;left:1%;animation:floatAlt 7.2s ease-in-out infinite}
+.fp7{bottom:18%;right:1%;animation:floatY 6.5s ease-in-out infinite}.fp8{bottom:2%;left:31%;animation:floatAlt 7.4s ease-in-out infinite}
+.tag{display:inline-flex;padding:8px 12px;border-radius:999px;font-size:.82rem;font-weight:800;background:rgba(118,242,226,.14);color:var(--aqua);margin-bottom:12px}
+section{padding:28px 0}.section-head{margin-bottom:22px}.section-head h2{font-size:clamp(1.8rem,3.4vw,3rem);margin:0 0 10px}
+.section-head p{margin:0;color:var(--muted);line-height:1.8;max-width:74ch}
+.equation,.formula{margin-top:16px;padding:14px 16px;border-radius:18px;font-weight:800;background:rgba(9,13,26,.5);color:#fff;
+border:1px solid rgba(255,255,255,.08);overflow-wrap:anywhere}
+.checklist{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:18px}.check{padding:15px 16px;border-radius:16px;
+background:rgba(255,255,255,.06);color:#fff;border:1px solid rgba(255,255,255,.08)}
+.answer{margin-top:14px;padding:14px 16px;border-radius:18px;background:rgba(118,242,226,.08);
+border:1px solid rgba(118,242,226,.18);color:#fff;line-height:1.7}
+.accent-aqua{color:var(--aqua)}.accent-cyan{color:var(--cyan)}.accent-gold{color:var(--gold)}.accent-pink{color:var(--pink)}.accent-violet{color:var(--violet)}
+.mini-table{width:100%;border-collapse:collapse;margin-top:14px;font-size:.96rem}.mini-table th,.mini-table td{padding:12px 14px;
+border-bottom:1px solid rgba(255,255,255,.08);text-align:left;background:rgba(255,255,255,.03)}.mini-table th{color:#fff;background:rgba(255,255,255,.08)}
+.svg-wrap{margin-top:10px;padding:10px;border-radius:20px;background:rgba(7,12,27,.4);border:1px solid rgba(255,255,255,.08)}
+.svg-wrap svg{width:100%;height:auto;display:block}.foot{margin:34px auto 50px;width:min(var(--max),calc(100% - 32px));padding:22px 24px;color:var(--muted);text-align:center}
+.expand-detail{display:none;margin-top:18px;padding:18px 20px;border-radius:22px;background:rgba(7,12,27,.42);
+border:1px solid rgba(255,255,255,.08);box-shadow:0 14px 34px rgba(0,0,0,.18)}
+.detail-kicker{display:inline-flex;padding:8px 12px;border-radius:999px;background:rgba(118,242,226,.10);color:var(--aqua);font-weight:800;font-size:.82rem;margin-bottom:12px}
+.expand-detail-title{font-weight:800;margin:0 0 12px;color:#eef3ff;font-size:clamp(1.25rem,2vw,2rem)}
+.expand-detail p,.expand-detail li{color:#dbe4ee;line-height:1.74}.exam-tip{margin-top:12px;padding:12px 14px;border-radius:16px;
+background:rgba(118,242,226,.08);border:1px solid rgba(118,242,226,.18);color:#eefcff;line-height:1.65}
+.pudding-overlay{position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;padding:28px;
+background:rgba(5,9,22,.42);backdrop-filter:blur(8px);opacity:0;visibility:hidden;pointer-events:none;transition:.38s}
+.pudding-overlay.is-open{opacity:1;visibility:visible;pointer-events:auto}.pudding-card{width:min(920px,calc(100vw - 36px));
+max-height:min(82vh,920px);overflow:auto;padding:30px;border-radius:32px;background:linear-gradient(180deg,rgba(24,32,60,.96),rgba(14,20,41,.96));
+border:1px solid rgba(255,255,255,.14);box-shadow:0 38px 120px rgba(0,0,0,.55);transform:translateY(30px) scale(.84);opacity:.2;transition:.42s}
+.pudding-overlay.is-open .pudding-card{transform:translateY(0) scale(1);opacity:1}.pudding-close{position:absolute;top:18px;right:20px;width:46px;height:46px;
+border:none;border-radius:999px;background:rgba(255,255,255,.08);color:#fff;font-size:1.3rem;cursor:pointer}.pudding-content{position:relative;padding-right:40px}
+.notes-box{margin-top:18px;padding:16px 18px;border-radius:22px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10)}
+.notes-box-head{display:flex;justify-content:space-between;gap:12px;margin-bottom:12px;font-weight:800;color:#fff}.notes-status{font-size:.9rem;color:var(--muted)}
+.notes-box textarea{width:100%;min-height:150px;resize:vertical;border:none;outline:none;border-radius:18px;padding:14px 16px;
+background:rgba(7,12,27,.58);color:#eef3ff;line-height:1.6;font:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.scorebar{position:fixed;right:18px;bottom:18px;z-index:70;padding:12px 16px;border-radius:18px;
+background:rgba(7,12,27,.78);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(15px);box-shadow:var(--shadow);
+display:flex;gap:18px;align-items:center;font-weight:800}.score-value{color:var(--aqua);font-size:1.15rem}.streak-value{color:var(--gold);font-size:1.15rem}
+.challenge{display:grid;gap:12px}.choice-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.choice{
+padding:14px;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#fff;
+font-weight:700;cursor:pointer;transition:.25s}.choice:hover{transform:translateY(-3px)}.choice.correct{background:rgba(125,255,177,.16);
+border-color:rgba(125,255,177,.55)}.choice.wrong{background:rgba(255,77,109,.14);border-color:rgba(255,77,109,.45)}
+.feedback{min-height:28px;font-weight:800;color:var(--muted)}.matrix-row{display:grid;grid-template-columns:1fr repeat(3,1fr);gap:8px;align-items:stretch;margin:8px 0}
+.matrix-row .label{padding:12px;border-radius:14px;background:rgba(255,255,255,.05);font-weight:800}.matrix-choice{padding:12px;border-radius:14px;
+background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);cursor:pointer}.matrix-choice.selected{background:rgba(84,184,255,.16);border-color:rgba(84,184,255,.6)}
+.matrix-choice.correct{background:rgba(125,255,177,.18);border-color:rgba(125,255,177,.6)}.matrix-choice.wrong{background:rgba(255,77,109,.16);border-color:rgba(255,77,109,.55)}
+.theme-switch{position:fixed;inline-size:1px;block-size:1px;opacity:0;pointer-events:none}.theme-toggle{width:78px;height:44px;padding:0;border-radius:999px;
+position:relative;display:inline-block;cursor:pointer;background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.06));
+border:1px solid rgba(255,255,255,.18);box-shadow:inset 0 1px 3px rgba(255,255,255,.22),0 10px 22px rgba(0,0,0,.18);overflow:hidden}
+.theme-toggle::before{content:"";position:absolute;inset:5px 39px 5px 5px;border-radius:999px;background:linear-gradient(180deg,#d2dce8,#b8c2d0);transition:.28s}
+.theme-toggle::after{content:"";position:absolute;top:4px;left:5px;width:34px;height:34px;border-radius:50%;
+background:radial-gradient(circle at 32% 28%,#fff,#fbfbfd 42%,#e7ebf1 76%,#d6dce5);box-shadow:0 4px 10px rgba(24,31,55,.24);transition:.28s}
+.theme-root.figma-light{--bg1:#f7f7f8;--bg2:#eceef2;--text:#1f2328;--muted:#5f6b7a;--aqua:#0ea5e9;--cyan:#3b82f6;
+--violet:#8b5cf6;--pink:#ec4899;--gold:#d97706;--green:#10b981;--shadow:0 20px 50px rgba(15,23,42,.10);
+background:radial-gradient(circle at 15% 20%,rgba(59,130,246,.10),transparent 28%),radial-gradient(circle at 85% 15%,rgba(139,92,246,.08),transparent 28%),linear-gradient(160deg,var(--bg1),var(--bg2))}
+.theme-root.figma-light .topbar{background:rgba(255,255,255,.7);border-bottom:1px solid rgba(15,23,42,.08)}
+.theme-root.figma-light .panel,.theme-root.figma-light .stat,.theme-root.figma-light .formula-card,.theme-root.figma-light .q-card,
+.theme-root.figma-light .diagram-card,.theme-root.figma-light .timeline-card,.theme-root.figma-light .foot,.theme-root.figma-light .hero-feature-card{
+background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,255,255,.82));border-color:rgba(15,23,42,.08);box-shadow:0 20px 50px rgba(15,23,42,.10)}
+.theme-root.figma-light .expand-detail,.theme-root.figma-light .check,.theme-root.figma-light .equation,.theme-root.figma-light .formula,
+.theme-root.figma-light .answer,.theme-root.figma-light .float-panel,.theme-root.figma-light .nameplate{background:rgba(255,255,255,.76);border-color:rgba(15,23,42,.08)}
+.theme-root.figma-light .panel p,.theme-root.figma-light .panel li,.theme-root.figma-light .section-head p,.theme-root.figma-light .subtitle,
+.theme-root.figma-light .formula-card p,.theme-root.figma-light .q-card p,.theme-root.figma-light .diagram-card p{color:var(--muted)}
+.theme-root.figma-light .mini-table td{background:rgba(255,255,255,.72);color:var(--text);border-color:rgba(15,23,42,.06)}
+.theme-root.figma-light .mini-table th{background:rgba(15,23,42,.06);color:var(--text)}
+.theme-root.figma-light h1,.theme-root.figma-light h2,.theme-root.figma-light h3,.theme-root.figma-light strong{color:var(--text)}
+@media(max-width:1100px){.hero-grid,.grid-3,.timeline,.grid-2,.hero-stats,.checklist{grid-template-columns:1fr 1fr}}
+@media(max-width:820px){.hero-grid,.grid-2,.grid-3,.timeline,.hero-stats,.checklist{grid-template-columns:1fr}.nav{flex-direction:column;align-items:flex-start}
+.hero-visual{min-height:420px}.hero-constellation{min-height:auto;display:flex;flex-direction:column;gap:14px}.float-panel{position:static;max-width:none;width:100%;animation:none}
+.hero-feature-card{width:100%}.choice-row{grid-template-columns:1fr}.matrix-row{grid-template-columns:1fr}.scorebar{left:12px;right:12px;justify-content:center}}
+
+/* Chapter 16 matrix upgrade: 4 rows × 3 statements, one selection per row */
+.matrix-v2{display:grid;gap:12px;margin-top:16px}
+.matrix-v2-row{display:grid;grid-template-columns:170px 1fr;gap:12px;align-items:stretch}
+.matrix-v2-label{display:flex;align-items:center;padding:14px 16px;border-radius:16px;
+background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);font-weight:800}
+.matrix-v2-options{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;
+padding:6px;border-radius:18px;background:rgba(7,12,27,.34);border:1px solid rgba(255,255,255,.08);overflow:hidden}
+.matrix-v2-highlight{position:absolute;top:6px;bottom:6px;left:6px;width:calc((100% - 28px)/3);
+border-radius:14px;background:linear-gradient(135deg,rgba(84,184,255,.22),rgba(118,242,226,.18));
+border:1px solid rgba(118,242,226,.38);box-shadow:0 8px 24px rgba(84,184,255,.14);
+opacity:0;transform:translateX(0);transition:transform .34s cubic-bezier(.2,.8,.2,1),opacity .22s ease,background .25s ease}
+.matrix-v2-row[data-selected="0"] .matrix-v2-highlight{opacity:1;transform:translateX(0)}
+.matrix-v2-row[data-selected="1"] .matrix-v2-highlight{opacity:1;transform:translateX(calc(100% + 8px))}
+.matrix-v2-row[data-selected="2"] .matrix-v2-highlight{opacity:1;transform:translateX(calc(200% + 16px))}
+.matrix-v2-row[data-state="correct"] .matrix-v2-highlight{background:rgba(125,255,177,.18);border-color:rgba(125,255,177,.58)}
+.matrix-v2-row[data-state="wrong"] .matrix-v2-highlight{background:rgba(255,77,109,.16);border-color:rgba(255,77,109,.48)}
+.matrix-v2-choice{position:relative;z-index:2;border:none;background:transparent;color:#eef3ff;padding:14px 12px;border-radius:14px;
+font:inherit;font-weight:700;line-height:1.35;cursor:pointer;transition:transform .2s ease,color .2s ease}
+.matrix-v2-choice:hover{transform:translateY(-2px)}
+.matrix-progress{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-top:16px;padding:13px 15px;
+border-radius:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+.matrix-progress strong{font-size:1.05rem}
+.matrix-pass{color:var(--green)}
+.theme-root.figma-light .matrix-v2-label,.theme-root.figma-light .matrix-v2-options,.theme-root.figma-light .matrix-progress{
+background:rgba(255,255,255,.72);border-color:rgba(15,23,42,.08)}
+.theme-root.figma-light .matrix-v2-choice{color:#0f172a}
+@media(max-width:820px){
+ .matrix-v2-row{grid-template-columns:1fr}
+ .matrix-v2-options{grid-template-columns:1fr}
+ .matrix-v2-highlight{display:none}
+ .matrix-v2-choice[aria-pressed="true"]{background:rgba(84,184,255,.16);border:1px solid rgba(84,184,255,.38)}
+}
+
+/* Additional learning interactions */
+.mcq-options{display:grid;gap:10px;margin-top:14px}
+.mcq-option{padding:14px 16px;border-radius:16px;border:1px solid rgba(255,255,255,.10);
+background:rgba(255,255,255,.05);color:#eef3ff;text-align:left;font:inherit;font-weight:700;cursor:pointer;transition:.24s}
+.mcq-option:hover{transform:translateX(4px);background:rgba(255,255,255,.09)}
+.mcq-option.correct{background:rgba(125,255,177,.16);border-color:rgba(125,255,177,.55)}
+.mcq-option.wrong{background:rgba(255,77,109,.14);border-color:rgba(255,77,109,.48)}
+.fill-line{display:flex;flex-wrap:wrap;gap:10px;align-items:center;line-height:1.8}
+.fill-select{padding:9px 12px;border-radius:13px;background:rgba(7,12,27,.55);color:#eef3ff;border:1px solid rgba(255,255,255,.12);font:inherit}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.match-item{padding:13px 14px;border-radius:15px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09)}
+.punnett{display:grid;grid-template-columns:84px repeat(2,1fr);gap:7px;margin-top:14px}
+.punnett>div,.punnett button{min-height:62px;padding:10px;border-radius:14px;border:1px solid rgba(255,255,255,.1);
+background:rgba(255,255,255,.05);color:#eef3ff;display:grid;place-items:center;text-align:center;font:inherit;font-weight:800}
+.punnett .head{background:rgba(118,242,226,.10);color:var(--aqua)}
+.punnett button{cursor:pointer}.punnett button.correct{background:rgba(125,255,177,.16);border-color:rgba(125,255,177,.55)}
+.theme-root.figma-light .mcq-option,.theme-root.figma-light .fill-select,.theme-root.figma-light .match-item,
+.theme-root.figma-light .punnett>div,.theme-root.figma-light .punnett button{color:#0f172a;border-color:rgba(15,23,42,.08)}
+.theme-root.figma-light .fill-select{background:rgba(255,255,255,.95)}
+
+.sorter{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.sort-zone{padding:14px;border-radius:18px;background:rgba(255,255,255,.045);border:1px dashed rgba(255,255,255,.18)}.sort-zone h4{margin:0 0 10px;color:var(--aqua)}.sort-chip{display:inline-flex;margin:5px;padding:9px 11px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);font-weight:700;cursor:pointer;transition:.22s}.sort-chip:hover{transform:translateY(-2px)}.sort-chip.correct{background:rgba(125,255,177,.16);border-color:rgba(125,255,177,.55)}.sequence{display:grid;gap:10px;margin-top:14px}.sequence-step{display:grid;grid-template-columns:48px 1fr;gap:12px;align-items:center;padding:12px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09)}.sequence-num{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:rgba(118,242,226,.13);border:1px solid rgba(118,242,226,.28);font-weight:900;color:var(--aqua)}.flow-choice-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.flow-choice{padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#eef3ff;font:inherit;font-weight:700;cursor:pointer;transition:.22s}.flow-choice.correct{background:rgba(125,255,177,.16);border-color:rgba(125,255,177,.55)}.flow-choice.wrong{background:rgba(255,77,109,.15);border-color:rgba(255,77,109,.5)}.theme-root.figma-light .sort-zone,.theme-root.figma-light .sequence-step{background:rgba(255,255,255,.72);border-color:rgba(15,23,42,.1)}.theme-root.figma-light .sort-chip,.theme-root.figma-light .flow-choice{color:#0f172a;border-color:rgba(15,23,42,.10)}@media(max-width:820px){.sorter,.flow-choice-row{grid-template-columns:1fr}}
+
+/* Chapter 18 ecology-specific interactive components */
+.eco-chain{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:14px}
+.eco-node{padding:14px 16px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+font-weight:800;text-align:center;min-width:130px}.eco-arrow{font-size:1.5rem;color:var(--aqua);font-weight:900}
+.energy-pyramid{display:grid;gap:7px;justify-items:center;margin-top:16px}
+.energy-level{height:56px;border-radius:14px;display:grid;place-items:center;font-weight:800;border:1px solid rgba(255,255,255,.12);
+background:rgba(255,255,255,.06);transition:.25s}.energy-level:nth-child(1){width:36%}.energy-level:nth-child(2){width:62%}.energy-level:nth-child(3){width:92%}
+.cycle-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}
+.cycle-step{padding:14px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);min-height:120px}
+.cycle-step strong{display:block;margin-bottom:6px}.cycle-arrow{font-size:1.35rem;color:var(--gold);font-weight:900;text-align:center}
+.pop-curve{position:relative}
+.phase-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.phase-card{padding:13px;border-radius:15px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09)}
+.phase-card b{display:block;margin-bottom:5px;color:var(--aqua)}
+.web-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}
+.web-organism{padding:13px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);text-align:center;font-weight:800}
+.calc-box{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin-top:14px}
+.calc-box input{width:100%;padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(7,12,27,.55);color:#eef3ff;font:inherit}
+.calc-output{margin-top:12px;padding:13px 15px;border-radius:14px;background:rgba(118,242,226,.08);border:1px solid rgba(118,242,226,.2);font-weight:800}
+.dragbank{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.dragchip{padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.11);font-weight:800;cursor:pointer}
+.dropgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.dropcell{min-height:90px;padding:12px;border-radius:16px;border:1px dashed rgba(255,255,255,.22);background:rgba(255,255,255,.035)}
+.dropcell strong{display:block;color:var(--aqua);margin-bottom:7px}
+.dropcell .placed{display:block;margin-top:5px;padding:8px;border-radius:12px;background:rgba(84,184,255,.12)}
+.dropcell.good{border-color:rgba(125,255,177,.55);background:rgba(125,255,177,.08)}
+.dropcell.bad{border-color:rgba(255,77,109,.5);background:rgba(255,77,109,.07)}
+.theme-root.figma-light .eco-node,.theme-root.figma-light .energy-level,.theme-root.figma-light .cycle-step,.theme-root.figma-light .phase-card,
+.theme-root.figma-light .web-organism,.theme-root.figma-light .dragchip,.theme-root.figma-light .dropcell{background:rgba(255,255,255,.72);border-color:rgba(15,23,42,.09)}
+.theme-root.figma-light .calc-box input{background:#fff;color:#0f172a;border-color:rgba(15,23,42,.12)}
+@media(max-width:820px){.cycle-grid,.phase-row,.web-grid,.dropgrid{grid-template-columns:1fr 1fr}.calc-box{grid-template-columns:1fr}.eco-arrow{transform:rotate(90deg)}}
+@media(max-width:520px){.cycle-grid,.phase-row,.web-grid,.dropgrid{grid-template-columns:1fr}}
+
+/* FIX: animated theme-switch thumb */
+.theme-toggle.is-on::before{
+  left:5px;
+  right:39px;
+  transform:translateX(34px);
+  background:linear-gradient(180deg,#91e8ff,#5bbcff);
+}
+.theme-toggle.is-on::after{
+  transform:translateX(34px);
+  background:
+    radial-gradient(circle at 35% 35%,#fff7c8 0 20%,#ffd76a 42%,#f7b733 78%,#e69a13 100%);
+  box-shadow:0 4px 10px rgba(24,31,55,.20),0 0 16px rgba(255,215,106,.35);
+}
+.theme-toggle{
+  transition:background .28s ease,border-color .28s ease,box-shadow .28s ease;
+}
+.theme-toggle.is-on{
+  background:linear-gradient(180deg,rgba(84,184,255,.24),rgba(118,242,226,.10));
+  border-color:rgba(84,184,255,.34);
+}
+
+
+/* =========================================================
+   LIGHT THEME AUTO-CONTRAST FIX
+   Ensures text inside pale cards/panels switches to dark ink.
+   ========================================================= */
+.theme-root.figma-light{
+  --surface-ink:#172033;
+  --surface-muted:#4b5567;
+  --surface-soft:#667085;
+}
+
+/* Main card text */
+.theme-root.figma-light .panel,
+.theme-root.figma-light .q-card,
+.theme-root.figma-light .diagram-card,
+.theme-root.figma-light .formula-card,
+.theme-root.figma-light .timeline-card,
+.theme-root.figma-light .stat,
+.theme-root.figma-light .hero-feature-card,
+.theme-root.figma-light .float-panel,
+.theme-root.figma-light .foot{
+  color:var(--surface-ink);
+}
+
+.theme-root.figma-light .panel p,
+.theme-root.figma-light .panel li,
+.theme-root.figma-light .q-card p,
+.theme-root.figma-light .q-card li,
+.theme-root.figma-light .diagram-card p,
+.theme-root.figma-light .diagram-card li,
+.theme-root.figma-light .formula-card p,
+.theme-root.figma-light .formula-card li,
+.theme-root.figma-light .timeline-card p,
+.theme-root.figma-light .timeline-card li,
+.theme-root.figma-light .hero-feature-card p,
+.theme-root.figma-light .foot,
+.theme-root.figma-light .stat{
+  color:var(--surface-muted);
+}
+
+/* Model answers were white in light mode */
+.theme-root.figma-light .answer{
+  color:var(--surface-ink);
+  background:rgba(14,165,233,.09);
+  border-color:rgba(14,165,233,.22);
+}
+
+/* Dark-only utility boxes */
+.theme-root.figma-light .equation,
+.theme-root.figma-light .formula,
+.theme-root.figma-light .check,
+.theme-root.figma-light .flow-step,
+.theme-root.figma-light .eco-node,
+.theme-root.figma-light .energy-level,
+.theme-root.figma-light .phase-card,
+.theme-root.figma-light .cycle-step,
+.theme-root.figma-light .web-organism,
+.theme-root.figma-light .sort-chip,
+.theme-root.figma-light .dragchip,
+.theme-root.figma-light .dropcell,
+.theme-root.figma-light .sequence-step{
+  color:var(--surface-ink);
+}
+
+/* Floating hero cards */
+.theme-root.figma-light .float-panel strong,
+.theme-root.figma-light .hero-feature-card h3,
+.theme-root.figma-light .hero-feature-card strong,
+.theme-root.figma-light .stat strong{
+  color:var(--surface-ink);
+}
+
+/* Expandable detail overlays embedded in cards */
+.theme-root.figma-light .expand-detail{
+  background:rgba(255,255,255,.93);
+  border-color:rgba(15,23,42,.10);
+}
+.theme-root.figma-light .expand-detail-title,
+.theme-root.figma-light .expand-detail h3,
+.theme-root.figma-light .expand-detail strong{
+  color:var(--surface-ink);
+}
+.theme-root.figma-light .expand-detail p,
+.theme-root.figma-light .expand-detail li{
+  color:var(--surface-muted);
+}
+.theme-root.figma-light .exam-tip{
+  color:#17324d;
+  background:rgba(14,165,233,.08);
+  border-color:rgba(14,165,233,.20);
+}
+
+/* Nameplate */
+.theme-root.figma-light .nameplate,
+.theme-root.figma-light .pinned-nameplate{
+  color:var(--surface-ink);
+  background:rgba(255,255,255,.94);
+}
+.theme-root.figma-light .nameplate strong,
+.theme-root.figma-light .pinned-nameplate strong{
+  color:var(--surface-ink);
+}
+
+/* Interactive choices */
+.theme-root.figma-light .choice,
+.theme-root.figma-light .mcq-option,
+.theme-root.figma-light .flow-choice,
+.theme-root.figma-light .matrix-choice,
+.theme-root.figma-light .matrix-v2-choice{
+  color:var(--surface-ink);
+}
+.theme-root.figma-light .choice{
+  background:rgba(255,255,255,.78);
+  border-color:rgba(15,23,42,.10);
+}
+
+/* Notes */
+.theme-root.figma-light .notes-box{
+  background:rgba(255,255,255,.72);
+  border-color:rgba(15,23,42,.10);
+}
+.theme-root.figma-light .notes-box-head{
+  color:var(--surface-ink);
+}
+.theme-root.figma-light .notes-status{
+  color:var(--surface-soft);
+}
+.theme-root.figma-light .notes-box textarea{
+  background:#fff;
+  color:var(--surface-ink);
+  box-shadow:inset 0 0 0 1px rgba(15,23,42,.10);
+}
+.theme-root.figma-light .notes-box textarea::placeholder{
+  color:#8a94a6;
+}
+
+/* Score panel remains readable if page is light */
+.theme-root.figma-light .scorebar{
+  background:rgba(255,255,255,.90);
+  color:var(--surface-ink);
+  border-color:rgba(15,23,42,.10);
+}
+
+/* Table text */
+.theme-root.figma-light .mini-table td,
+.theme-root.figma-light .mini-table th{
+  color:var(--surface-ink);
+}
+
+/* Keep accent text accented instead of flattening it */
+.theme-root.figma-light .accent-aqua{color:#0284c7}
+.theme-root.figma-light .accent-cyan{color:#2563eb}
+.theme-root.figma-light .accent-violet{color:#7c3aed}
+.theme-root.figma-light .accent-pink{color:#db2777}
+.theme-root.figma-light .accent-gold{color:#b45309}
+
+</style>
+</head>
+<body>
+
+<input aria-label="Switch theme" class="theme-switch" id="themeSwitch" type="checkbox"/>
+<div class="theme-root" id="themeRoot">
+<header class="topbar">
+<div class="wrap nav">
+<div class="brand">🌍 Chapter 18 Organisms and Their Environment</div>
+<nav class="nav-links">
+<label aria-label="Switch theme" class="theme-toggle" for="themeSwitch" id="themeToggleLabel" role="switch" tabindex="0"></label>
+<a class="interactive" href="#summary">Summary</a>
+<a class="interactive" href="#feeding">Feeding</a>
+<a class="interactive" href="#energy">Energy</a>
+<a class="interactive" href="#cycles">Cycles</a>
+<a class="interactive" href="#populations">Populations</a>
+<a class="interactive" href="#questions">Exam Qs</a>
+</nav>
+</div>
+</header>
+
+<div class="nameplate pinned-nameplate interactive" id="pinnedNameplate"><span class="nameplate-status"></span> By <span class="accent-gold">Dr King Wunna</span>
+<div class="expand-detail"><div class="expand-detail-title">Dr King Wunna</div><ul><li><strong>Lecturer</strong></li><li><strong>kingwunna@gmail.com</strong></li></ul></div>
+</div>
+
+<main>
+<section class="hero">
+<div class="wrap hero-grid">
+<div class="hero-copy">
+<div class="eyebrow interactive">Chapter 18 / ecology and energy-flow revision</div>
+<h1 class="interactive"><span class="gradient-text">Chapter 18</span><br/>Organisms &amp;<br/>Their Environment
+<div class="expand-detail">
+<div class="detail-kicker">Big picture</div>
+<h3 class="expand-detail-title">How ecosystems work</h3>
+<p>This chapter links organisms to their habitats, populations and communities, then follows energy through food chains and nutrients through carbon and nitrogen cycles. It also examines population growth and limiting factors.</p>
+<ul>
+<li>Energy enters ecosystems mainly from sunlight and flows through trophic levels.</li>
+<li>Nutrients are recycled between organisms and the environment.</li>
+<li>Population size changes when conditions alter birth, death, immigration and emigration.</li>
+</ul>
+<div class="exam-tip">Remember the contrast: <strong>energy flows</strong> through ecosystems, but <strong>nutrients cycle</strong>.</div>
+</div></h1>
+<p class="subtitle interactive">High-yield IGCSE revision on habitats, populations, communities and ecosystems, producers and consumers, food chains and food webs, trophic levels, energy losses, ecological pyramids, carbon and nitrogen cycles, population growth and limiting factors.</p>
+
+<div class="nameplate interactive"><span class="nameplate-status"></span> By <span class="accent-gold">Dr King Wunna</span>
+<div class="expand-detail"><div class="expand-detail-title">Dr King Wunna</div><ul><li><strong>Lecturer</strong></li><li><strong>kingwunna@gmail.com</strong></li></ul></div></div>
+
+<div class="hero-stats">
+<div class="stat interactive"><strong>4</strong> Ecology levels<div class="expand-detail"><div class="detail-kicker">Core terms</div><h3 class="expand-detail-title">Habitat → population → community → ecosystem</h3><p>These terms move from the place an organism lives to the interacting community and physical environment.</p></div></div>
+<div class="stat interactive"><strong>3</strong> Pyramid types<div class="expand-detail"><div class="detail-kicker">Representations</div><h3 class="expand-detail-title">Numbers, biomass and energy</h3><p>The chapter source distinguishes pyramids of numbers, biomass and energy.</p></div></div>
+<div class="stat interactive"><strong>16</strong> Exam checkpoints<div class="expand-detail"><div class="detail-kicker">Practice</div><h3 class="expand-detail-title">Food webs + cycles + populations</h3><p>Questions include the same high-frequency skills seen in the June 2026 paper: trophic levels, energy pyramids and population-growth phases.</p></div></div>
+</div>
+</div>
+
+<div class="hero-visual">
+<div class="hero-constellation">
+<div class="constellation-glow"></div><div class="constellation-glow-two"></div>
+<div class="float-panel fp1 interactive"><strong>Producer<br/>captures light energy</strong><div class="expand-detail"><div class="detail-kicker">01</div><h3 class="expand-detail-title">Producer</h3><p>An organism that makes its own organic nutrients, usually by photosynthesis using energy from sunlight.</p></div></div>
+<div class="float-panel fp2 interactive"><strong>Consumer<br/>feeds on organisms</strong><div class="expand-detail"><div class="detail-kicker">02</div><h3 class="expand-detail-title">Consumer</h3><p>An organism that gets energy by feeding on other organisms.</p></div></div>
+<div class="float-panel fp3 interactive"><strong>Decomposer<br/>recycles nutrients</strong><div class="expand-detail"><div class="detail-kicker">03</div><h3 class="expand-detail-title">Decomposer</h3><p>Bacteria and fungi can obtain energy by breaking down dead and waste organic matter, recycling nutrients.</p></div></div>
+<div class="float-panel fp4 interactive"><strong>Trophic level<br/>feeding position</strong><div class="expand-detail"><div class="detail-kicker">04</div><h3 class="expand-detail-title">Trophic level</h3><p>The position of an organism in a food chain, food web or ecological pyramid.</p></div></div>
+
+<div class="hero-feature-card interactive">
+<div class="hero-feature-icon">
+<svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+<rect width="180" height="180" rx="36" fill="rgba(255,255,255,.06)"/>
+<circle cx="44" cy="45" r="19" fill="#ffd77a"/>
+<path d="M89 136 C74 111 76 84 91 62 C108 82 111 109 89 136" fill="rgba(125,255,177,.45)" stroke="#7dffb1" stroke-width="4"/>
+<path d="M90 136 V151" stroke="#7dffb1" stroke-width="5"/>
+<path d="M112 87 C126 71 146 73 153 89 C143 104 122 105 112 87" fill="rgba(84,184,255,.32)" stroke="#54b8ff" stroke-width="3"/>
+<path d="M112 87 L96 95" stroke="#54b8ff" stroke-width="3"/>
+<path d="M115 125 C133 113 151 121 154 140 C138 151 120 145 115 125" fill="rgba(255,127,209,.25)" stroke="#ff7fd1" stroke-width="3"/>
+<path d="M115 125 L99 116" stroke="#ff7fd1" stroke-width="3"/>
+</svg>
+</div>
+<h3>Energy &amp; nutrient pathways</h3>
+<p>Sunlight enters through producers, energy passes between trophic levels, and decomposers return nutrients to the environment.</p>
+<div class="hero-feature-flow"><span class="flow-step">Sun</span><span class="flow-step">Producer</span><span class="flow-step">Consumer</span><span class="flow-step">Decomposer</span><span class="flow-step">Nutrients</span></div>
+</div>
+
+<div class="float-panel fp5 interactive"><strong>Food web<br/>interconnected chains</strong><div class="expand-detail"><div class="detail-kicker">05</div><h3 class="expand-detail-title">Food web</h3><p>A network of interconnected food chains showing feeding relationships in an ecosystem.</p></div></div>
+<div class="float-panel fp6 interactive"><strong>Energy loss<br/>heat + waste + movement</strong><div class="expand-detail"><div class="detail-kicker">06</div><h3 class="expand-detail-title">Energy losses</h3><p>Energy is lost between trophic levels through respiration as heat, movement, excretion, egestion and uneaten material.</p></div></div>
+<div class="float-panel fp7 interactive"><strong>Carbon cycle<br/>CO₂ recycled</strong><div class="expand-detail"><div class="detail-kicker">07</div><h3 class="expand-detail-title">Carbon cycle</h3><p>Photosynthesis removes carbon dioxide while respiration, decomposition and combustion return carbon dioxide to the atmosphere.</p></div></div>
+<div class="float-panel fp8 interactive"><strong>Population<br/>growth + limits</strong><div class="expand-detail"><div class="detail-kicker">08</div><h3 class="expand-detail-title">Population dynamics</h3><p>Population growth depends on resources, environmental conditions, birth and death rates, immigration, emigration and other limiting factors.</p></div></div>
+</div></div>
+</div>
+</section>
+
+<section class="wrap" id="summary">
+<div class="section-head"><h2>Topic summary</h2><p>The Chapter 18 source begins with ecological organisation and then develops feeding relationships, energy transfer, nutrient cycles and population dynamics.</p></div>
+<div class="grid-2">
+<article class="panel interactive"><h3><span class="accent-aqua">Area 1</span> Ecology vocabulary</h3>
+<table class="mini-table">
+<tr><th>Term</th><th>Meaning</th></tr>
+<tr><td>Habitat</td><td>The place where an organism lives.</td></tr>
+<tr><td>Population</td><td>Organisms of one species living in the same area at the same time.</td></tr>
+<tr><td>Community</td><td>Populations of different species living together in an area.</td></tr>
+<tr><td>Ecosystem</td><td>A community interacting with the physical environment.</td></tr>
+<tr><td>Niche</td><td>The role of an organism in its ecosystem.</td></tr>
+</table></article>
+
+<article class="panel interactive"><h3><span class="accent-cyan">Area 2</span> Energy and recycling</h3>
+<ul>
+<li>The Sun is the principal energy input for most ecosystems.</li>
+<li>Producers convert light energy into chemical energy by photosynthesis.</li>
+<li>Consumers obtain energy by feeding.</li>
+<li>Decomposers break down dead and waste material.</li>
+<li>Energy is lost between trophic levels, so food chains are limited in length.</li>
+<li>Carbon and nitrogen compounds are recycled.</li>
+</ul>
+<div class="equation">energy flows → nutrients cycle</div></article>
+</div>
+</section>
+
+<section class="wrap" id="feeding">
+<div class="section-head"><h2>Food chains, food webs and trophic levels</h2><p>In June 2026, Paper 43 used a marine food web and asked about secondary and quaternary consumers, then used a phytoplankton → zooplankton → cuttlefish energy chain.</p></div>
+
+<div class="grid-2">
+<article class="panel interactive"><h3>Food chain</h3>
+<p>A food chain shows the transfer of energy from one organism to the next, beginning with a producer.</p>
+<div class="eco-chain">
+<div class="eco-node">Phytoplankton<br/><small>producer</small></div><div class="eco-arrow">→</div>
+<div class="eco-node">Zooplankton<br/><small>primary consumer</small></div><div class="eco-arrow">→</div>
+<div class="eco-node">Cuttlefish<br/><small>secondary consumer</small></div>
+</div>
+<div class="answer">The arrow points in the direction of energy transfer: from the organism being eaten to the organism that eats it.</div></article>
+
+<article class="panel interactive"><h3>Consumer types</h3>
+<table class="mini-table">
+<tr><th>Type</th><th>Typical role</th></tr>
+<tr><td>Herbivore</td><td>Primary consumer that feeds on plants / producers.</td></tr>
+<tr><td>Carnivore</td><td>Consumer that feeds on animals.</td></tr>
+<tr><td>Omnivore</td><td>Feeds on both plant and animal material.</td></tr>
+<tr><td>Decomposer</td><td>Breaks down dead or waste organic matter.</td></tr>
+</table></article>
+
+<article class="panel interactive"><h3>Trophic-level map</h3>
+<div class="sequence">
+<div class="sequence-step"><div class="sequence-num">1</div><div><strong>Producer</strong><br/>first trophic level</div></div>
+<div class="sequence-step"><div class="sequence-num">2</div><div><strong>Primary consumer</strong><br/>second trophic level</div></div>
+<div class="sequence-step"><div class="sequence-num">3</div><div><strong>Secondary consumer</strong><br/>third trophic level</div></div>
+<div class="sequence-step"><div class="sequence-num">4</div><div><strong>Tertiary consumer</strong><br/>fourth trophic level</div></div>
+</div></article>
+
+<article class="panel interactive"><h3>Food web</h3>
+<p>A food web is a network of interconnected food chains.</p>
+<div class="web-grid">
+<div class="web-organism">phytoplankton</div><div class="web-organism">zooplankton</div><div class="web-organism">coral</div><div class="web-organism">wrasse</div>
+<div class="web-organism">crab</div><div class="web-organism">cuttlefish</div><div class="web-organism">grouper</div><div class="web-organism">shark</div>
+</div>
+<div class="exam-tip">A species may feed at more than one trophic level if its diet includes organisms from different trophic levels.</div></article>
+</div>
+</section>
+
+<section class="wrap" id="energy">
+<div class="section-head"><h2>Energy transfer and ecological pyramids</h2><p>The Chapter 18 source covers energy losses, the approximate 10% rule, food-chain length and pyramids of numbers, biomass and energy.</p></div>
+
+<div class="grid-3">
+<article class="panel interactive"><h3>Why energy decreases</h3>
+<ul>
+<li>Respiration releases energy as heat.</li>
+<li>Energy is used in movement and muscle activity.</li>
+<li>Energy leaves in excretory products.</li>
+<li>Some food is not eaten.</li>
+<li>Some material is egested in faeces.</li>
+</ul>
+<div class="formula">only a fraction of energy becomes biomass available to the next trophic level</div></article>
+
+<article class="panel interactive"><h3>Pyramid of numbers</h3>
+<p>Shows the number of organisms at each trophic level.</p>
+<ul><li>Can sometimes be inverted.</li><li>The source highlights an oak-tree example where one large producer can support many consumers.</li></ul>
+<div class="answer">Numbers do not show organism size.</div></article>
+
+<article class="panel interactive"><h3>Biomass and energy</h3>
+<ul><li><strong>Biomass:</strong> total dry mass of living material at a trophic level.</li><li><strong>Pyramid of biomass:</strong> compares biomass between trophic levels.</li><li><strong>Pyramid of energy:</strong> shows energy flow through trophic levels.</li><li>The source highlights energy pyramids as always upright.</li></ul></article>
+</div>
+
+<div class="grid-2" style="margin-top:18px">
+<article class="diagram-card interactive"><h3>2026-style energy pyramid</h3>
+<p>Using the June 2026 Paper 43 values: phytoplankton 960, zooplankton 120 and cuttlefish 10 arbitrary energy units.</p>
+<div class="energy-pyramid">
+<div class="energy-level">Cuttlefish — 10</div>
+<div class="energy-level">Zooplankton — 120</div>
+<div class="energy-level">Phytoplankton — 960</div>
+</div>
+<div class="answer">Energy falls sharply at each transfer, so higher trophic levels support less available energy.</div></article>
+
+<article class="panel"><h3>Energy-transfer calculator</h3>
+<p>Calculate percentage energy transfer between two trophic levels.</p>
+<div class="calc-box"><input id="energyIn" type="number" value="960" min="0" aria-label="Energy at lower trophic level"/><span>→</span><input id="energyOut" type="number" value="120" min="0" aria-label="Energy at next trophic level"/></div>
+<button class="choice" id="calcEnergy" style="margin-top:12px">Calculate transfer</button>
+<div class="calc-output" id="calcOutput">Enter the two energy values.</div>
+<div class="formula">% transfer = energy at next level ÷ energy at previous level × 100</div></article>
+</div>
+</section>
+
+<section class="wrap" id="cycles">
+<div class="section-head"><h2>Carbon and nitrogen cycles</h2><p>Nutrients are repeatedly recycled between organisms and the environment.</p></div>
+
+<div class="grid-2">
+<article class="panel interactive"><h3>Carbon cycle</h3>
+<div class="cycle-grid">
+<div class="cycle-step"><strong>Atmospheric CO₂</strong>Carbon dioxide is available to producers.</div>
+<div class="cycle-step"><strong>Photosynthesis</strong>Removes carbon dioxide and builds organic compounds.</div>
+<div class="cycle-step"><strong>Feeding</strong>Transfers carbon compounds through food chains.</div>
+<div class="cycle-step"><strong>Respiration</strong>Returns carbon dioxide to the atmosphere.</div>
+<div class="cycle-step"><strong>Decomposition</strong>Decomposers respire while breaking down dead material.</div>
+<div class="cycle-step"><strong>Combustion</strong>Burning fossil fuels / biomass releases carbon dioxide.</div>
+</div>
+<div class="exam-tip">Photosynthesis is the major carbon-dioxide removal step; respiration, decomposition and combustion return CO₂.</div></article>
+
+<article class="diagram-card interactive"><h3>Carbon-cycle visual</h3><div class="svg-wrap">
+<svg viewBox="0 0 650 340" xmlns="http://www.w3.org/2000/svg">
+<rect width="650" height="340" rx="24" fill="#0f1730"/>
+<ellipse cx="325" cy="55" rx="105" ry="34" fill="rgba(84,184,255,.16)" stroke="#54b8ff" stroke-width="3"/>
+<text x="260" y="62" fill="#eef3ff" font-size="18" font-weight="700">atmospheric CO₂</text>
+<rect x="60" y="135" width="150" height="64" rx="18" fill="rgba(125,255,177,.13)" stroke="#7dffb1" stroke-width="3"/>
+<text x="104" y="173" fill="#eef3ff" font-size="18">plants</text>
+<rect x="440" y="135" width="150" height="64" rx="18" fill="rgba(255,127,209,.12)" stroke="#ff7fd1" stroke-width="3"/>
+<text x="480" y="173" fill="#eef3ff" font-size="18">animals</text>
+<rect x="250" y="250" width="150" height="58" rx="18" fill="rgba(255,214,122,.11)" stroke="#ffd77a" stroke-width="3"/>
+<text x="276" y="284" fill="#eef3ff" font-size="17">decomposers</text>
+<path d="M266 83 C205 95 167 105 145 132" fill="none" stroke="#76f2e2" stroke-width="4"/><text x="135" y="105" fill="#76f2e2" font-size="13">photosynthesis</text>
+<path d="M205 164 H432" stroke="#ffd77a" stroke-width="4"/><path d="M420 154 L438 164 L420 174" fill="none" stroke="#ffd77a" stroke-width="4"/><text x="292" y="150" fill="#ffd77a" font-size="13">feeding</text>
+<path d="M505 132 C490 92 435 78 385 76" fill="none" stroke="#ff7fd1" stroke-width="4"/><text x="462" y="101" fill="#ff7fd1" font-size="13">respiration</text>
+<path d="M134 202 C166 250 210 270 242 276" fill="none" stroke="#eef3ff" stroke-width="3"/><path d="M516 202 C477 248 435 269 406 277" fill="none" stroke="#eef3ff" stroke-width="3"/>
+<path d="M325 248 C325 170 328 112 329 91" fill="none" stroke="#54b8ff" stroke-width="4"/><text x="337" y="221" fill="#54b8ff" font-size="13">respiration</text>
+</svg></div></article>
+</div>
+
+<div class="grid-2" style="margin-top:18px">
+<article class="panel interactive"><h3>Nitrogen cycle</h3>
+<ol>
+<li><strong>Nitrogen fixation:</strong> nitrogen-fixing bacteria convert atmospheric nitrogen into useful nitrogen compounds; the source also lists lightning.</li>
+<li><strong>Plant uptake:</strong> roots absorb nitrate ions for making amino acids, proteins and nucleic acids.</li>
+<li><strong>Feeding:</strong> nitrogen-containing compounds move through food chains.</li>
+<li><strong>Ammonification:</strong> decomposers break down proteins and nitrogenous wastes to ammonium compounds.</li>
+<li><strong>Nitrification:</strong> nitrifying bacteria convert ammonium compounds to nitrates in aerobic conditions.</li>
+<li><strong>Denitrification:</strong> denitrifying bacteria convert nitrates to nitrogen gas, especially in waterlogged / low-oxygen conditions.</li>
+</ol></article>
+
+<article class="panel"><h3>Nitrogen-cycle ordering challenge</h3>
+<p>Click the terms in the correct order beginning with atmospheric nitrogen.</p>
+<div class="dragbank" id="nitrogenBank">
+<span class="dragchip" data-order="3">plant uptake</span>
+<span class="dragchip" data-order="1">nitrogen fixation</span>
+<span class="dragchip" data-order="5">nitrification</span>
+<span class="dragchip" data-order="2">ammonium compounds</span>
+<span class="dragchip" data-order="4">feeding / death / decomposition</span>
+<span class="dragchip" data-order="6">denitrification</span>
+</div>
+<div class="feedback" id="nitrogenFeedback">Select step 1.</div>
+</article>
+</div>
+</section>
+
+<section class="wrap" id="populations">
+<div class="section-head"><h2>Population growth and limiting factors</h2><p>The Chapter 18 source includes sigmoid growth, lag / log / stationary / death phases, carrying capacity, immigration, emigration and limiting factors. June 2026 Paper 43 directly tested phytoplankton growth phases.</p></div>
+
+<div class="grid-2">
+<article class="diagram-card interactive"><h3>Population-growth curve</h3>
+<div class="svg-wrap pop-curve"><svg viewBox="0 0 650 330" xmlns="http://www.w3.org/2000/svg">
+<rect width="650" height="330" rx="24" fill="#0f1730"/>
+<line x1="65" y1="270" x2="595" y2="270" stroke="#eef3ff" stroke-width="2"/><line x1="65" y1="270" x2="65" y2="45" stroke="#eef3ff" stroke-width="2"/>
+<path d="M78 250 C125 250 145 241 165 222 C190 197 208 158 238 113 C268 68 330 62 390 72 C455 83 492 80 528 82 C554 83 568 105 572 135 C575 180 555 222 525 246" fill="none" stroke="#76f2e2" stroke-width="7"/>
+<line x1="300" y1="80" x2="585" y2="80" stroke="#ffd77a" stroke-width="2" stroke-dasharray="8 7"/>
+<text x="430" y="68" fill="#ffd77a" font-size="14">carrying capacity</text>
+<text x="82" y="296" fill="#eef3ff" font-size="14">time</text><text x="20" y="180" fill="#eef3ff" font-size="14" transform="rotate(-90 20 180)">population size</text>
+<text x="88" y="235" fill="#54b8ff" font-size="13">lag</text><text x="190" y="150" fill="#ff7fd1" font-size="13">log</text><text x="395" y="104" fill="#7dffb1" font-size="13">stationary</text><text x="530" y="225" fill="#ffd77a" font-size="13">decline</text>
+</svg></div>
+
+<div class="phase-row">
+<div class="phase-card"><b>Lag</b>Slow growth while organisms adjust and begin reproducing.</div>
+<div class="phase-card"><b>Log / exponential</b>Rapid reproduction when resources are abundant.</div>
+<div class="phase-card"><b>Stationary</b>Population fluctuates around carrying capacity as limiting factors act.</div>
+<div class="phase-card"><b>Death / decline</b>Deaths exceed births when conditions deteriorate.</div>
+</div></article>
+
+<article class="panel interactive"><h3>What changes population size?</h3>
+<div class="equation">population change = births + immigration − deaths − emigration</div>
+<ul><li><strong>Abiotic limits:</strong> temperature, water and light.</li><li><strong>Biotic limits:</strong> food, predation, disease and competition.</li><li><strong>Carrying capacity:</strong> the maximum population size the environment can sustain under given conditions.</li></ul>
+<div class="exam-tip">At carrying capacity, population size may fluctuate rather than staying perfectly constant.</div></article>
+
+<article class="panel interactive"><h3>Predator–prey oscillations</h3>
+<p>The source highlights the classic snowshoe hare–lynx example and the idea that predator numbers tend to follow prey numbers with a time lag.</p>
+<ul><li>More prey can support more predators.</li><li>Predator increase may later reduce prey numbers.</li><li>Reduced prey can then cause predator numbers to fall.</li><li>Cycles may repeat.</li></ul></article>
+
+<article class="panel interactive"><h3>2026 exam spotlight</h3>
+<p>Paper 43 measured phytoplankton population as organisms per cm³, asked for a population calculation in 0.5 dm³, then asked candidates to identify and explain the phases of the growth curve.</p>
+<div class="answer">For graph questions: read the trend first, then link each phase to reproduction, resources, competition and limiting factors.</div></article>
+</div>
+</section>
+
+<section class="wrap">
+<div class="section-head"><h2>Statement Matrix Challenge</h2><p>Four horizontal rows, three statements in each row, exactly one correct statement per row. Change your selections until all four are correct.</p></div>
+<article class="panel">
+<div class="matrix-v2" id="matrixChallenge">
+<div class="matrix-v2-row" data-answer="1" data-selected="-1">
+<div class="matrix-v2-label">Ecology</div>
+<div class="matrix-v2-options"><div class="matrix-v2-highlight"></div>
+<button class="matrix-v2-choice" aria-pressed="false">A. A population contains many different species.</button>
+<button class="matrix-v2-choice" aria-pressed="false">B. A population is one species living in the same area at the same time.</button>
+<button class="matrix-v2-choice" aria-pressed="false">C. A habitat means all food chains in an ecosystem.</button>
+</div></div>
+
+<div class="matrix-v2-row" data-answer="2" data-selected="-1">
+<div class="matrix-v2-label">Food chains</div>
+<div class="matrix-v2-options"><div class="matrix-v2-highlight"></div>
+<button class="matrix-v2-choice" aria-pressed="false">A. Arrows show where an organism moves.</button>
+<button class="matrix-v2-choice" aria-pressed="false">B. Producers are always secondary consumers.</button>
+<button class="matrix-v2-choice" aria-pressed="false">C. Arrows show the direction of energy transfer.</button>
+</div></div>
+
+<div class="matrix-v2-row" data-answer="0" data-selected="-1">
+<div class="matrix-v2-label">Energy</div>
+<div class="matrix-v2-options"><div class="matrix-v2-highlight"></div>
+<button class="matrix-v2-choice" aria-pressed="false">A. Energy is lost between trophic levels through respiration, movement and waste.</button>
+<button class="matrix-v2-choice" aria-pressed="false">B. Every trophic level receives all the energy from the previous one.</button>
+<button class="matrix-v2-choice" aria-pressed="false">C. Energy is completely recycled in ecosystems.</button>
+</div></div>
+
+<div class="matrix-v2-row" data-answer="1" data-selected="-1">
+<div class="matrix-v2-label">Population</div>
+<div class="matrix-v2-options"><div class="matrix-v2-highlight"></div>
+<button class="matrix-v2-choice" aria-pressed="false">A. Immigration always decreases a population.</button>
+<button class="matrix-v2-choice" aria-pressed="false">B. Competition and food availability can limit population growth.</button>
+<button class="matrix-v2-choice" aria-pressed="false">C. Carrying capacity means the number of species in a community.</button>
+</div></div>
+</div>
+<div class="matrix-progress"><strong id="matrixCount">0 / 4 correct</strong><span id="matrixFeedback">Select one statement in each row.</span></div>
+</article>
+</section>
+
+<section class="wrap">
+<div class="section-head"><h2>Quick active-recall practice</h2><p>Use the game score and streak system while revising core Chapter 18 concepts.</p></div>
+<div class="grid-2">
+<article class="panel">
+<h3>MCQ — trophic level</h3>
+<p>In the chain grass → rabbit → fox, which trophic level is the rabbit?</p>
+<div class="mcq-options" data-correct="1">
+<button class="mcq-option">A. First</button><button class="mcq-option">B. Second</button><button class="mcq-option">C. Third</button><button class="mcq-option">D. Fourth</button>
+</div><div class="feedback">Choose one answer.</div>
+</article>
+
+<article class="panel">
+<h3>Fill the blanks — carbon cycle</h3>
+<div class="fill-line">
+<select class="fill-select" data-answer="photosynthesis"><option value="">choose…</option><option>photosynthesis</option><option>respiration</option><option>egestion</option></select>
+removes carbon dioxide from the atmosphere, while
+<select class="fill-select" data-answer="respiration"><option value="">choose…</option><option>photosynthesis</option><option>respiration</option><option>transpiration</option></select>
+returns carbon dioxide, and
+<select class="fill-select" data-answer="combustion"><option value="">choose…</option><option>combustion</option><option>osmosis</option><option>pollination</option></select>
+also releases carbon dioxide.
+</div><div class="feedback" id="fillFeedback">Complete all three blanks.</div>
+</article>
+
+<article class="panel interactive"><h3>10% rule memory</h3>
+<p>The chapter source includes the <strong>ten percent rule</strong> as an approximate model for energy transfer between trophic levels.</p>
+<div class="answer">Because energy is lost at each transfer, food chains usually contain relatively few trophic levels.</div></article>
+
+<article class="panel interactive"><h3>Exam trap detector</h3>
+<div class="checklist">
+<div class="check interactive">Arrow direction<div class="expand-detail"><div class="detail-kicker">Trap</div><p>Food-chain arrows point from food to feeder — the direction of energy transfer.</p></div></div>
+<div class="check interactive">Energy ≠ nutrients<div class="expand-detail"><div class="detail-kicker">Trap</div><p>Energy is not recycled; nutrients such as carbon and nitrogen are recycled.</p></div></div>
+<div class="check interactive">Population ≠ community<div class="expand-detail"><div class="detail-kicker">Trap</div><p>A population contains one species; a community contains populations of different species.</p></div></div>
+<div class="check interactive">Stationary ≠ no activity<div class="expand-detail"><div class="detail-kicker">Trap</div><p>At the stationary phase, organisms still reproduce and die; population size is limited around carrying capacity.</p></div></div>
+</div></article>
+</div>
+</section>
+
+<section class="wrap" id="questions">
+<div class="section-head"><h2>Exam-style questions with model answers</h2><p>These use the terminology and topic structure found in the Chapter 18 source and recent 0610 exam material.</p></div>
+<div class="grid-2">
+<article class="q-card interactive"><h3>Q1. Define a population.</h3><div class="answer">A group of organisms of one species living in the same area at the same time.</div></article>
+<article class="q-card interactive"><h3>Q2. Define a community.</h3><div class="answer">Populations of different species living together in the same area.</div></article>
+<article class="q-card interactive"><h3>Q3. Define an ecosystem.</h3><div class="answer">A community of organisms interacting with each other and with the physical environment.</div></article>
+<article class="q-card interactive"><h3>Q4. What is a producer?</h3><div class="answer">An organism that makes its own organic nutrients using energy, usually light energy in photosynthesis.</div></article>
+<article class="q-card interactive"><h3>Q5. What is a decomposer?</h3><div class="answer">An organism, such as a bacterium or fungus, that obtains energy by breaking down dead or waste organic matter.</div></article>
+<article class="q-card interactive"><h3>Q6. What does an arrow mean in a food chain?</h3><div class="answer">It shows the direction of energy transfer from the organism being eaten to the organism that eats it.</div></article>
+<article class="q-card interactive"><h3>Q7. Define trophic level.</h3><div class="answer">The feeding position of an organism in a food chain, food web or ecological pyramid.</div></article>
+<article class="q-card interactive"><h3>Q8. Give three reasons energy is lost between trophic levels.</h3><div class="answer">Any three of: heat released by respiration, movement, excretion, egestion, uneaten parts.</div></article>
+<article class="q-card interactive"><h3>Q9. Why are food chains usually short?</h3><div class="answer">Energy is lost at each trophic transfer, so too little remains to support many higher trophic levels.</div></article>
+<article class="q-card interactive"><h3>Q10. Distinguish pyramids of numbers, biomass and energy.</h3><div class="answer">Numbers show organism counts; biomass shows total dry mass at each trophic level; energy pyramids show energy flow through trophic levels.</div></article>
+<article class="q-card interactive"><h3>Q11. State three processes that return carbon dioxide to the atmosphere.</h3><div class="answer">Respiration, decomposition and combustion.</div></article>
+<article class="q-card interactive"><h3>Q12. What do nitrifying bacteria do?</h3><div class="answer">They convert ammonium compounds into nitrates in aerobic conditions.</div></article>
+<article class="q-card interactive"><h3>Q13. What do denitrifying bacteria do?</h3><div class="answer">They convert nitrates to nitrogen gas, especially in low-oxygen / waterlogged conditions.</div></article>
+<article class="q-card interactive"><h3>Q14. What is carrying capacity?</h3><div class="answer">The maximum population size that an environment can sustain under the existing conditions.</div></article>
+<article class="q-card interactive"><h3>Q15. Name two abiotic and two biotic limiting factors.</h3><div class="answer">Abiotic: any two of temperature, water, light. Biotic: any two of food, predation, disease, competition.</div></article>
+<article class="q-card interactive"><h3>Q16. Describe the log phase of a population-growth curve.</h3><div class="answer">Population size increases rapidly because reproduction is fast while resources and conditions are favourable and limiting factors are relatively weak.</div></article>
+</div>
+</section>
+</main>
+
+<div class="scorebar"><span>Score <span class="score-value" id="score">0</span></span><span>Streak <span class="streak-value" id="streak">0</span></span></div>
+
+<div class="foot interactive"><strong class="accent-gold">Quick memory hook:</strong> Sun → producer → consumer → decomposer; energy decreases up trophic levels, while carbon and nitrogen are recycled.
+<div class="expand-detail"><div class="detail-kicker">Exam routine</div><h3 class="expand-detail-title">Ecology answer routine</h3>
+<ul><li>Food chain: follow the arrows as energy transfer.</li><li>Energy: identify losses before explaining shorter food chains.</li><li>Cycles: name the process that moves the nutrient between stores.</li><li>Population graph: identify the phase, describe the trend, then explain the resources / limiting factors.</li></ul></div></div>
+
+<div aria-hidden="true" class="pudding-overlay" id="puddingOverlay">
+<div class="pudding-card"><div class="pudding-content" id="puddingContent"></div><button aria-label="Close" class="pudding-close" id="puddingClose">×</button></div>
+</div>
+</div>
+
+<script>
+const topbar=document.querySelector('.topbar'),originalNameplate=document.querySelector('.hero .nameplate'),
+pinnedNameplate=document.getElementById('pinnedNameplate'),wrap=document.querySelector('.topbar .wrap'),
+overlay=document.getElementById('puddingOverlay'),overlayContent=document.getElementById('puddingContent'),overlayClose=document.getElementById('puddingClose');
+
+const safeStore={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+function slugify(t){return(t||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,60)||'note'}
+function syncPinned(){
+ if(!topbar||!originalNameplate||!pinnedNameplate||!wrap)return;
+ const b=topbar.getBoundingClientRect(),o=originalNameplate.getBoundingClientRect(),w=wrap.getBoundingClientRect(),p=Math.round(b.bottom+8);
+ pinnedNameplate.style.top=p+'px';pinnedNameplate.style.left=Math.max(12,Math.round(w.left))+'px';
+ const yes=o.top<=p;pinnedNameplate.classList.toggle('is-visible',yes);document.body.classList.toggle('nameplate-pinned',yes)
+}
+function buildOverlay(el){
+ overlayContent.innerHTML='';const shell=document.createElement('div');shell.className='overlay-study';
+ const prev=el.cloneNode(true);prev.classList.remove('interactive','is-active');prev.querySelectorAll('.expand-detail').forEach(n=>n.remove());
+ const pw=document.createElement('div');pw.className='source-preview';pw.appendChild(prev);shell.appendChild(pw);
+ const d=el.querySelector('.expand-detail');if(d){const c=d.cloneNode(true);c.style.display='block';shell.appendChild(c)}
+ if(!el.classList.contains('nameplate')){
+   const notes=document.createElement('div');notes.className='notes-box';
+   notes.innerHTML='<div class="notes-box-head"><span>📝 Quick notes</span><span class="notes-status">Saved in this browser</span></div><textarea placeholder="Type your own revision notes here..."></textarea>';
+   const ta=notes.querySelector('textarea'),st=notes.querySelector('.notes-status'),key='ch18_'+slugify(el.innerText.slice(0,70));
+   ta.value=safeStore.get(key)||'';let tm;ta.addEventListener('input',()=>{st.textContent='Typing…';clearTimeout(tm);tm=setTimeout(()=>{safeStore.set(key,ta.value);st.textContent='Saved in this browser'},180)});
+   shell.appendChild(notes);
+ }
+ overlayContent.appendChild(shell)
+}
+function openOverlay(el){buildOverlay(el);overlay.classList.add('is-open');overlay.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'}
+function closeOverlay(){overlay.classList.remove('is-open');overlay.setAttribute('aria-hidden','true');document.body.style.overflow='';document.querySelectorAll('.interactive.is-active').forEach(x=>x.classList.remove('is-active'))}
+document.querySelectorAll('.interactive').forEach(el=>el.addEventListener('click',e=>{
+ if(e.target.closest('a,button,textarea,label,input,select')||e.target===overlayClose)return;
+ e.preventDefault();document.querySelectorAll('.interactive.is-active').forEach(x=>{if(x!==el)x.classList.remove('is-active')});el.classList.add('is-active');openOverlay(el)
+}));
+overlayClose.addEventListener('click',closeOverlay);overlay.addEventListener('click',e=>{if(e.target===overlay)closeOverlay()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOverlay()});
+
+const themeSwitch=document.getElementById('themeSwitch'),themeRoot=document.getElementById('themeRoot'),toggle=document.getElementById('themeToggleLabel');
+function applyTheme(light){themeRoot.classList.toggle('figma-light',light);themeSwitch.checked=light;toggle.classList.toggle('is-on',light);toggle.setAttribute('aria-checked',String(light))}
+applyTheme(safeStore.get('page18-theme')==='light');
+themeSwitch.addEventListener('change',()=>{applyTheme(themeSwitch.checked);safeStore.set('page18-theme',themeSwitch.checked?'light':'dark')});
+toggle.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();themeSwitch.checked=!themeSwitch.checked;themeSwitch.dispatchEvent(new Event('change'))}});
+window.addEventListener('scroll',syncPinned,{passive:true});window.addEventListener('resize',syncPinned);syncPinned();
+
+let score=0,streak=0;const scoreEl=document.getElementById('score'),streakEl=document.getElementById('streak');
+function renderScore(){scoreEl.textContent=score;streakEl.textContent=streak}
+function award(points=10){score+=points;streak+=1;renderScore()}
+function wrong(){streak=0;renderScore()}
+
+/* Statement Matrix Challenge: one active choice per row; current correct count controls PASS */
+const matrix=document.getElementById('matrixChallenge');let matrixAwarded=false;
+function updateMatrix(){
+ const rows=[...matrix.querySelectorAll('.matrix-v2-row')];let selected=0,correct=0;
+ rows.forEach(row=>{const s=Number(row.dataset.selected),a=Number(row.dataset.answer);if(s>=0){selected++;if(s===a)correct++;}row.dataset.state=s<0?'':(s===a?'correct':'wrong')});
+ document.getElementById('matrixCount').textContent=`${correct} / 4 correct`;
+ const f=document.getElementById('matrixFeedback');
+ if(correct===4){f.innerHTML='<span class="matrix-pass">✓ PASS — all four statements are correct.</span>';if(!matrixAwarded){matrixAwarded=true;score+=100;streak+=1;renderScore();}}
+ else if(selected<4){f.textContent=`${selected} row${selected===1?'':'s'} selected — keep choosing.`}
+ else{f.textContent=`${correct} correct — keep changing the highlighted choices.`}
+}
+matrix.querySelectorAll('.matrix-v2-row').forEach(row=>row.querySelectorAll('.matrix-v2-choice').forEach((btn,index)=>btn.addEventListener('click',()=>{
+ row.dataset.selected=String(index);row.querySelectorAll('.matrix-v2-choice').forEach((b,i)=>b.setAttribute('aria-pressed',String(i===index)));
+ if(index!==Number(row.dataset.answer))wrong();updateMatrix();
+})));updateMatrix();
+
+/* Energy transfer calculator */
+document.getElementById('calcEnergy').addEventListener('click',()=>{
+ const a=Number(document.getElementById('energyIn').value),b=Number(document.getElementById('energyOut').value),out=document.getElementById('calcOutput');
+ if(!(a>0)||b<0){out.textContent='Enter valid energy values.';wrong();return}
+ const pct=b/a*100;out.textContent=`Transfer efficiency = ${pct.toFixed(1)}%`;
+ award(10);
+});
+
+/* Nitrogen-cycle ordering game */
+let nStep=1,nAwarded=false;
+document.querySelectorAll('#nitrogenBank .dragchip').forEach(chip=>chip.addEventListener('click',()=>{
+ const order=Number(chip.dataset.order),f=document.getElementById('nitrogenFeedback');
+ if(chip.classList.contains('correct'))return;
+ if(order===nStep){
+   chip.classList.add('correct');nStep++;
+   if(nStep===7){f.textContent='✓ Nitrogen-cycle sequence complete.';if(!nAwarded){nAwarded=true;award(40)}}
+   else f.textContent=`Correct. Now select step ${nStep}.`;
+ }else{chip.classList.add('wrong');setTimeout(()=>chip.classList.remove('wrong'),450);f.textContent=`That is not step ${nStep}. Try again.`;wrong();}
+}));
+
+/* MCQ */
+document.querySelectorAll('.mcq-options').forEach(group=>{
+ let completed=false;const correct=Number(group.dataset.correct),feedback=group.parentElement.querySelector('.feedback');
+ group.querySelectorAll('.mcq-option').forEach((btn,i)=>btn.addEventListener('click',()=>{
+   group.querySelectorAll('.mcq-option').forEach(b=>b.classList.remove('correct','wrong'));
+   const ok=i===correct;btn.classList.add(ok?'correct':'wrong');
+   feedback.textContent=ok?'✓ Correct — rabbit is the primary consumer at trophic level 2.':'✕ Recount from the producer as trophic level 1.';
+   if(ok&&!completed){completed=true;award(10)}else if(!ok)wrong();
+ }))
+});
+
+/* Fill blanks */
+const fillSelects=[...document.querySelectorAll('.fill-select')];let fillAwarded=false;
+function checkFill(){
+ const all=fillSelects.every(s=>s.value),correct=fillSelects.every(s=>s.value===s.dataset.answer),f=document.getElementById('fillFeedback');
+ if(correct){f.textContent='✓ Carbon-cycle sentence complete.';if(!fillAwarded){fillAwarded=true;award(30)}}
+ else if(all){f.textContent='Some process names are incorrect — check which remove or release CO₂.';wrong()}
+ else f.textContent='Complete all three blanks.';
+}
+fillSelects.forEach(s=>s.addEventListener('change',checkFill));
+</script>
+</body>
+</html>

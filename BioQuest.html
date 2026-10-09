@@ -100,6 +100,9 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.92}option{b
 .question-card #question-title{font-size:calc(clamp(1.3rem,2.2vw,1.85rem) * var(--font-scale,1))}
 .question-card .option{font-size:calc(1rem * var(--font-scale,1))}
 .question-card .drag-card{font-size:calc(1rem * var(--font-scale,1))}
+.question-card .match-row label,.question-card .match-row select{font-size:calc(1rem * var(--font-scale,1))}
+.question-card .matrix td:first-child{font-size:calc(1rem * var(--font-scale,1))}
+.question-card .order-row{font-size:calc(1rem * var(--font-scale,1))}
 /* Premium one-second correct-answer celebration. */
 .celebration-layer{position:fixed;inset:0;z-index:80;pointer-events:none;overflow:hidden;animation:celebrationFade 1s ease both}.celebration-glow{position:absolute;left:50%;top:50%;width:18vmin;height:18vmin;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(215,255,143,.34),rgba(139,232,234,.12) 45%,transparent 72%);animation:celebrationGlow 1s cubic-bezier(.18,.82,.25,1) both}.celebration-spark{--x:0px;--y:-160px;--r:0deg;position:absolute;left:50%;top:48%;font-size:clamp(1rem,2vw,1.7rem);color:var(--lime);text-shadow:0 0 18px rgba(215,255,143,.8);animation:celebrationSpark 1s cubic-bezier(.16,.84,.32,1) both}.celebration-spark:nth-child(3n){color:var(--cyan)}.celebration-spark:nth-child(4n){color:var(--orange)}
 @keyframes celebrationGlow{0%{opacity:0;transform:translate(-50%,-50%) scale(.25)}35%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(5)}}@keyframes celebrationSpark{0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}18%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(var(--r)) scale(1.2)}}@keyframes celebrationFade{0%,75%{opacity:1}100%{opacity:0}}
