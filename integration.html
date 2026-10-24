@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Exponential Calculus Challenge Step-Order Quiz</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)'], ['$', '$']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+:root {
+  --bg1:#f9fcff;
+  --bg2:#eef5ff;
+  --card:#ffffff;
+  --accent:#2f6fff;
+  --accent-soft:#e8f0ff;
+  --good:#dff7e6;
+  --bad:#ffe3e3;
+  --text:#1d2a39;
+  --muted:#667587;
+  --border:#d7e4ff;
+  --shadow:0 14px 40px rgba(30, 74, 138, 0.12);
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  font-family: Inter, Arial, sans-serif;
+  background: linear-gradient(135deg, var(--bg1), var(--bg2));
+  color:var(--text);
+}
+button { font: inherit; }
+.app { display:flex; min-height:100vh; }
+.sidebar {
+  width:290px;
+  background:rgba(255,255,255,0.88);
+  border-right:1px solid var(--border);
+  backdrop-filter: blur(10px);
+  padding:18px 16px 24px;
+  position:fixed;
+  top:0; left:0; bottom:0;
+  overflow:auto;
+  transition:transform .28s ease;
+  z-index:20;
+}
+.sidebar.hidden { transform:translateX(-100%); }
+.brand { margin:8px 6px 18px; }
+.brand-heading { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.brand h2 { margin:0 0 6px; font-size:20px; }
+.sidebar-hide-btn {
+  flex:0 0 34px;
+  width:34px;
+  height:34px;
+  border:0;
+  border-radius:8px;
+  background:var(--accent-soft);
+  color:#27446c;
+  cursor:pointer;
+  font-size:22px;
+  line-height:1;
+}
+.sidebar-hide-btn:hover { background:#d7e5ff; }
+.brand p { margin:0; color:var(--muted); font-size:13px; line-height:1.35; }
+.sidebar h3 { margin:18px 6px 10px; font-size:15px; }
+.nav-grid {
+  display:grid;
+  grid-template-columns:repeat(5, 1fr);
+  gap:8px;
+}
+.nav-btn {
+  border:none;
+  background:var(--accent-soft);
+  border-radius:12px;
+  padding:10px 0;
+  color:#224;
+  font-weight:700;
+  cursor:pointer;
+}
+.nav-btn.active { background:var(--accent); color:white; }
+.nav-btn.done { box-shadow: inset 0 0 0 2px #1ba855; }
+.sidebar-stats {
+  margin:18px 6px 0;
+  padding:12px 14px;
+  border-radius:16px;
+  background:#f7fbff;
+  border:1px solid var(--border);
+  font-size:14px;
+  line-height:1.7;
+}
+.main {
+  flex:1;
+  margin-left:290px;
+  padding:24px 24px 96px;
+  transition:margin-left .28s ease;
+}
+.main.expanded { margin-left:0; }
+.topbar {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  margin-bottom:18px;
+}
+.title-group { flex:1 1 260px; min-width:0; }
+.topbar-controls { flex:0 0 auto; margin-top:0; gap:6px; }
+.topbar-controls .action-btn { padding:10px 14px; }
+.toggle-btn {
+  border:none;
+  background:var(--accent);
+  color:white;
+  border-radius:999px;
+  padding:11px 16px;
+  cursor:pointer;
+  box-shadow:var(--shadow);
+}
+.title-group h1 { margin:0; font-size:28px; }
+.title-group p { margin:6px 0 0; color:var(--muted); }
+.card {
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:24px;
+  box-shadow:var(--shadow);
+  padding:24px;
+}
+.view-tabs {
+  display:flex;
+  gap:6px;
+  margin:0 0 16px;
+  border-bottom:1px solid var(--border);
+}
+.view-tab {
+  border:0;
+  border-bottom:3px solid transparent;
+  background:transparent;
+  color:var(--muted);
+  padding:12px 16px 10px;
+  font-weight:700;
+  cursor:pointer;
+}
+.view-tab:hover { color:var(--text); }
+.view-tab.active {
+  color:var(--accent);
+  border-bottom-color:var(--accent);
+}
+#quizView[hidden],
+#formulaView[hidden] { display:none; }
+.formula-heading {
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:8px 16px;
+  margin-bottom:20px;
+}
+.formula-heading h2 { margin:0; font-size:22px; }
+.formula-heading p { margin:0; color:var(--muted); font-size:14px; }
+.formula-grid {
+  display:grid;
+  grid-template-columns:minmax(0, 1fr);
+  gap:24px;
+}
+.formula-group {
+  min-width:0;
+  padding-top:14px;
+  border-top:2px solid var(--border);
+}
+.formula-group h3 { margin:0 0 8px; font-size:16px; }
+.formula-row {
+  display:grid;
+  grid-template-columns:minmax(0, 1fr);
+  gap:5px;
+  min-height:56px;
+  padding:8px 0;
+  border-bottom:1px solid #edf1f7;
+}
+.formula-label { color:var(--muted); font-size:14px; }
+.formula-equation { min-width:0; overflow:visible; color:var(--text); font-size:calc(0.9em * var(--math-scale, 1)); padding-bottom:2px; }
+.question-head {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:18px;
+}
+.badge {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:96px;
+  padding:10px 14px;
+  border-radius:999px;
+  background:var(--accent-soft);
+  color:var(--accent);
+  font-weight:700;
+}
+.question-box {
+  padding:18px 20px;
+  border-radius:18px;
+  background:linear-gradient(180deg, #ffffff, #f7fbff);
+  border:1px solid var(--border);
+  margin-bottom:18px;
+  font-size:21px;
+}
+.section-title {
+  font-size:15px;
+  font-weight:700;
+  margin:18px 0 10px;
+}
+.bank {
+  min-height:120px;
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:#fbfdff;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.dropzone {
+  min-height:160px;
+  padding:14px;
+  border:2px dashed #9fbcff;
+  border-radius:18px;
+  background:#f9fbff;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.dropzone.dragover { background:#eef5ff; border-color:var(--accent); }
+.step-card {
+  position:relative;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:12px 14px 12px 36px;
+  cursor:grab;
+  user-select:none;
+  box-shadow:0 4px 14px rgba(69,103,163,0.08);
+}
+.step-card:hover { transform:translateY(-1px); }
+.step-label {
+  position:absolute;
+  left:9px;
+  top:9px;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:var(--accent-soft);
+  color:var(--accent);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:10px;
+  font-weight:800;
+  line-height:1;
+}
+.step-math { display:inline-block; }
+.answer-card {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px 14px;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:16px;
+  box-shadow:0 4px 14px rgba(69,103,163,0.08);
+  cursor:grab;
+  transition:all 0.2s ease;
+}
+.answer-card.dragging { opacity:.45; }
+.answer-card.correct {
+  border-color:#3dbf72;
+  background:linear-gradient(180deg, #f2fff7 0%, #eafaf0 100%);
+  box-shadow:0 0 0 3px rgba(61, 191, 114, 0.12), 0 10px 22px rgba(61, 191, 114, 0.18);
+}
+.answer-card.incorrect {
+  border-color:#ef6d6d;
+  background:linear-gradient(180deg, #fff7f7 0%, #fff1f1 100%);
+}
+.answer-index {
+  min-width:28px;
+  height:28px;
+  border-radius:50%;
+  background:var(--accent-soft);
+  color:var(--accent);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:13px;
+  font-weight:700;
+}
+.answer-math { flex:1; }
+.order-controls { display:flex; gap:4px; }
+.order-btn {
+  width:30px;
+  height:30px;
+  border:0;
+  border-radius:50%;
+  background:#f2f6ff;
+  color:#38577e;
+  cursor:pointer;
+  font-size:15px;
+}
+.order-btn:disabled { opacity:.4; cursor:default; }
+.remove-btn {
+  border:none;
+  background:#f2f6ff;
+  color:#5c6d86;
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:17px;
+  line-height:1;
+}
+.controls {
+  margin-top:18px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-start;
+  gap:10px;
+}
+.action-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-top:14px;
+}
+.math-controls {
+  margin-top:14px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.action-btn {
+  border:none;
+  border-radius:999px;
+  padding:12px 18px;
+  cursor:pointer;
+  font-weight:700;
+}
+.primary { background:var(--accent); color:white; }
+.secondary { background:#eef4ff; color:#27446c; }
+.status {
+  margin-top:18px;
+  padding:14px 16px;
+  border-radius:16px;
+  display:none;
+  border:1px solid transparent;
+}
+.status.show { display:block; }
+.status.good { background:var(--good); border-color:#b8e7c6; }
+.status.bad { background:var(--bad); border-color:#f3b9b9; }
+.mode-row,
+.panel-row {
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:14px;
+}
+.panel-row {
+  justify-content:flex-end;
+}
+.mode-menu {
+  position:relative;
+  display:flex;
+  align-items:center;
+}
+.mode-menu-button {
+  border:none;
+  border-radius:999px;
+  background:var(--accent);
+  color:white;
+  padding:10px 16px;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:var(--shadow);
+}
+.mode-dropdown {
+  position:absolute;
+  right:0;
+  top:calc(100% + 10px);
+  display:flex;
+  flex-direction:column;
+  min-width:180px;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:16px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  z-index:25;
+}
+.mode-dropdown.hidden { display:none; }
+.mode-dropdown-item {
+  border:none;
+  background:white;
+  color:#2b3d55;
+  text-align:left;
+  padding:12px 14px;
+  font-weight:700;
+  cursor:pointer;
+}
+.mode-dropdown-item.active {
+  background:var(--accent-soft);
+  color:var(--accent);
+}
+.mode-dropdown-item:hover {
+  background:#f5f9ff;
+}
+.inline-btn {
+  background:#f3f7ff;
+  color:#21476f;
+  border:none;
+  border-radius:999px;
+  padding:10px 14px;
+  font-weight:700;
+  cursor:pointer;
+  transition:all 0.2s ease;
+}
+.progress-shell {
+  margin-top:18px;
+  padding:14px 16px;
+  border-radius:18px;
+  background:#f7fbff;
+  border:1px solid var(--border);
+}
+.progress-bar {
+  width:100%;
+  height:12px;
+  background:#e8efff;
+  border-radius:999px;
+  overflow:hidden;
+  border:1px solid #dfeaff;
+}
+.progress-fill {
+  display:block;
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg, #2f6fff, #54b6ff);
+  border-radius:inherit;
+  transition:width 0.25s ease;
+}
+.progress-meta {
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:10px;
+  color:var(--muted);
+  font-size:13px;
+  flex-wrap:wrap;
+}
+.feedback-panel {
+  margin-top:18px;
+  background:#f8fbff;
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:16px 18px;
+}
+.feedback-panel.hidden { display:none; }
+.feedback-title {
+  font-size:16px;
+  font-weight:800;
+  margin-bottom:8px;
+}
+.feedback-text,
+.feedback-hint {
+  color:#324864;
+  line-height:1.6;
+}
+.feedback-hint {
+  margin-top:8px;
+  padding:10px 12px;
+  background:#edf5ff;
+  border-radius:12px;
+  border:1px solid #dfeafe;
+}
+.study-solution {
+  margin-top:12px;
+  padding:10px 12px;
+  border-radius:12px;
+  background:#f3fff8;
+  border:1px solid #d7efdf;
+}
+.solution-line {
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  margin-top:8px;
+  color:#1d2a39;
+}
+.retry-strip {
+  margin-top:16px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.retry-pill {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:8px 12px;
+  border-radius:999px;
+  background:#fff3f2;
+  border:1px solid #f7d0d0;
+  color:#903737;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+}
+.clear-answer-btn {
+  border:none;
+  background:#eef4ff;
+  color:#27446c;
+  border-radius:999px;
+  padding:10px 14px;
+  font-weight:700;
+  cursor:pointer;
+  align-self:flex-end;
+  margin-top:8px;
+}
+.legend { margin-top:10px; color:var(--muted); font-size:13px; }
+.footer-note { margin-top:12px; color:var(--muted); font-size:13px; }
+.signature-badge {
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:30;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:11px 15px;
+  color:#173329;
+  font-size:14px;
+  font-weight:700;
+  background:rgba(255,255,255,0.76);
+  border:1px solid rgba(255,255,255,0.9);
+  border-radius:10px;
+  box-shadow:0 8px 28px rgba(25,52,42,0.16);
+  backdrop-filter:blur(14px) saturate(150%);
+  -webkit-backdrop-filter:blur(14px) saturate(150%);
+}
+.badge-light {
+  width:9px;
+  height:9px;
+  flex:0 0 9px;
+  border-radius:50%;
+  background:#20bf55;
+  box-shadow:0 0 0 3px rgba(32,191,85,0.14), 0 0 12px rgba(32,191,85,0.75);
+  animation:green-pulse 1.5s ease-in-out infinite;
+}
+@keyframes green-pulse {
+  50% { opacity:.38; box-shadow:0 0 0 5px rgba(32,191,85,0.08), 0 0 5px rgba(32,191,85,0.35); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .badge-light { animation:none; }
+}
+@media (max-width: 900px) {
+  .sidebar { transform:translateX(-100%); }
+  .sidebar.mobile-open { transform:translateX(0); }
+  .main { margin-left:0; padding:16px 16px 88px; }
+  .title-group h1 { font-size:22px; }
+  .question-box { font-size:19px; }
+  .signature-badge { right:12px; bottom:12px; padding:10px 13px; }
+}
+@media (max-width: 640px) {
+  .card { padding:18px; }
+  .formula-grid { gap:18px; }
+  .formula-equation { font-size:calc(0.78em * var(--math-scale, 1)); }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar hidden" id="sidebar">
+    <div class="brand">
+      <div class="brand-heading">
+        <h2>Exponential Calculus Quiz</h2>
+        <button class="sidebar-hide-btn" id="sidebarHideBtn" type="button" aria-label="Hide questions panel" title="Hide questions panel">‹</button>
+      </div>
+      <p>Drag only the correct mathematical expressions into the answer box in the correct order.</p>
+    </div>
+    <h3>Question Navigator</h3>
+    <div class="nav-grid" id="navGrid"></div>
+    <div class="sidebar-stats">
+      <div><strong>Total:</strong> <span id="totalCount"></span></div>
+      <div><strong>Completed:</strong> <span id="doneCount">0</span></div>
+      <div><strong>Score:</strong> <span id="scoreCount">0</span></div>
+    </div>
+  </aside>
+
+  <main class="main expanded" id="mainArea">
+    <div class="topbar">
+      <button class="toggle-btn" id="toggleBtn">☰ Questions</button>
+      <div class="title-group">
+        <h1>Exponential Calculus Step Order Quiz</h1>
+        <p>Mathematical expressions only • one-time drag cards • proper stacked fractions</p>
+      </div>
+      <div class="math-controls topbar-controls" aria-label="Formula font size">
+        <button class="action-btn secondary" id="fontDownBtn" type="button" title="Decrease formula size" aria-label="Decrease formula size">A−</button>
+        <button class="action-btn secondary" id="fontUpBtn" type="button" title="Increase formula size" aria-label="Increase formula size">A+</button>
+      </div>
+      <div class="mode-menu">
+        <button class="mode-menu-button" id="modeMenuButton" type="button" aria-expanded="false" aria-controls="modeDropdown">Mode: Quiz mode ▾</button>
+        <div class="mode-dropdown hidden" id="modeDropdown">
+          <button class="mode-dropdown-item active" type="button" data-mode="quiz">Quiz mode</button>
+          <button class="mode-dropdown-item" type="button" data-mode="study">Study mode</button>
+          <button class="mode-dropdown-item" type="button" data-mode="challenge">Challenge mode</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="view-tabs" role="tablist" aria-label="Quiz and formula views">
+      <button class="view-tab active" id="practiceTab" type="button" role="tab" aria-selected="true" aria-controls="quizView" data-view="practice">Practice</button>
+      <button class="view-tab" id="formulaTab" type="button" role="tab" aria-selected="false" aria-controls="formulaView" data-view="formulas" tabindex="-1">Formula Recall</button>
+    </div>
+
+    <section class="card" id="quizView" role="tabpanel" aria-labelledby="practiceTab">
+      <div class="question-head">
+        <div class="badge" id="questionBadge">Question 1</div>
+      </div>
+
+      <div class="question-box" id="questionBox"></div>
+
+      <div class="section-title">Given Steps</div>
+      <div class="bank" id="bank"></div>
+
+      <div class="section-title">Answer Order</div>
+      <div class="dropzone" id="dropzone"></div>
+      <div class="action-row">
+        <button class="clear-answer-btn" id="clearAnswerBtn" type="button">Clear</button>
+        <button class="action-btn primary" id="checkBtn">Check Answer</button>
+      </div>
+      <div class="legend">Each step can be used only once. Click × to return a step to the given steps box.</div>
+
+      <div class="controls">
+        <button class="action-btn secondary" id="prevBtn">Previous</button>
+        <button class="action-btn secondary" id="nextBtn">Next</button>
+      </div>
+
+      <div class="panel-row">
+        <button class="inline-btn" id="hintBtn" type="button">Hint</button>
+        <button class="inline-btn" id="showSolutionBtn" type="button">Show solution</button>
+      </div>
+
+      <div class="progress-shell" aria-live="polite">
+        <div class="progress-bar"><span class="progress-fill" id="progressFill"></span></div>
+        <div class="progress-meta">
+          <span id="progressText">0/0</span>
+          <span id="streakText">Streak 0</span>
+        </div>
+      </div>
+
+      <div class="feedback-panel hidden" id="feedbackPanel"></div>
+      <div class="retry-strip" id="retryStrip"></div>
+
+      <div class="status" id="statusBox"></div>
+      <div class="footer-note">Only mathematical expressions are shown in the steps.</div>
+    </section>
+
+    <section class="card" id="formulaView" role="tabpanel" aria-labelledby="formulaTab" hidden>
+      <div class="formula-heading">
+        <h2>Derivative Rules</h2>
+        <p>Exponential, trigonometric, and implicit differentiation</p>
+      </div>
+      <div class="formula-grid">
+        <section class="formula-group">
+          <h3>Exponential Derivatives</h3>
+          <div class="formula-row"><span class="formula-label">Natural base</span><span class="formula-equation">\(\dfrac{d}{dx}(e^x)=e^x\)</span></div>
+          <div class="formula-row"><span class="formula-label">General base</span><span class="formula-equation">\(\dfrac{d}{dx}(a^x)=a^x\ln(a),\quad a>0,\;a\ne1\)</span></div>
+          <div class="formula-row"><span class="formula-label">Natural base composite</span><span class="formula-equation">\(\dfrac{d}{dx}(e^{g(x)})=g'(x)e^{g(x)}\)</span></div>
+          <div class="formula-row"><span class="formula-label">General base composite</span><span class="formula-equation">\(\dfrac{d}{dx}(a^{g(x)})=g'(x)a^{g(x)}\ln(a)\)</span></div>
+          <div class="formula-row"><span class="formula-label">Natural logarithm</span><span class="formula-equation">\(\dfrac{d}{dx}\ln(u)=\dfrac{u'}{u}\)</span></div>
+          <div class="formula-row"><span class="formula-label">Inverse tangent</span><span class="formula-equation">\(\dfrac{d}{dx}\arctan(u)=\dfrac{u'}{1+u^2}\)</span></div>
+          <div class="formula-row"><span class="formula-label">Sine</span><span class="formula-equation">\(\dfrac{d}{dx}\sin(u)=\cos(u)\,u'\)</span></div>
+          <div class="formula-row"><span class="formula-label">Tangent</span><span class="formula-equation">\(\dfrac{d}{dx}\tan(u)=\sec^2(u)\,u'\)</span></div>
+        </section>
+        <section class="formula-group">
+          <h3>Linearity and Powers</h3>
+          <div class="formula-row"><span class="formula-label">Constant multiple</span><span class="formula-equation">\(\dfrac{d}{dx}[cf(x)]=cf'(x)\)</span></div>
+          <div class="formula-row"><span class="formula-label">Sum or difference</span><span class="formula-equation">\(\dfrac{d}{dx}[f(x)\pm g(x)]=f'(x)\pm g'(x)\)</span></div>
+          <div class="formula-row"><span class="formula-label">Power rule</span><span class="formula-equation">\(\dfrac{d}{dx}(x^n)=nx^{n-1}\)</span></div>
+        </section>
+        <section class="formula-group">
+          <h3>Chain Rule</h3>
+          <div class="formula-row"><span class="formula-label">Composite function</span><span class="formula-equation">\(\dfrac{d}{dx}f(g(x))=f'(g(x))g'(x)\)</span></div>
+          <div class="formula-row"><span class="formula-label">Linear inner function</span><span class="formula-equation">\(u=ax+b\;\Longrightarrow\;u'=a\)</span></div>
+        </section>
+        <section class="formula-group">
+          <h3>Product Rule</h3>
+          <div class="formula-row"><span class="formula-label">Two functions</span><span class="formula-equation">\((uv)'=u'v+uv'\)</span></div>
+          <div class="formula-row"><span class="formula-label">Example form</span><span class="formula-equation">\(\dfrac{d}{dx}[x f(x)]=f(x)+xf'(x)\)</span></div>
+        </section>
+        <section class="formula-group">
+          <h3>Quotient Rule</h3>
+          <div class="formula-row"><span class="formula-label">Two functions</span><span class="formula-equation">\(\left(\dfrac{u}{v}\right)'=\dfrac{vu'-uv'}{v^2}\)</span></div>
+        </section>
+        <section class="formula-group">
+          <h3>Power and Product Rules</h3>
+          <div class="formula-row"><span class="formula-label">General power</span><span class="formula-equation">\(\dfrac{d}{dx}[f(x)]^n=n[f(x)]^{n-1}f'(x)\)</span></div>
+          <div class="formula-row"><span class="formula-label">Product rule</span><span class="formula-equation">\((uv)'=u'v+uv'\)</span></div>
+        </section>
+        <section class="formula-group">
+          <h3>Curve Analysis</h3>
+          <div class="formula-row"><span class="formula-label">Stationary point</span><span class="formula-equation">\(\dfrac{dy}{dx}=0\)</span></div>
+          <div class="formula-row"><span class="formula-label">Second derivative test</span><span class="formula-equation">\(y''>0:\text{ minimum},\quad y''<0:\text{ maximum}\)</span></div>
+          <div class="formula-row"><span class="formula-label">Normal gradient</span><span class="formula-equation">\(m_n=-\dfrac{1}{m_t}\)</span></div>
+        </section>
+        <section class="formula-group">
+          <h3>Implicit Differentiation</h3>
+          <div class="formula-row"><span class="formula-label">General relation</span><span class="formula-equation">\(F(x,y)=c\;\Longrightarrow\;\dfrac{d}{dx}F(x,y)=0\)</span></div>
+          <div class="formula-row"><span class="formula-label">Exponential of y</span><span class="formula-equation">\(\dfrac{d}{dx}(e^{g(y)})=e^{g(y)}g'(y)\dfrac{dy}{dx}\)</span></div>
+        </section>
+        <section class="formula-group">
+          <h3>Exam Reminders</h3>
+          <div class="formula-row"><span class="formula-label">Variable base, fixed power</span><span class="formula-equation">\(\dfrac{d}{dx}(x^2)=2x\)</span></div>
+          <div class="formula-row"><span class="formula-label">Fixed base, variable power</span><span class="formula-equation">\(\dfrac{d}{dx}(2^x)=2^x\ln(2)\)</span></div>
+          <div class="formula-row"><span class="formula-label">Simplify logs first</span><span class="formula-equation">\(\ln(e^{3x})=3x\;\Longrightarrow\;\dfrac{d}{dx}\ln(e^{3x})=3\)</span></div>
+        </section>
+        <section class="formula-group">
+          <h3>Rates of Change</h3>
+          <div class="formula-row"><span class="formula-label">Velocity</span><span class="formula-equation">\(v=\dfrac{ds}{dt}\)</span></div>
+          <div class="formula-row"><span class="formula-label">Acceleration</span><span class="formula-equation">\(a=\dfrac{dv}{dt}\)</span></div>
+          <div class="formula-row"><span class="formula-label">Stationary velocity</span><span class="formula-equation">\(a=0\)</span></div>
+        </section>
+        <section class="formula-group">
+          <h3>Exponential Models</h3>
+          <div class="formula-row"><span class="formula-label">Exponential decay</span><span class="formula-equation">\(M=Ae^{-kt}\)</span></div>
+          <div class="formula-row"><span class="formula-label">Half-life</span><span class="formula-equation">\(M(T)=\dfrac{A}{2}\;\Longrightarrow\;k=\dfrac{\ln 2}{T}\)</span></div>
+        </section>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="signature-badge" aria-label="Dr King Wunna">
+  <span class="badge-light" aria-hidden="true"></span>
+  <span>Dr King Wunna</span>
+</div>
+
+<script>
+const questions = [
+  {
+    title: "\\(f(x)=4e^x-2x\\)",
+    answer: ["\\frac{d}{dx}(4e^x-2x)", "4\\frac{d}{dx}(e^x)-2\\frac{d}{dx}(x)", "4e^x-2"],
+    distractors: ["4e^x+2", "4e^x-2x"]
+  },
+  {
+    title: "\\(f(x)=e^{-5x}\\)",
+    answer: ["u=-5x", "\\frac{d}{dx}(e^u)=e^u u'", "u'=-5", "-5e^{-5x}"],
+    distractors: ["e^{-5x}", "5e^{-5x}"]
+  },
+  {
+    title: "\\(f(x)=e^{x^2+4x}\\)",
+    answer: ["u=x^2+4x", "u'=2x+4", "\\frac{d}{dx}(e^u)=e^u u'", "(2x+4)e^{x^2+4x}"],
+    distractors: ["(x^2+4)e^{x^2+4x}", "(2x+4)e^{2x+4x}"]
+  },
+  {
+    title: "\\(f(x)=3^x\\)",
+    answer: ["\\frac{d}{dx}(a^x)=a^x\\ln(a)", "a=3", "3^x\\ln(3)"],
+    distractors: ["3^x\\ln(x)", "x3^{x-1}"]
+  },
+  {
+    title: "\\(f(x)=10^{2x}\\)",
+    answer: ["u=2x", "\\frac{d}{dx}(10^u)=10^u\\ln(10)u'", "u'=2", "2\\cdot10^{2x}\\ln(10)"],
+    distractors: ["10^{2x}\\ln(10)", "2\\cdot10^{2x}"]
+  },
+  {
+    title: "\\(f(x)=x^2e^x\\)",
+    answer: ["u=x^2,\\quad v=e^x", "u'=2x,\\quad v'=e^x", "(uv)'=u'v+uv'", "(x^2+2x)e^x"],
+    distractors: ["(x^2+2x)e^{2x}", "2xe^x"]
+  },
+  {
+    title: "\\(f(x)=\\dfrac{e^x}{x+1}\\)",
+    answer: ["u=e^x,\\quad v=x+1", "u'=e^x,\\quad v'=1", "\\left(\\frac{u}{v}\\right)'=\\frac{u'v-uv'}{v^2}", "\\frac{e^x(x+1)-e^x}{(x+1)^2}", "\\frac{xe^x}{(x+1)^2}"],
+    distractors: ["\\frac{e^x}{(x+1)^2}", "\\frac{(x+2)e^x}{(x+1)^2}"]
+  },
+  {
+    title: "\\(f(x)=e^{\\cos(3x)}\\)",
+    answer: ["u=\\cos(3x)", "u'=-\\sin(3x)\\cdot3", "\\frac{d}{dx}(e^u)=e^u u'", "-3\\sin(3x)e^{\\cos(3x)}"],
+    distractors: ["3\\sin(3x)e^{\\cos(3x)}", "-3\\cos(3x)e^{\\cos(3x)}"]
+  },
+  {
+    title: "\\(f(x)=e^{2x}\\sin(x)\\)",
+    answer: ["u=e^{2x},\\quad v=\\sin(x)", "u'=2e^{2x},\\quad v'=\\cos(x)", "(uv)'=u'v+uv'", "e^{2x}(2\\sin(x)+\\cos(x))"],
+    distractors: ["e^{2x}(2\\cos(x)+\\sin(x))", "2e^{2x}\\sin(x)"]
+  },
+  {
+    title: "\\(f(x)=\\sqrt{e^{4x}+1}\\)",
+    answer: ["f(x)=(e^{4x}+1)^{1/2}", "\\frac{d}{dx}(u^{1/2})=\\frac{1}{2}u^{-1/2}u'", "u=e^{4x}+1,\\quad u'=4e^{4x}", "\\frac{1}{2}(e^{4x}+1)^{-1/2}\\cdot4e^{4x}", "\\frac{2e^{4x}}{\\sqrt{e^{4x}+1}}"],
+    distractors: ["\\frac{4e^{4x}}{\\sqrt{e^{4x}+1}}", "\\frac{2e^{4x}}{e^{4x}+1}"]
+  },
+  {
+    title: "\\(f(x)=e^{\\sqrt{x}}\\)",
+    answer: ["u=\\sqrt{x}=x^{1/2}", "u'=\\frac{1}{2}x^{-1/2}=\\frac{1}{2\\sqrt{x}}", "\\frac{d}{dx}(e^u)=e^u u'", "\\frac{e^{\\sqrt{x}}}{2\\sqrt{x}}"],
+    distractors: ["\\frac{e^{\\sqrt{x}}}{\\sqrt{x}}", "\\frac{1}{2\\sqrt{x}}"]
+  },
+  {
+    title: "\\(f(x)=5^{x^3}\\)",
+    answer: ["u=x^3,\\quad u'=3x^2", "\\frac{d}{dx}(a^u)=a^u\\ln(a)u'", "a=5", "3x^2\\cdot5^{x^3}\\ln(5)"],
+    distractors: ["x^3\\cdot5^{x^3}\\ln(5)", "3x^2\\cdot5^{x^3}"]
+  },
+  {
+    title: "\\(f(x)=\\dfrac{x^3}{e^{2x}}\\)",
+    answer: ["u=x^3,\\quad v=e^{2x}", "u'=3x^2,\\quad v'=2e^{2x}", "\\left(\\frac{u}{v}\\right)'=\\frac{u'v-uv'}{v^2}", "\\frac{3x^2e^{2x}-2x^3e^{2x}}{(e^{2x})^2}", "\\frac{x^2e^{2x}(3-2x)}{e^{4x}}", "\\frac{x^2(3-2x)}{e^{2x}}"],
+    distractors: ["\\frac{x^2(3+2x)}{e^{2x}}", "\\frac{x^2(3-2x)}{e^{4x}}"]
+  },
+  {
+    title: "\\(f(x)=\\ln(e^x+2)\\)",
+    answer: ["u=e^x+2,\\quad u'=e^x", "\\frac{d}{dx}\\ln(u)=\\frac{u'}{u}", "\\frac{e^x}{e^x+2}"],
+    distractors: ["\\frac{1}{e^x+2}", "\\frac{e^x}{e^x+1}"]
+  },
+  {
+    title: "\\(f(x)=e^x\\tan(x)\\)",
+    answer: ["u=e^x,\\quad v=\\tan(x)", "u'=e^x,\\quad v'=\\sec^2(x)", "(uv)'=u'v+uv'", "e^x(\\tan(x)+\\sec^2(x))"],
+    distractors: ["e^x(\\tan(x)+\\sec(x))", "e^x\\tan(x)\\sec^2(x)"]
+  },
+  {
+    title: "\\(f(x)=(e^{3x}-1)^5\\)",
+    answer: ["u=e^{3x}-1,\\quad u'=3e^{3x}", "\\frac{d}{dx}(u^5)=5u^4u'", "5(e^{3x}-1)^4\\cdot3e^{3x}", "15e^{3x}(e^{3x}-1)^4"],
+    distractors: ["15e^{3x}(e^{3x}-1)^5", "5e^{3x}(e^{3x}-1)^4"]
+  },
+  {
+    title: "\\(f(x)=e^{x\\ln(x)}\\)",
+    answer: ["u=x\\ln(x)", "u'=1\\cdot\\ln(x)+x\\cdot\\frac{1}{x}=\\ln(x)+1", "\\frac{d}{dx}(e^u)=e^u u'", "(\\ln(x)+1)e^{x\\ln(x)}"],
+    distractors: ["\\ln(x)e^{x\\ln(x)}", "(\\ln(x)+1)e^{\\ln(x)}"]
+  },
+  {
+    title: "\\(f(x)=\\sin(e^{-x})\\)",
+    answer: ["u=e^{-x},\\quad u'=-e^{-x}", "\\frac{d}{dx}\\sin(u)=\\cos(u)u'", "-e^{-x}\\cos(e^{-x})"],
+    distractors: ["e^{-x}\\cos(e^{-x})", "-e^{-x}\\sin(e^{-x})"]
+  },
+  {
+    title: "\\(f(x)=\\dfrac{e^x+e^{-x}}{2}\\)",
+    answer: ["f(x)=\\frac{1}{2}(e^x+e^{-x})", "\\frac{d}{dx}(e^x)=e^x,\\quad\\frac{d}{dx}(e^{-x})=-e^{-x}", "\\frac{1}{2}(e^x-e^{-x})", "\\frac{e^x-e^{-x}}{2}"],
+    distractors: ["\\frac{e^x+e^{-x}}{2}", "\\frac{e^x-e^{-x}}{2x}"]
+  },
+  {
+    title: "\\(f(x)=e^{e^x}\\)",
+    answer: ["u=e^x,\\quad u'=e^x", "\\frac{d}{dx}(e^u)=e^u u'", "e^x\\cdot e^{e^x}"],
+    distractors: ["e^{e^x}", "e^x\\cdot e^x"]
+  },
+  {
+    title: "\\(f(x)=x^x\\)",
+    answer: ["y=x^x", "\\ln(y)=\\ln(x^x)=x\\ln(x)", "\\frac{1}{y}\\frac{dy}{dx}=\\frac{d}{dx}[x\\ln(x)]", "\\frac{1}{y}\\frac{dy}{dx}=\\ln(x)+1", "\\frac{dy}{dx}=y(\\ln(x)+1)", "f'(x)=x^x(\\ln(x)+1)"],
+    distractors: ["x^x\\ln(x)", "x^x(\\ln(x)-1)"]
+  },
+  {
+    title: "\\(f(x)=e^{x^2\\sin(x)}\\)",
+    answer: ["u=x^2\\sin(x)", "u'=2x\\sin(x)+x^2\\cos(x)", "\\frac{d}{dx}(e^u)=e^u u'", "(2x\\sin(x)+x^2\\cos(x))e^{x^2\\sin(x)}"],
+    distractors: ["(2x\\cos(x)+x^2\\sin(x))e^{x^2\\sin(x)}", "(2x\\sin(x)+x^2\\cos(x))e^{2x\\sin(x)}"]
+  },
+  {
+    title: "\\(f(x)=\\arctan(e^{2x})\\)",
+    answer: ["u=e^{2x},\\quad u'=2e^{2x}", "\\frac{d}{dx}\\arctan(u)=\\frac{u'}{1+u^2}", "\\frac{2e^{2x}}{1+(e^{2x})^2}", "\\frac{2e^{2x}}{1+e^{4x}}"],
+    distractors: ["\\frac{e^{2x}}{1+e^{4x}}", "\\frac{2e^{2x}}{1+e^{2x}}"]
+  },
+  {
+    title: "\\(f(x)=\\dfrac{e^x-1}{e^x+1}\\)",
+    answer: ["u=e^x-1,\\quad v=e^x+1", "u'=e^x,\\quad v'=e^x", "\\left(\\frac{u}{v}\\right)'=\\frac{u'v-uv'}{v^2}", "\\frac{e^x(e^x+1)-(e^x-1)e^x}{(e^x+1)^2}", "\\frac{2e^x}{(e^x+1)^2}"],
+    distractors: ["\\frac{2e^x}{e^x+1}", "\\frac{e^x}{(e^x+1)^2}"]
+  },
+  {
+    title: "\\(f(x)=7^{\\cos^2(x)}\\)",
+    answer: ["u=\\cos^2(x),\\quad u'=2\\cos(x)(-\\sin(x))", "\\frac{d}{dx}(a^u)=a^u\\ln(a)u'", "7^{\\cos^2(x)}\\ln(7)\\cdot[-2\\sin(x)\\cos(x)]", "-\\sin(2x)\\cdot7^{\\cos^2(x)}\\ln(7)"],
+    distractors: ["\\sin(2x)\\cdot7^{\\cos^2(x)}\\ln(7)", "-2\\sin(x)\\cos(x)\\cdot7^{\\cos(x)}"]
+  },
+  {
+    title: "\\(f(x)=\\ln\\left(\\dfrac{e^x}{e^x+5}\\right)\\)",
+    answer: ["\\ln\\left(\\frac{e^x}{e^x+5}\\right)=\\ln(e^x)-\\ln(e^x+5)=x-\\ln(e^x+5)", "\\frac{d}{dx}[x]=1,\\quad\\frac{d}{dx}\\ln(e^x+5)=\\frac{e^x}{e^x+5}", "1-\\frac{e^x}{e^x+5}", "\\frac{e^x+5-e^x}{e^x+5}", "\\frac{5}{e^x+5}"],
+    distractors: ["\\frac{e^x}{e^x+5}", "\\frac{5}{e^x}"]
+  },
+  {
+    title: "\\(f(x)=e^{3x}\\ln(x^2+1)\\)",
+    answer: ["u=e^{3x},\\quad v=\\ln(x^2+1)", "u'=3e^{3x},\\quad v'=\\frac{2x}{x^2+1}", "(uv)'=u'v+uv'", "3e^{3x}\\ln(x^2+1)+e^{3x}\\frac{2x}{x^2+1}", "e^{3x}\\left(3\\ln(x^2+1)+\\frac{2x}{x^2+1}\\right)"],
+    distractors: ["e^{3x}\\left(3\\ln(x^2+1)+\\frac{2}{x^2+1}\\right)", "e^{3x}\\left(\\ln(x^2+1)+\\frac{2x}{x^2+1}\\right)"]
+  },
+  {
+    title: "\\(f(x)=\\sqrt{x}\\cdot e^{-x^2}\\)",
+    answer: ["u=\\sqrt{x},\\quad v=e^{-x^2}", "u'=\\frac{1}{2\\sqrt{x}},\\quad v'=-2xe^{-x^2}", "(uv)'=u'v+uv'", "\\frac{1}{2\\sqrt{x}}e^{-x^2}-2x\\sqrt{x}e^{-x^2}", "e^{-x^2}\\left(\\frac{1}{2\\sqrt{x}}-2x\\sqrt{x}\\right)", "\\frac{(1-4x^2)e^{-x^2}}{2\\sqrt{x}}"],
+    distractors: ["\\frac{(1+4x^2)e^{-x^2}}{2\\sqrt{x}}", "\\frac{(1-2x^2)e^{-x^2}}{2\\sqrt{x}}"]
+  },
+  {
+    title: "\\(f(x)=e^{-x^2}\\); find \\(f''(x)\\)",
+    answer: ["f'(x)=-2xe^{-x^2}", "u=-2x,\\quad v=e^{-x^2}", "u'=-2,\\quad v'=-2xe^{-x^2}", "f''(x)=(-2)e^{-x^2}+(-2x)(-2xe^{-x^2})", "f''(x)=-2e^{-x^2}+4x^2e^{-x^2}", "f''(x)=2e^{-x^2}(2x^2-1)"],
+    distractors: ["f''(x)=2e^{-x^2}(2x^2+1)", "f''(x)=e^{-x^2}(2x^2-1)"]
+  },
+  {
+    title: "\\(f(x)=e^{e^{e^x}}\\)",
+    answer: ["u=e^{e^x},\\quad u'=e^x e^{e^x}", "\\frac{d}{dx}(e^u)=e^u u'", "e^x\\cdot e^{e^x}\\cdot e^{e^{e^x}}"],
+    distractors: ["e^{e^x}\\cdot e^{e^{e^x}}", "e^x\\cdot e^{e^{e^x}}"]
+  },
+  {
+    number: 41,
+    title: "\\(y=3e^{-2x}\\sin(x)\\); find the first stationary point for \\(x>0\\)",
+    answer: ["u=3e^{-2x},\\quad v=\\sin(x)", "u'=-6e^{-2x},\\quad v'=\\cos(x)", "\\frac{dy}{dx}=u'v+uv'", "\\frac{dy}{dx}=3e^{-2x}(\\cos(x)-2\\sin(x))", "\\frac{dy}{dx}=0\\;\\Longrightarrow\\;\\cos(x)-2\\sin(x)=0", "\\tan(x)=\\frac{1}{2}", "x=\\arctan\\left(\\frac{1}{2}\\right)"],
+    distractors: ["x=\\arctan(2)", "x=\\frac{\\pi}{2}-\\arctan\\left(\\frac{1}{2}\\right)"]
+  },
+  {
+    number: 42,
+    title: "\\(y=\\dfrac{e^{4x}}{2x+1}\\); find the normal at the y-intercept",
+    answer: ["x=0\\;\\Longrightarrow\\;y=1,\\quad (0,1)", "\\frac{dy}{dx}=\\frac{(4e^{4x})(2x+1)-2e^{4x}}{(2x+1)^2}", "m_t=\\left.\\frac{dy}{dx}\\right|_{x=0}=2", "m_n=-\\frac{1}{m_t}=-\\frac{1}{2}", "y-1=-\\frac{1}{2}(x-0)", "y=-\\frac{1}{2}x+1"],
+    distractors: ["y=2x+1", "y=-2x+1"]
+  },
+  {
+    number: 43,
+    title: "\\(y=(x-3)e^{2x}\\); find the stationary point and its nature",
+    answer: ["\\frac{dy}{dx}=e^{2x}+2(x-3)e^{2x}", "\\frac{dy}{dx}=e^{2x}(2x-5)", "\\frac{dy}{dx}=0\\;\\Longrightarrow\\;x=\\frac{5}{2}", "y\\left(\\frac{5}{2}\\right)=-\\frac{1}{2}e^5", "\\left(\\frac{5}{2},-\\frac{1}{2}e^5\\right)", "\\frac{d^2y}{dx^2}=2e^{2x}(2x-4)", "\\left.\\frac{d^2y}{dx^2}\\right|_{x=5/2}=2e^5>0", "A minimum point"],
+    distractors: ["\\left(\\frac{5}{2},\\frac{1}{2}e^5\\right)", "A maximum point"]
+  },
+  {
+    number: 44,
+    title: "\\(y=e^{-x}\\sqrt{3x+1}\\); correct the proposed derivative",
+    answer: ["y=e^{-x}(3x+1)^{1/2}", "u=e^{-x},\\quad v=\\sqrt{3x+1}", "u'=-e^{-x},\\quad v'=\\frac{3}{2\\sqrt{3x+1}}", "\\frac{dy}{dx}=-e^{-x}\\sqrt{3x+1}+\\frac{3e^{-x}}{2\\sqrt{3x+1}}", "\\frac{dy}{dx}=\\frac{e^{-x}[-2(3x+1)+3]}{2\\sqrt{3x+1}}", "\\frac{dy}{dx}=\\frac{e^{-x}(1-6x)}{2\\sqrt{3x+1}}", "\\left.\\frac{dy}{dx}\\right|_{x=1}=-\\frac{5}{4e}\\ne-\\frac{2}{e};\\;\\text{the proposed expression is false}"],
+    distractors: ["\\frac{e^{-x}(1-6x-3x^2)}{2\\sqrt{3x+1}}", "\\frac{e^{-x}(1+6x)}{2\\sqrt{3x+1}}"]
+  },
+  {
+    number: 45,
+    title: "\\(e^{2y}+3x^2e^y=4\\); find \\(\\dfrac{dy}{dx}\\) at the y-axis intersection",
+    answer: ["x=0\\;\\Longrightarrow\\;e^{2y}=4,\\quad y=\\ln(2)", "\\frac{d}{dx}(e^{2y})+\\frac{d}{dx}(3x^2e^y)=0", "2e^{2y}\\frac{dy}{dx}+6xe^y+3x^2e^y\\frac{dy}{dx}=0", "x=0,\\quad e^y=2,\\quad e^{2y}=4", "8\\frac{dy}{dx}=0", "\\frac{dy}{dx}=0"],
+    distractors: ["\\frac{dy}{dx}=2", "\\frac{dy}{dx}=-\\frac{3}{2}"]
+  },
+  {
+    number: 46,
+    title: "\\(y=e^{3x}\\cos(2x)\\); verify \\(y''-6y'+13y=0\\)",
+    answer: ["y'=3e^{3x}\\cos(2x)-2e^{3x}\\sin(2x)", "y'=e^{3x}(3\\cos(2x)-2\\sin(2x))", "y''=3e^{3x}(3\\cos(2x)-2\\sin(2x))+e^{3x}(-6\\sin(2x)-4\\cos(2x))", "y''=e^{3x}(5\\cos(2x)-12\\sin(2x))", "y''-6y'+13y=e^{3x}[(5-18+13)\\cos(2x)+(-12+12)\\sin(2x)]", "y''-6y'+13y=0"],
+    distractors: ["y''=e^{3x}(13\\cos(2x)-12\\sin(2x))", "y''-6y'+13y=2e^{3x}\\cos(2x)"]
+  },
+  {
+    number: 47,
+    title: "Check the triangle claim for \\(y=2e^{-x}+x\\) at \\(x=\\ln(2)\\), then use the proposed correction",
+    answer: ["P=(\\ln(2),1+\\ln(2))", "\\frac{dy}{dx}=-2e^{-x}+1", "\\left.\\frac{dy}{dx}\\right|_{x=\\ln(2)}=0\\;\\Longrightarrow\\;\\text{the normal is vertical}", "\\text{As stated, the normal does not meet the y-axis at a unique point, so the triangle area is undefined}", "\\text{For the proposed correction }y=4e^{-x}+x:\\quad P=(\\ln(2),2+\\ln(2))", "m_t=-1,\\quad m_n=1,\\quad y-(2+\\ln(2))=x-\\ln(2)", "y=x+2,\\quad A=(-2,0),\\quad B=(0,2)", "\\text{Corrected curve triangle area}=\\frac{1}{2}(2)(2)=2\\text{ units}^2"],
+    distractors: ["\\text{The stated curve has triangle area }2\\text{ units}^2", "m_n=0"]
+  },
+  {
+    number: 48,
+    title: "\\(M= Ae^{-kt}\\); initial mass 500 g, half-life 20 years: find the rate of decrease at \\(t=30\\)",
+    answer: ["M(0)=500\\;\\Longrightarrow\\;A=500", "250=500e^{-20k}\\;\\Longrightarrow\\;k=\\frac{\\ln(2)}{20}", "M=500e^{-kt},\\quad\\frac{dM}{dt}=-500ke^{-kt}", "\\left.\\frac{dM}{dt}\\right|_{t=30}=-25\\ln(2)e^{-3\\ln(2)/2}", "e^{-3\\ln(2)/2}=\\frac{1}{2\\sqrt{2}}", "\\left.\\frac{dM}{dt}\\right|_{t=30}=-\\frac{25\\sqrt{2}\\ln(2)}{4}\\text{ g/year}", "\\text{Rate of decrease}=\\frac{25\\sqrt{2}\\ln(2)}{4}\\text{ g/year}"],
+    distractors: ["\\frac{25\\sqrt{2}\\ln(2)}{2}\\text{ g/year}", "-\\frac{25\\sqrt{2}\\ln(2)}{4}\\text{ g/year is the positive rate of decrease}"]
+  },
+  {
+    number: 49,
+    title: "\\(y=\\dfrac{e^{x^2-4x}}{x}\\), \\(x>0\\); find the stationary x-coordinate(s)",
+    answer: ["u=e^{x^2-4x},\\quad v=x", "u'=(2x-4)e^{x^2-4x},\\quad v'=1", "\\frac{dy}{dx}=\\frac{(2x-4)e^{x^2-4x}x-e^{x^2-4x}}{x^2}", "\\frac{dy}{dx}=\\frac{e^{x^2-4x}(2x^2-4x-1)}{x^2}", "2x^2-4x-1=0", "x=1\\pm\\frac{\\sqrt{6}}{2}", "x>0\\;\\Longrightarrow\\;x=1+\\frac{\\sqrt{6}}{2}"],
+    distractors: ["x=1-\\frac{\\sqrt{6}}{2}", "x=1\\pm\\sqrt{6}"]
+  },
+  {
+    number: 50,
+    title: "\\(s=t^2e^{-0.5t}\\), \\(t\\ge0\\); find the maximum velocity",
+    answer: ["v=\\frac{ds}{dt}=e^{-0.5t}(2t-0.5t^2)", "a=\\frac{dv}{dt}=e^{-0.5t}(0.25t^2-2t+2)", "a=0\\;\\Longrightarrow\\;t^2-8t+8=0", "t=4\\pm2\\sqrt{2}", "t=4-2\\sqrt{2}\\text{ gives the maximum velocity}", "v(4-2\\sqrt{2})=4(\\sqrt{2}-1)e^{\\sqrt{2}-2}", "\\text{Maximum velocity}=4(\\sqrt{2}-1)e^{\\sqrt{2}-2}\\text{ m/s}"],
+    distractors: ["t=4+2\\sqrt{2}\\text{ gives the maximum velocity}", "v_{\\max}=4(\\sqrt{2}-1)e^{2-\\sqrt{2}}\\text{ m/s}"]
+  },
+  {
+    number: 51,
+    title: "\\(y=(x-4)e^{3x}\\); find the stationary point and its nature",
+    answer: ["\\frac{dy}{dx}=e^{3x}+3(x-4)e^{3x}", "\\frac{dy}{dx}=(3x-11)e^{3x}", "\\frac{dy}{dx}=0\\;\\Longrightarrow\\;(3x-11)e^{3x}=0,\\quad e^{3x}>0\\;\\Longrightarrow\\;x=\\frac{11}{3}", "y\\left(\\frac{11}{3}\\right)=-\\frac{1}{3}e^{11}", "\\left(\\frac{11}{3},-\\frac{e^{11}}{3}\\right)", "\\frac{d^2y}{dx^2}=3e^{3x}(3x-11)+3e^{3x}=(9x-30)e^{3x}", "\\left.\\frac{d^2y}{dx^2}\\right|_{x=11/3}=3e^{11}>0", "A minimum point"],
+    distractors: ["\\left(\\frac{11}{3},\\frac{e^{11}}{3}\\right)", "\\left.\\frac{d^2y}{dx^2}\\right|_{x=11/3}=-3e^{11}<0", "A maximum point"]
+  },
+  {
+    number: 52,
+    title: "\\(y=\\dfrac{e^{x^2-2x}}{x}\\), \\(x>0\\); find the stationary x-coordinate(s)",
+    answer: ["u=e^{x^2-2x},\\quad v=x", "u'=(2x-2)e^{x^2-2x},\\quad v'=1", "\\frac{dy}{dx}=\\frac{v u'-u v'}{v^2}", "\\frac{dy}{dx}=\\frac{x(2x-2)e^{x^2-2x}-e^{x^2-2x}}{x^2}", "\\frac{dy}{dx}=\\frac{e^{x^2-2x}(2x^2-2x-1)}{x^2}", "\\frac{dy}{dx}=0\\;\\Longrightarrow\\;2x^2-2x-1=0", "x=\\frac{1\\pm\\sqrt{3}}{2}", "x=\\frac{1+\\sqrt{3}}{2}\\approx1.366,\\quad x=\\frac{1-\\sqrt{3}}{2}\\approx-0.366", "x>0\\;\\Longrightarrow\\;x=\\frac{1+\\sqrt{3}}{2}"],
+    distractors: ["x=\\frac{1\\pm\\sqrt{12}}{2}", "x=\\frac{1-\\sqrt{3}}{2}\\text{ is valid since }x>0"]
+  },
+  {
+    number: 53,
+    title: "\\(y=\\dfrac{e^{2x^2-3x}}{x}\\), \\(x>0\\); find the stationary x-coordinate",
+    answer: ["u=e^{2x^2-3x},\\quad v=x", "u'=(4x-3)e^{2x^2-3x},\\quad v'=1", "\\frac{dy}{dx}=\\frac{v u'-u v'}{v^2}", "\\frac{dy}{dx}=\\frac{x(4x-3)e^{2x^2-3x}-e^{2x^2-3x}}{x^2}", "\\frac{dy}{dx}=\\frac{e^{2x^2-3x}(4x^2-3x-1)}{x^2}", "\\frac{dy}{dx}=0\\;\\Longrightarrow\\;4x^2-3x-1=0", "(4x+1)(x-1)=0\\;\\Longrightarrow\\;x=-\\frac{1}{4}\\text{ or }x=1", "x>0\\;\\Longrightarrow\\;x=1"],
+    distractors: ["x=-\\frac{1}{4}\\text{ or }x=1\\text{ are both valid}", "x=\\frac{3\\pm\\sqrt{25}}{8}"]
+  }
+];
+
+let currentIndex = 0;
+let score = 0;
+let currentStreak = 0;
+const completed = Array(questions.length).fill(false);
+const correctOnce = Array(questions.length).fill(false);
+const masteryLevels = Array(questions.length).fill(0);
+const retryQuestions = [];
+const modeState = { mode: 'quiz' };
+
+const sidebar = document.getElementById('sidebar');
+const mainArea = document.getElementById('mainArea');
+const toggleBtn = document.getElementById('toggleBtn');
+const navGrid = document.getElementById('navGrid');
+const bank = document.getElementById('bank');
+const dropzone = document.getElementById('dropzone');
+const questionBox = document.getElementById('questionBox');
+const questionBadge = document.getElementById('questionBadge');
+const statusBox = document.getElementById('statusBox');
+const feedbackPanel = document.getElementById('feedbackPanel');
+const progressFill = document.getElementById('progressFill');
+const progressText = document.getElementById('progressText');
+const streakText = document.getElementById('streakText');
+const retryStrip = document.getElementById('retryStrip');
+
+let mathScale = 1;
+
+function getQuestionHint(q) {
+  const title = q.title || '';
+  const steps = q.answer || [];
+  const formulas = [];
+  const hasProductRule = steps.some(step => step.includes("u'v+uv'"));
+  const hasPower = title.includes('\\sqrt') || title.includes('x^');
+
+  if (title.includes('\\dfrac')) {
+    formulas.push("\\left(\\frac{u}{v}\\right)'=\\frac{vu'-uv'}{v^2}");
+  }
+  if (hasProductRule) {
+    formulas.push("(uv)'=u'v+uv'");
+  }
+  if (title.includes('x^x')) {
+    formulas.push("\\frac{d}{dx}\\ln(y)=\\frac{y'}{y}");
+  } else if (title.includes('x^')) {
+    formulas.push("\\frac{d}{dx}(x^n)=nx^{n-1}");
+  }
+  if (hasPower) {
+    formulas.push("\\frac{d}{dx}[f(x)]^n=n[f(x)]^{n-1}f'(x)");
+  }
+  if (title.includes('e^')) {
+    formulas.push("\\frac{d}{dx}(e^u)=e^u u'");
+  }
+  if (/(?:[2-9]|10)\^/.test(title)) {
+    formulas.push("\\frac{d}{dx}(a^u)=a^u\\ln(a)u'");
+  }
+  if (title.includes('\\ln')) {
+    formulas.push("\\frac{d}{dx}\\ln(u)=\\frac{u'}{u}");
+  }
+  if (title.includes('\\sin')) {
+    formulas.push("\\frac{d}{dx}\\sin(u)=\\cos(u)u'");
+  }
+  if (title.includes('\\tan')) {
+    formulas.push("\\frac{d}{dx}\\tan(u)=\\sec^2(u)u'");
+  }
+  if (title.includes('\\arctan')) {
+    formulas.push("\\frac{d}{dx}\\arctan(u)=\\frac{u'}{1+u^2}");
+  }
+  if (q.number === 41 || q.number === 43 || q.number === 51 || q.number === 52 || q.number === 53) {
+    formulas.push("\\text{Stationary point: }\\frac{dy}{dx}=0");
+  }
+  if (q.number === 42) {
+    formulas.push("m_{\\text{normal}}=-\\frac{1}{m_{\\text{tangent}}}");
+  }
+  if (q.number === 43 || q.number === 51) {
+    formulas.push("\\text{At a stationary point: }y''>0\\text{ minimum},\\quad y''<0\\text{ maximum}");
+  }
+  if (q.number === 45) {
+    formulas.push("\\frac{d}{dx}(e^{g(y)})=e^{g(y)}g'(y)\\frac{dy}{dx}");
+  }
+  if (q.number === 46) {
+    formulas.push("\\text{Differentiate twice and substitute into the stated identity}");
+  }
+  if (q.number === 47) {
+    formulas.push("m_{\\text{normal}}=-\\frac{1}{m_{\\text{tangent}}}");
+  }
+  if (q.number === 48) {
+    formulas.push("\\frac{dM}{dt}=-kM");
+  }
+  if (q.number === 49 || q.number === 52 || q.number === 53) {
+    formulas.push("\\text{Stationary point: }\\frac{dy}{dx}=0");
+  }
+  if (q.number === 50) {
+    formulas.push("v=\\frac{ds}{dt},\\quad a=\\frac{dv}{dt}");
+    formulas.push("\\text{A maximum velocity occurs at a stationary point of }v");
+  }
+
+  return formulas.map(formula => `\\(${formula}\\)`).join('<br>');
+}
+
+function getQuestionExplanation(q) {
+  const hint = getQuestionHint(q);
+  const base = 'Apply the appropriate derivative rule, use the chain rule for composite functions, and simplify the result.';
+  return `${base} <strong>Derivative hint:</strong> ${hint}`;
+}
+
+function getSolutionMarkup(q) {
+  return q.answer.map((step, idx) => `
+    <div class="solution-line">
+      <span>${idx + 1}.</span>
+      <span>\\(${step}\\)</span>
+    </div>
+  `).join('');
+}
+
+function renderFeedbackPanel() {
+  const q = questions[currentIndex];
+  const selectedMath = q.selected.map(id => q.pool.find(step => step.id === id)?.math || '');
+  const isCorrect = JSON.stringify(selectedMath) === JSON.stringify(q.answer);
+
+  if (!q.hasChecked && !(modeState.mode === 'study' && q.solutionShown)) {
+    feedbackPanel.classList.add('hidden');
+    feedbackPanel.innerHTML = '';
+    return;
+  }
+
+  if (modeState.mode === 'study') {
+    const feedbackMarkup = q.hasChecked ? `
+      <div class="feedback-title">${isCorrect ? 'Correct sequence' : 'Approximate order'}</div>
+      <div class="feedback-text">${getQuestionExplanation(q)}</div>
+      <div class="feedback-hint"><strong>Hint:</strong> ${getQuestionHint(q)}</div>
+    ` : '';
+    const solutionMarkup = `
+      <div class="study-solution">
+        <strong>Worked solution:</strong>
+        ${getSolutionMarkup(q)}
+      </div>
+    `;
+
+    feedbackPanel.innerHTML = `${feedbackMarkup}${solutionMarkup}`;
+    feedbackPanel.classList.remove('hidden');
+    return;
+  }
+
+  if (isCorrect) {
+    feedbackPanel.innerHTML = `
+      <div class="feedback-title">Correct sequence</div>
+      <div class="feedback-text">${getQuestionExplanation(q)}</div>
+      <div class="feedback-hint"><strong>Hint:</strong> ${getQuestionHint(q)}</div>
+    `;
+    feedbackPanel.classList.remove('hidden');
+    return;
+  }
+
+  feedbackPanel.innerHTML = `
+    <div class="feedback-title">Next move</div>
+    <div class="feedback-text">${getQuestionExplanation(q)}</div>
+    <div class="feedback-hint"><strong>Hint:</strong> ${getQuestionHint(q)}</div>
+  `;
+  feedbackPanel.classList.remove('hidden');
+}
+
+function updateModeButtons() {
+  const buttons = document.querySelectorAll('.mode-dropdown-item');
+  const menuButton = document.getElementById('modeMenuButton');
+  const labelMap = {
+    quiz: 'Quiz mode',
+    study: 'Study mode',
+    challenge: 'Challenge mode'
+  };
+
+  buttons.forEach((btn) => {
+    btn.classList.toggle('active', modeState.mode === btn.dataset.mode);
+  });
+
+  menuButton.textContent = `${labelMap[modeState.mode]} ▾`;
+}
+
+function setActiveView(view) {
+  const isFormulaView = view === 'formulas';
+  const practiceTab = document.getElementById('practiceTab');
+  const formulaTab = document.getElementById('formulaTab');
+  const quizView = document.getElementById('quizView');
+  const formulaView = document.getElementById('formulaView');
+
+  practiceTab.classList.toggle('active', !isFormulaView);
+  formulaTab.classList.toggle('active', isFormulaView);
+  practiceTab.setAttribute('aria-selected', String(!isFormulaView));
+  formulaTab.setAttribute('aria-selected', String(isFormulaView));
+  practiceTab.tabIndex = isFormulaView ? -1 : 0;
+  formulaTab.tabIndex = isFormulaView ? 0 : -1;
+  quizView.hidden = isFormulaView;
+  formulaView.hidden = !isFormulaView;
+
+  if (isFormulaView && window.MathJax && MathJax.typesetPromise) {
+    MathJax.typesetPromise([formulaView]);
+  }
+}
+
+function toggleModeMenu(forceOpen) {
+  const menu = document.getElementById('modeDropdown');
+  const isOpen = typeof forceOpen === 'boolean' ? forceOpen : menu.classList.contains('hidden');
+  menu.classList.toggle('hidden', !isOpen);
+  document.getElementById('modeMenuButton').setAttribute('aria-expanded', String(isOpen));
+}
+
+function updateRetryStrip() {
+  if (!retryQuestions.length) {
+    retryStrip.innerHTML = '<span class="footer-note">No missed questions yet.</span>';
+    return;
+  }
+
+  retryStrip.innerHTML = retryQuestions.map(index => `
+    <button class="retry-pill" type="button" data-retry-index="${index}">Retry Q${questionNumber(index)}</button>
+  `).join('');
+
+  retryStrip.querySelectorAll('.retry-pill').forEach(button => {
+    button.addEventListener('click', () => {
+      setActiveView('practice');
+      currentIndex = Number(button.dataset.retryIndex);
+      renderQuestion();
+    });
+  });
+}
+
+document.getElementById('totalCount').textContent = questions.length;
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function labelForIndex(index) {
+  let label = '';
+  let n = index;
+  while (n >= 0) {
+    label = String.fromCharCode(65 + (n % 26)) + label;
+    n = Math.floor(n / 26) - 1;
+  }
+  return label;
+}
+
+function initQuestions() {
+  questions.forEach((q, qi) => {
+    q.pool = shuffle([
+      ...q.answer.map((m, idx) => ({ id:`q${qi}_a${idx}`, math:m, correct:true })),
+      ...q.distractors.map((m, idx) => ({ id:`q${qi}_d${idx}`, math:m, correct:false }))
+    ]);
+    q.pool.forEach((step, index) => {
+      step.label = labelForIndex(index);
+    });
+    q.selected = [];
+  });
+}
+
+function renderNav() {
+  navGrid.innerHTML = '';
+  questions.forEach((question, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'nav-btn' + (i === currentIndex ? ' active' : '') + (completed[i] ? ' done' : '');
+    btn.textContent = questionNumber(i);
+    btn.addEventListener('click', () => {
+      setActiveView('practice');
+      currentIndex = i;
+      renderQuestion();
+    });
+    navGrid.appendChild(btn);
+  });
+}
+
+function questionNumber(index) {
+  return questions[index].number || index + 1;
+}
+
+function updateMathScale() {
+  document.documentElement.style.setProperty('--math-scale', mathScale);
+  document.querySelectorAll('.question-box, .step-card, .answer-card, .answer-math, .step-math').forEach(el => {
+    el.style.fontSize = `${mathScale}em`;
+  });
+}
+
+function renderQuestion() {
+  const q = questions[currentIndex];
+  questionBadge.textContent = `Question ${questionNumber(currentIndex)}`;
+  questionBox.innerHTML = q.title;
+
+  bank.innerHTML = '';
+  q.pool.forEach((step) => {
+    if (q.selected.includes(step.id)) return;
+    const card = document.createElement('div');
+    card.className = 'step-card';
+    card.draggable = true;
+    card.dataset.id = step.id;
+    card.innerHTML = `<span class="step-label">${step.label}</span><span class="step-math">\\(${step.math}\\)</span>`;
+    card.addEventListener('dragstart', onDragStart);
+    card.addEventListener('dragend', onDragEnd);
+    bank.appendChild(card);
+  });
+
+  dropzone.innerHTML = '';
+  q.selected.forEach((id, idx) => {
+    const step = q.pool.find(s => s.id === id);
+    const row = document.createElement('div');
+    row.className = 'answer-card';
+    row.draggable = true;
+    row.dataset.id = step.id;
+    row.innerHTML = `
+      <div class="answer-index">${step.label}</div>
+      <div class="answer-math">\\(${step.math}\\)</div>
+      <div class="order-controls">
+        <button class="order-btn" type="button" aria-label="Move step ${step.label} up" title="Move up" ${idx === 0 ? 'disabled' : ''}>↑</button>
+        <button class="order-btn" type="button" aria-label="Move step ${step.label} down" title="Move down" ${idx === q.selected.length - 1 ? 'disabled' : ''}>↓</button>
+      </div>
+      <button class="remove-btn" type="button" aria-label="Remove">×</button>
+    `;
+    row.addEventListener('dragstart', onDragStart);
+    row.addEventListener('dragend', onDragEnd);
+    row.querySelector('.remove-btn').addEventListener('click', () => removeAnswer(step.id));
+    const orderButtons = row.querySelectorAll('.order-btn');
+    orderButtons[0].addEventListener('click', () => moveAnswer(step.id, -1));
+    orderButtons[1].addEventListener('click', () => moveAnswer(step.id, 1));
+    dropzone.appendChild(row);
+  });
+
+  renderNav();
+  renderFeedbackPanel();
+  updateStats();
+  updateRetryStrip();
+  updateModeButtons();
+  clearStatus();
+  updateMathScale();
+  if (window.MathJax && MathJax.typesetPromise) {
+    MathJax.typesetPromise().then(() => updateMathScale());
+  }
+}
+
+function onDragStart(e) {
+  if (e.target.closest('button')) {
+    e.preventDefault();
+    return;
+  }
+  const card = e.currentTarget;
+  e.dataTransfer.setData('text/plain', card.dataset.id);
+  e.dataTransfer.setData('application/x-step-quiz-source', card.classList.contains('answer-card') ? 'answer' : 'bank');
+  e.dataTransfer.effectAllowed = 'move';
+  card.classList.add('dragging');
+}
+
+function onDragEnd(e) {
+  e.currentTarget.classList.remove('dragging');
+}
+
+dropzone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  dropzone.classList.add('dragover');
+});
+dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+dropzone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dropzone.classList.remove('dragover');
+  const id = e.dataTransfer.getData('text/plain');
+  const source = e.dataTransfer.getData('application/x-step-quiz-source');
+  if (source === 'answer') {
+    const targetRow = e.target.closest('.answer-card');
+    moveAnswerBefore(id, targetRow ? targetRow.dataset.id : null);
+  } else {
+    addAnswer(id);
+  }
+});
+
+function moveAnswerBefore(id, targetId) {
+  if (id === targetId) return;
+  const selected = questions[currentIndex].selected;
+  const fromIndex = selected.indexOf(id);
+  if (fromIndex === -1) return;
+  selected.splice(fromIndex, 1);
+  const targetIndex = targetId ? selected.indexOf(targetId) : selected.length;
+  selected.splice(targetIndex === -1 ? selected.length : targetIndex, 0, id);
+  renderQuestion();
+}
+
+function moveAnswer(id, offset) {
+  const selected = questions[currentIndex].selected;
+  const fromIndex = selected.indexOf(id);
+  const toIndex = fromIndex + offset;
+  if (fromIndex === -1 || toIndex < 0 || toIndex >= selected.length) return;
+  [selected[fromIndex], selected[toIndex]] = [selected[toIndex], selected[fromIndex]];
+  renderQuestion();
+}
+
+function addAnswer(id) {
+  const q = questions[currentIndex];
+  if (!id || q.selected.includes(id)) {
+    showStatus('This step is already used.', false);
+    return;
+  }
+  q.selected.push(id);
+  q.hasChecked = false;
+  renderQuestion();
+}
+
+function removeAnswer(id) {
+  const q = questions[currentIndex];
+  q.selected = q.selected.filter(x => x !== id);
+  q.hasChecked = false;
+  renderQuestion();
+}
+
+function resetQuestion() {
+  questions[currentIndex].selected = [];
+  questions[currentIndex].hasChecked = false;
+  renderQuestion();
+}
+
+function checkAnswer() {
+  const q = questions[currentIndex];
+  q.hasChecked = true;
+  const selectedSteps = q.selected.map(id => q.pool.find(s => s.id === id).math);
+  const correct = JSON.stringify(selectedSteps) === JSON.stringify(q.answer);
+
+  dropzone.querySelectorAll('.answer-card').forEach(card => {
+    card.classList.remove('correct', 'incorrect');
+    if (correct) card.classList.add('correct');
+  });
+
+  if (correct) {
+    completed[currentIndex] = true;
+    masteryLevels[currentIndex] = Math.min(3, masteryLevels[currentIndex] + 1);
+    currentStreak += 1;
+    if (!correctOnce[currentIndex]) {
+      correctOnce[currentIndex] = true;
+      score += 1;
+    }
+    if (!retryQuestions.includes(currentIndex)) {
+      const wrongIndex = retryQuestions.indexOf(currentIndex);
+      if (wrongIndex !== -1) retryQuestions.splice(wrongIndex, 1);
+    }
+    showStatus('Correct order. Great job.', true);
+  } else {
+    currentStreak = 0;
+    if (!retryQuestions.includes(currentIndex)) {
+      retryQuestions.push(currentIndex);
+    }
+    showStatus('Incorrect order. Rearrange the expressions and try again.', false);
+    dropzone.querySelectorAll('.answer-card').forEach(card => card.classList.add('incorrect'));
+  }
+
+  renderNav();
+  renderFeedbackPanel();
+  updateStats();
+  updateRetryStrip();
+}
+
+function updateStats() {
+  const finished = completed.filter(Boolean).length;
+  const percent = questions.length ? Math.round((finished / questions.length) * 100) : 0;
+  progressFill.style.width = `${percent}%`;
+  progressText.textContent = `${finished}/${questions.length}`;
+  streakText.textContent = `Streak ${currentStreak}`;
+  document.getElementById('doneCount').textContent = finished;
+  document.getElementById('scoreCount').textContent = score;
+
+  const masteryText = masteryLevels[currentIndex] >= 2 ? 'Mastered' : 'Learning';
+  questionBadge.title = masteryText;
+  const masteryBadge = document.createElement('span');
+  masteryBadge.className = 'badge';
+  masteryBadge.textContent = masteryLevels[currentIndex] >= 2 ? 'Mastered' : 'Question ' + questionNumber(currentIndex);
+  if (questionBadge.dataset.masteryMode !== String(masteryLevels[currentIndex] >= 2)) {
+    questionBadge.textContent = masteryLevels[currentIndex] >= 2 ? 'Mastered' : `Question ${questionNumber(currentIndex)}`;
+    questionBadge.dataset.masteryMode = String(masteryLevels[currentIndex] >= 2);
+  }
+}
+
+function showStatus(message, ok) {
+  statusBox.textContent = message;
+  statusBox.className = 'status show ' + (ok ? 'good' : 'bad');
+}
+
+function clearStatus() {
+  statusBox.className = 'status';
+  statusBox.textContent = '';
+}
+
+document.getElementById('checkBtn').addEventListener('click', checkAnswer);
+document.getElementById('clearAnswerBtn').addEventListener('click', resetQuestion);
+document.getElementById('fontDownBtn').addEventListener('click', () => {
+  mathScale = Math.max(0.75, Number((mathScale - 0.1).toFixed(2)));
+  updateMathScale();
+});
+document.getElementById('fontUpBtn').addEventListener('click', () => {
+  mathScale = Math.min(1.6, Number((mathScale + 0.1).toFixed(2)));
+  updateMathScale();
+});
+document.getElementById('prevBtn').addEventListener('click', () => {
+  currentIndex = (currentIndex - 1 + questions.length) % questions.length;
+  renderQuestion();
+});
+document.getElementById('nextBtn').addEventListener('click', () => {
+  currentIndex = (currentIndex + 1) % questions.length;
+  renderQuestion();
+});
+document.getElementById('hintBtn').addEventListener('click', () => {
+  const q = questions[currentIndex];
+  const formula = getQuestionHint(q);
+  clearStatus();
+  feedbackPanel.innerHTML = `
+    <div class="feedback-hint">${formula}</div>
+  `;
+  feedbackPanel.classList.remove('hidden');
+  if (window.MathJax && MathJax.typesetPromise) {
+    MathJax.typesetPromise([feedbackPanel]);
+  }
+});
+document.getElementById('showSolutionBtn').addEventListener('click', () => {
+  modeState.mode = 'study';
+  questions[currentIndex].solutionShown = true;
+  updateModeButtons();
+  renderQuestion();
+});
+
+document.getElementById('modeMenuButton').addEventListener('click', () => {
+  const menu = document.getElementById('modeDropdown');
+  toggleModeMenu(menu.classList.contains('hidden'));
+});
+
+document.querySelectorAll('.view-tab').forEach((tab, index, tabs) => {
+  tab.addEventListener('click', () => setActiveView(tab.dataset.view));
+  tab.addEventListener('keydown', (event) => {
+    const nextIndex = event.key === 'ArrowRight' || event.key === 'ArrowDown'
+      ? (index + 1) % tabs.length
+      : event.key === 'ArrowLeft' || event.key === 'ArrowUp'
+        ? (index - 1 + tabs.length) % tabs.length
+        : event.key === 'Home'
+          ? 0
+          : event.key === 'End'
+            ? tabs.length - 1
+            : -1;
+    if (nextIndex !== -1) {
+      event.preventDefault();
+      tabs[nextIndex].focus();
+      setActiveView(tabs[nextIndex].dataset.view);
+    }
+  });
+});
+
+document.querySelectorAll('.mode-dropdown-item').forEach(button => {
+  button.addEventListener('click', () => {
+    const nextMode = button.dataset.mode;
+    modeState.mode = nextMode;
+    if (nextMode === 'challenge') {
+      questions.sort(() => Math.random() - 0.5);
+      currentIndex = 0;
+    }
+    updateModeButtons();
+    toggleModeMenu(false);
+    renderQuestion();
+  });
+});
+
+document.addEventListener('click', (event) => {
+  const menu = document.getElementById('modeDropdown');
+  const trigger = document.getElementById('modeMenuButton');
+  if (!menu.contains(event.target) && !trigger.contains(event.target)) {
+    toggleModeMenu(false);
+  }
+});
+
+updateMathScale();
+
+toggleBtn.addEventListener('click', () => {
+  if (window.innerWidth <= 900) {
+    sidebar.classList.toggle('mobile-open');
+  } else {
+    sidebar.classList.toggle('hidden');
+    mainArea.classList.toggle('expanded');
+  }
+});
+
+document.getElementById('sidebarHideBtn').addEventListener('click', () => toggleBtn.click());
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 900) {
+    sidebar.classList.remove('mobile-open');
+  }
+});
+
+initQuestions();
+renderQuestion();
+</script>
+</body>
+</html>

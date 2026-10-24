@@ -1,596 +1,1482 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Percentage & Compound Interest Quiz</title>
-
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#ffffff"/>
+<meta name="color-scheme" content="light"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<title>Advanced, Ultimate &amp; Master Interest Challenge</title>
 <style>
-* {
-    box-sizing: border-box;
+
+:root{--bg:#f7f9fc;--panel:#fff;--line:#dce3eb;--text:#172033;--muted:#657386;--gold:#b78618;--gold2:#f0ce72;--teal:#0f8f83;--green:#16865f;--red:#c94c5b;--blue:#2563eb;--shadow:0 24px 70px rgba(23,32,51,.12)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%;overflow-x:hidden}
+body{margin:0;min-width:280px;min-height:100vh;min-height:100dvh;overflow-x:hidden;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(circle at 12% 0%,rgba(15,143,131,.08),transparent 26%),radial-gradient(circle at 88% 0%,rgba(183,134,24,.10),transparent 24%),linear-gradient(180deg,#fff 0%,var(--bg) 45%,#f3f6fa 100%);color:var(--text);-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer;-webkit-appearance:none;appearance:none;touch-action:manipulation}
+.app{width:100%;max-width:1040px;margin:0 auto;padding:max(20px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(72px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))}
+.hero{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap;margin-bottom:20px}.brand{display:flex;gap:14px;align-items:center}.logo{width:50px;height:50px;border-radius:15px;background:linear-gradient(145deg,#d7aa3b,#f4d77c);display:grid;place-items:center;font-weight:950;box-shadow:0 10px 28px rgba(183,134,24,.2)}h1{font-size:clamp(1.45rem,3vw,2.25rem);margin:0;letter-spacing:-.035em}.subtitle{margin:.35rem 0 0;color:var(--muted)}.pill{border:1px solid #d9e6e3;background:#f2fbf8;color:#17685f;border-radius:999px;padding:8px 12px;font-weight:850;white-space:nowrap}
+.shell{background:rgba(255,255,255,.97);border:1px solid #e1e7ee;border-radius:28px;box-shadow:var(--shadow);overflow:hidden;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}.start{padding:36px 28px 40px;text-align:center}.kicker{color:var(--gold);font-weight:950;text-transform:uppercase;letter-spacing:.12em;font-size:.85rem}.start h2{font-size:clamp(1.7rem,4vw,2.5rem);margin:9px auto 10px;max-width:760px}.start p{color:var(--muted);line-height:1.65;max-width:780px;margin:0 auto 24px}
+.featureGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:24px auto;max-width:860px}.feature{padding:14px;border:1px solid #dfe6ed;border-radius:14px;background:#fff;color:#344257}.feature strong{color:#172033}
+.nameEntry{display:grid;gap:8px;max-width:420px;margin:0 auto 20px;text-align:left}.nameEntry label{font-weight:850;color:#344257}.nameEntry input{width:100%;min-height:50px;padding:12px 14px;border:1px solid #cfd9e4;border-radius:12px;font:inherit;color:var(--text);background:#fff}.nameEntry input:focus-visible{outline:3px solid rgba(37,99,235,.32);outline-offset:2px}
+.timerOption{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 auto 20px;color:#344257;font-weight:850}.timerOption input{width:20px;height:20px;accent-color:#0f8f83}
+.btn{border:0;border-radius:13px;padding:13px 18px;min-height:50px;font-weight:900;transition:.15s ease}.btnPrimary{background:linear-gradient(135deg,#d4a437,#f0ce72);color:#172033;box-shadow:0 8px 22px rgba(183,134,24,.18)}.btnSecondary{background:#eef4f7;color:#173d3a;border:1px solid #cfe0df}.btnGhost{background:#fff;color:#30455f;border:1px solid #cfd9e4}.btnTeal{background:linear-gradient(135deg,#0f8f83,#2db6a6);color:#fff}.btn:disabled{opacity:.45;cursor:not-allowed}
+.topbar{padding:19px 23px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff,#fbfcfe)}.meta{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:10px;flex-wrap:wrap}.counter{font-weight:900}.catwrap{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.category{color:var(--teal);font-weight:950}.diff{font-size:.8rem;font-weight:900;border-radius:999px;padding:4px 8px;background:#f1f5f9;color:#475569}.progressTrack{height:9px;background:#edf1f5;border-radius:99px;overflow:hidden;border:1px solid #e1e7ed}.progress{height:100%;width:2%;background:linear-gradient(90deg,var(--teal),#d3a93f);transition:width .3s ease}
+.content{padding:28px}.questionNo{color:var(--gold);font-size:.88rem;font-weight:950;text-transform:uppercase;letter-spacing:.12em}.question{font-size:clamp(1.28rem,2.5vw,1.72rem);line-height:1.45;margin:9px 0 18px;font-weight:850;letter-spacing:-.02em}.diagram{border:1px solid #e0e6ed;border-radius:18px;background:#fbfcfe;padding:8px;margin:0 0 19px;overflow:hidden}.diagram svg{display:block;width:100%;height:auto;max-height:330px}.miniTableWrap{overflow-x:auto;-webkit-overflow-scrolling:touch}.miniTable{border-collapse:collapse;width:100%;min-width:420px;background:#fff}.miniTable th,.miniTable td{padding:10px 12px;border:1px solid #dfe6ed;text-align:center}.miniTable th{background:#fffaf0;color:#8e6814}
+.answers{display:grid;gap:12px;border:0;padding:0;margin:0}.answer{width:100%;text-align:left;display:flex;gap:13px;align-items:flex-start;background:#fff;border:1px solid #d7e0e8;color:var(--text);padding:15px 16px;border-radius:15px;min-height:58px;transition:.16s ease;box-shadow:0 4px 14px rgba(31,41,55,.035)}.answer:hover:not(:disabled){transform:translateY(-1px);border-color:#8fb3d2;background:#f8fbff}.answer:focus-visible,.btn:focus-visible{outline:3px solid rgba(37,99,235,.32);outline-offset:3px}.letter{display:grid;place-items:center;flex:0 0 30px;height:30px;border-radius:9px;background:#eef3f8;color:#28415b;font-weight:950;border:1px solid #dde6ee}.answer.correct{border-color:#78bea4;background:#effaf5}.answer.correct .letter{background:#dff5eb;color:#136246;border-color:#a9d8c7}.answer.wrong{border-color:#df9ba5;background:#fff3f4}.answer.wrong .letter{background:#fde4e7;color:#9f2f3e;border-color:#efbdc4}.answer.dim{opacity:.58;background:#fafbfc}
+.hintBox,.feedback{margin-top:16px;border-radius:17px;padding:15px 16px;line-height:1.6}.hintBox{display:none;background:#fff9e8;border:1px solid #eed89b;color:#5f4a14}.hintBox.show{display:block}.feedback{display:none;border:1px solid #d8e1e9;background:#fbfcfe}.feedback.show{display:block}.feedbackTitle{font-weight:950;margin-bottom:7px}.feedback.correct .feedbackTitle{color:var(--green)}.feedback.wrong .feedbackTitle{color:#b33849}.explanation{color:#445267;margin:0;line-height:1.65}.actions{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-top:20px}.leftActions{display:flex;gap:9px;flex-wrap:wrap}.keyboardHint{color:var(--muted);font-size:.91rem;margin-top:10px}
+.results{padding:30px 28px}.scoreRing{width:146px;height:146px;border-radius:50%;display:grid;place-items:center;margin:0 auto 18px;background:conic-gradient(var(--teal) 0deg,var(--gold) 0deg,#e7edf3 0deg);position:relative;box-shadow:0 8px 24px rgba(31,41,55,.08)}.scoreRing:after{content:"";position:absolute;inset:12px;border-radius:50%;background:#fff}.scoreText{z-index:1;text-align:center;font-weight:950;font-size:2rem}.scoreText small{display:block;font-size:.78rem;color:var(--muted);font-weight:800}.resultTitle{text-align:center;margin:0 0 6px;font-size:2rem}.resultSub{text-align:center;color:var(--muted);margin:0 auto 22px;max-width:720px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}.stat{background:#fff;border:1px solid #dfe6ed;border-radius:15px;padding:16px;text-align:center}.stat strong{display:block;font-size:1.5rem}.stat span{color:var(--muted)}.resultActions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:20px 0}
+.missedTopicsBox{margin:20px 0 6px;border:1px solid #f0d7dc;background:#fff7f8;border-radius:16px;padding:16px}.missedTopicsBox h3{margin:0 0 10px;color:#a83b4b}.missedTopicsList{display:flex;flex-wrap:wrap;gap:9px}.missedTopicChip{display:inline-flex;align-items:center;gap:7px;border:1px solid #ecc4cb;background:#fff;color:#8f3040;border-radius:999px;padding:8px 11px;font-weight:850;font-size:.92rem}.noMissedTopics{color:#16865f;font-weight:850}
+.sectionTitle{margin:26px 0 12px}.topicGrid{display:grid;gap:10px}.topicRow{border:1px solid #dfe6ed;border-radius:14px;padding:12px;background:#fff}.topicHead{display:flex;justify-content:space-between;gap:10px;font-weight:850}.meter{height:8px;border-radius:99px;background:#edf1f5;overflow:hidden;margin-top:8px}.meterFill{height:100%;background:linear-gradient(90deg,var(--red),var(--gold),var(--teal));border-radius:99px}.reviewList{display:grid;gap:12px}details{border:1px solid #dbe3eb;border-radius:14px;background:#fff;padding:12px 14px}summary{cursor:pointer;font-weight:850;line-height:1.45}details p{color:#536276;line-height:1.6}.keyTable{width:100%;border-collapse:collapse;margin-top:14px;background:#fff;min-width:650px}.keyTable th,.keyTable td{border-bottom:1px solid #e0e6ed;padding:10px 8px;text-align:left;vertical-align:top}.keyTable th{color:#8e6814;background:#fffaf0}
+.frac{display:inline-grid;grid-template-rows:auto auto;text-align:center;vertical-align:-.36em;line-height:1;margin:0 .12em;white-space:nowrap}.frac .num{display:block;padding:0 .18em .10em;border-bottom:1.45px solid currentColor}.frac .den{display:block;padding:.10em .18em 0}.hidden{display:none!important}.footer{text-align:center;color:#7b8797;margin-top:18px;font-size:.9rem}
+.studyBuddy{position:fixed;right:max(12px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));z-index:9999;display:flex;align-items:center;gap:9px;padding:9px 13px;border-radius:999px;background:rgba(255,255,255,.98);border:1px solid rgba(11,122,117,.18);box-shadow:0 10px 26px rgba(0,0,0,.14);font-weight:900;font-size:14px;transform-origin:80% 100%}.studyAvatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#d7aa3b,#f4d77c);color:#172033;font-size:18px;font-weight:950;position:relative}.greenLight{width:10px;height:10px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 0 rgba(34,197,94,.8);animation:lightPulse 1.2s infinite}.cheerBubble{position:absolute;right:10px;bottom:58px;background:#fff;border:1px solid #dfe6ed;border-radius:14px;padding:8px 11px;box-shadow:0 8px 22px rgba(0,0,0,.12);opacity:0;transform:translateY(8px) scale(.92);pointer-events:none;white-space:nowrap;color:#17685f}.confetti{position:absolute;inset:-18px;pointer-events:none;opacity:0}.confetti i{position:absolute;width:7px;height:12px;border-radius:2px;background:#d4a437}.confetti i:nth-child(1){left:8%;top:28%;transform:rotate(15deg)}.confetti i:nth-child(2){left:28%;top:0;background:#0f8f83;transform:rotate(-28deg)}.confetti i:nth-child(3){left:50%;top:-6%;background:#2563eb;transform:rotate(30deg)}.confetti i:nth-child(4){right:18%;top:5%;background:#c94c5b;transform:rotate(-20deg)}.confetti i:nth-child(5){right:2%;top:32%;background:#22c55e;transform:rotate(40deg)}.confetti i:nth-child(6){left:18%;bottom:3%;background:#c94c5b;transform:rotate(35deg)}.confetti i:nth-child(7){right:30%;bottom:-4%;background:#2563eb;transform:rotate(-35deg)}.confetti i:nth-child(8){right:2%;bottom:20%;background:#d4a437;transform:rotate(18deg)}
+.studyBuddy.cheer{animation:studyJump .72s ease 2}.studyBuddy.cheer .studyAvatar{animation:studySpin .7s ease 1}.studyBuddy.cheer .cheerBubble{animation:bubblePop 2s ease forwards}.studyBuddy.cheer .confetti{animation:confettiPop 2s ease forwards}.studyBuddy.finalCheer{animation:studyMega 1s ease 3}
+.correctPop{position:fixed;inset:0;z-index:10060;display:grid;place-items:center;visibility:hidden;pointer-events:none}.correctPop.show{visibility:visible}.correctPopInner{display:flex;flex-direction:column;align-items:center;gap:12px;transform:translateY(-8px)}.correctPopMark{color:#16a34a;font-size:clamp(9rem,36vw,22rem);font-weight:1000;line-height:1;text-shadow:0 10px 36px rgba(22,134,95,.28);transform:scale(.3);opacity:0}.correctPopLabel{display:inline-block;background:rgba(255,255,255,.94);border:1px solid rgba(22,134,95,.2);color:#17685f;border-radius:999px;padding:10px 18px;font-weight:900;letter-spacing:.02em;box-shadow:0 16px 40px rgba(22,134,95,.18);transform:translateY(12px) scale(.9);opacity:0}.correctPop.show .correctPopMark,.correctPop.show .correctPopLabel{animation:correctSignPop 2s cubic-bezier(.16,1,.3,1) both}
+@keyframes lightPulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.8)}70%{box-shadow:0 0 0 8px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}@keyframes studyJump{0%,100%{transform:translateY(0) rotate(0)}40%{transform:translateY(-18px) rotate(-4deg)}65%{transform:translateY(-8px) rotate(4deg)}}@keyframes studySpin{0%{transform:rotate(0) scale(1)}50%{transform:rotate(12deg) scale(1.15)}100%{transform:rotate(0) scale(1)}}@keyframes bubblePop{0%{opacity:0;transform:translateY(8px) scale(.9)}18%,70%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-8px) scale(.96)}}@keyframes confettiPop{0%{opacity:0;transform:scale(.6) rotate(0)}20%{opacity:1}100%{opacity:0;transform:scale(1.45) rotate(120deg)}}@keyframes studyMega{0%,100%{transform:translateY(0) rotate(0) scale(1)}45%{transform:translateY(-22px) rotate(-6deg) scale(1.08)}70%{transform:translateY(-10px) rotate(6deg) scale(1.04)}}
+@keyframes correctSignPop{0%{opacity:0;transform:scale(.3)}28%{opacity:1;transform:scale(1.12)}70%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.82)}}
+@media(max-width:760px){.content,.results{padding:21px 16px}.topbar{padding:16px}.featureGrid{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1fr}.actions{align-items:stretch;flex-direction:column}.leftActions{display:grid;grid-template-columns:1fr 1fr}.actions>.btn{width:100%}}
+@media(max-width:430px){.app{padding-left:max(8px,env(safe-area-inset-left));padding-right:max(8px,env(safe-area-inset-right))}.shell{border-radius:18px}.start{padding:26px 14px 30px}.featureGrid{grid-template-columns:1fr 1fr;gap:8px}.question{font-size:1.18rem}.answer{padding:13px 11px;min-height:56px}.leftActions{grid-template-columns:1fr}.studyBuddy{right:8px;bottom:max(8px,env(safe-area-inset-bottom));font-size:13px;padding:8px 10px}}
+@media(hover:none),(pointer:coarse){.answer:hover:not(:disabled),.btn:hover:not(:disabled){transform:none}.answer,.btn{min-height:52px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}.studyBuddy.cheer .cheerBubble{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.correctPop.show .correctPopMark{animation:none!important;opacity:1;transform:none}}
+@media print{.hero,.start,#quizView,.resultActions,.studyBuddy,.footer{display:none!important}.shell{box-shadow:none;border:0}.results{padding:0}#answerKey{display:block!important}}
+
+.navigatorWrap{margin:18px 0 0;border:1px solid #dfe6ed;background:#fff;border-radius:18px;overflow:hidden}
+.navigatorHeader{width:100%;border:0;background:linear-gradient(180deg,#fff,#fbfcfe);color:#172033;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;font-weight:950;text-align:left}
+.navigatorHeader span:last-child{color:#0f8f83;font-size:.9rem}
+.navigatorBody{padding:14px 16px 16px;border-top:1px solid #e7ecf1}
+.navigatorLegend{display:flex;flex-wrap:wrap;gap:10px 14px;margin:0 0 12px;color:#657386;font-size:.88rem}
+.legendItem{display:inline-flex;align-items:center;gap:6px}.legendDot{width:13px;height:13px;border-radius:4px;border:1px solid #cfd9e4;background:#fff}
+.legendDot.correct{background:#eaf8f2;border-color:#9dd4bf}.legendDot.wrong{background:#fff0f2;border-color:#e4a6b0}.legendDot.skipped{background:#fff8e8;border-color:#e3c66e}.legendDot.current{background:#eef8f6;border:2px solid #0f8f83}
+.navigatorGrid{display:grid;grid-template-columns:repeat(10,1fr);gap:8px}.navQ{min-width:0;min-height:42px;border-radius:10px;border:1px solid #d6e0e8;background:#fff;color:#334155;font-weight:900;padding:6px 2px}
+.navQ:hover{border-color:#8fb3d2;background:#f8fbff}.navQ.correct{background:#edf9f4;border-color:#a9d8c7;color:#126147}.navQ.wrong{background:#fff2f4;border-color:#e4a6b0;color:#a13243}.navQ.skipped{background:#fff8e8;border-color:#e5ca76;color:#8b6b10}.navQ.current{outline:3px solid rgba(15,143,131,.22);border:2px solid #0f8f83}.navQ:focus-visible{outline:3px solid rgba(37,99,235,.32);outline-offset:2px}.resultNavigator{margin:22px 0 4px}
+@media(max-width:760px){.navigatorGrid{grid-template-columns:repeat(5,1fr);gap:8px}.navQ{min-height:44px}}
+@media(max-width:390px){.navigatorBody{padding:12px 10px 14px}.navigatorGrid{gap:6px}.navQ{border-radius:9px;min-height:42px;font-size:.92rem}}
+
+
+.timerStreakBar{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  margin:12px 0 11px;padding:12px 14px;border:1px solid #dfe6ed;border-radius:16px;background:#fff;
 }
 
-body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f4f7fb;
-    color: #1f2937;
+.timerGroup{display:flex;align-items:center;gap:12px;min-width:190px}
+.timerRing{
+  --p:100;--ring:#0f8f83;
+  width:58px;height:58px;border-radius:50%;display:grid;place-items:center;position:relative;
+  background:conic-gradient(var(--ring) calc(var(--p)*1%),#e7edf3 0);
+  box-shadow:0 4px 14px rgba(31,41,55,.08);
+}
+.timerRing:after{content:"";position:absolute;inset:6px;border-radius:50%;background:#fff}
+.timerText{position:relative;z-index:1;font-size:.9rem;font-weight:950;color:#172033;font-variant-numeric:tabular-nums}
+.timerLabel{font-weight:950;color:#172033}.timerSub{font-size:.82rem;color:#657386;margin-top:2px}
+.streakBox{display:flex;align-items:center;gap:9px;border:1px solid #ecd38e;background:#fff9e8;border-radius:13px;padding:9px 12px;font-weight:900;color:#71550d}
+.streakCount{font-size:1.2rem;color:#9b6b09}
+.timerRing.warn{--ring:#d69d20}.timerRing.danger{--ring:#c94c5b;animation:timerPulse .75s ease-in-out infinite}.timerRing.critical{animation:timerPulse .38s ease-in-out infinite}
+@keyframes timerPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08);box-shadow:0 0 0 7px rgba(201,76,91,.10)}}
+.timeoutNote{margin-top:8px;padding:8px 10px;border-radius:10px;background:#fff0f2;color:#9f2f3e;font-weight:800}
+@media(max-width:520px){.timerStreakBar{align-items:stretch}.timerGroup{min-width:0}.streakBox{justify-content:center;flex:1}}
+
+
+
+/* Side Timer + Side Navigator */
+.sideControls{position:relative;z-index:10020}
+.sidePanel{
+  position:fixed;
+  top:max(86px,calc(env(safe-area-inset-top) + 70px));
+  bottom:max(18px,env(safe-area-inset-bottom));
+  width:min(320px,calc(100vw - 42px));
+  background:rgba(255,255,255,.985);
+  border:1px solid #dfe6ed;
+  border-radius:22px;
+  box-shadow:0 20px 55px rgba(23,32,51,.18);
+  z-index:10020;
+  overflow:auto;
+  -webkit-overflow-scrolling:touch;
+  transition:transform .25s ease,opacity .2s ease;
+}
+.navSidePanel{
+  left:max(12px,env(safe-area-inset-left));
+  transform:translateX(calc(-100% - 28px));
+}
+.timerSidePanel{
+  right:max(12px,env(safe-area-inset-right));
+  width:min(285px,calc(100vw - 42px));
+  transform:translateX(calc(100% + 28px));
+}
+.sidePanel.open{transform:translateX(0)}
+.sidePanelHead{
+  position:sticky;top:0;z-index:2;
+  display:flex;justify-content:space-between;align-items:flex-start;gap:10px;
+  padding:15px 15px 13px;
+  background:linear-gradient(180deg,#fff,#fbfcfe);
+  border-bottom:1px solid #e4e9ef;
+}
+.sidePanelTitle{font-weight:950;color:#172033}
+.sidePanelSub{font-size:.82rem;line-height:1.35;color:#657386;margin-top:3px}
+.sideHideBtn{
+  border:1px solid #cfd9e4;background:#fff;color:#30455f;
+  min-height:38px;padding:7px 10px;border-radius:10px;font-weight:900;
+}
+.sidePanelBody{padding:14px}
+.edgeToggle{
+  position:fixed;z-index:10010;top:48%;
+  border:1px solid #d5dee7;background:rgba(255,255,255,.98);
+  color:#17324d;box-shadow:0 8px 22px rgba(23,32,51,.14);
+  min-height:48px;padding:10px 11px;font-weight:950;
+  transition:opacity .18s ease,transform .18s ease;
+}
+.edgeToggle.navEdge{
+  left:max(0px,env(safe-area-inset-left));
+  border-left:0;border-radius:0 13px 13px 0;
+}
+.edgeToggle.timerEdge{
+  right:max(0px,env(safe-area-inset-right));
+  border-right:0;border-radius:13px 0 0 13px;
+}
+.edgeToggle.tabHidden{opacity:0;pointer-events:none;transform:scale(.92)}
+.navSidePanel .navigatorBody{padding:0;border-top:0}
+.navSidePanel .navigatorGrid{grid-template-columns:repeat(5,1fr)}
+.navSidePanel .navigatorLegend{margin-bottom:13px}
+.timerSideBody{display:grid;gap:14px}
+.timerSidePanel .timerGroup{
+  display:grid;justify-items:center;text-align:center;gap:10px;min-width:0
+}
+.timerSidePanel .timerRing{width:112px;height:112px}
+.timerSidePanel .timerRing:after{inset:9px}
+.timerSidePanel .timerText{font-size:1.45rem}
+.timerSidePanel .timerLabel{font-size:1.06rem}
+.timerSidePanel .timerSub{font-size:.9rem;line-height:1.4}
+.timerSidePanel .streakBox{justify-content:center;width:100%;min-height:50px}
+.timerSidePanel .streakCount{font-size:1.35rem}
+.panelTip{
+  border-radius:12px;padding:10px 11px;background:#f7f9fc;
+  color:#657386;font-size:.84rem;line-height:1.45
+}
+.comboSidePanel{
+  right:max(12px,env(safe-area-inset-right));
+  width:min(320px,calc(100vw - 42px));
+}
+.comboBody{display:grid;gap:14px}
+.comboDivider{height:1px;background:#e4e9ef;margin:2px 0}
+.comboNavSection .navigatorBody{padding:0;border-top:0}
+.comboNavSection .navigatorGrid{grid-template-columns:repeat(5,1fr)}
+.comboNavSection .navigatorLegend{margin-bottom:13px}
+@media(max-width:760px){
+  .comboSidePanel{width:min(320px,calc(100vw - 26px))}
+}
+@media(max-width:390px){
+  .comboSidePanel{width:calc(100vw - 18px)}
+}
+@media(min-width:1280px){
+  body.timer-panel-open .app{padding-right:300px;max-width:1320px}
+}
+@media(max-width:760px){
+  .sidePanel{
+    top:max(72px,calc(env(safe-area-inset-top) + 58px));
+    bottom:max(10px,env(safe-area-inset-bottom));
+    width:min(330px,calc(100vw - 26px))
+  }
+  .timerSidePanel{width:min(300px,calc(100vw - 26px))}
+  .edgeToggle{
+    top:auto;
+    bottom:max(76px,calc(env(safe-area-inset-bottom) + 62px));
+    font-size:.88rem
+  }
+}
+@media(max-width:390px){
+  .sidePanel{width:calc(100vw - 18px);border-radius:18px}
+  .timerSidePanel{width:calc(100vw - 18px)}
+  .sidePanelBody{padding:11px}
+  .navSidePanel .navigatorGrid{gap:6px}
+}
+@media(prefers-reduced-motion:reduce){
+  .sidePanel,.edgeToggle{transition:none!important}
+}
+@media print{
+  .sideControls{display:none!important}
 }
 
-header {
-    background: linear-gradient(135deg, #2563eb, #4f46e5);
-    color: white;
-    padding: 35px 20px;
-    text-align: center;
+
+/* Compact non-overlapping layout refinements */
+.app{
+  max-width:1180px;
+  transition:padding-left .24s ease,padding-right .24s ease,max-width .24s ease;
 }
 
-header h1 {
-    margin: 0 0 8px;
-    font-size: 32px;
+/* Side cards should hug their content instead of stretching to the bottom */
+.sidePanel{
+  bottom:auto;
+  max-height:calc(100dvh - 112px);
+}
+.timerSidePanel{
+  width:268px;
+  max-height:430px;
+  overflow:hidden;
+}
+.timerSidePanel .sidePanelBody{
+  padding:14px 14px 16px;
+}
+.navSidePanel{
+  max-height:calc(100dvh - 112px);
 }
 
-header p {
-    margin: 0;
-    opacity: 0.9;
+/* Reserve real space for open side panels on wide screens so nothing overlaps */
+@media(min-width:1180px){
+  body.timer-panel-open .app{
+    max-width:1480px;
+    padding-right:300px;
+  }
+  body.nav-panel-open .app{
+    max-width:1480px;
+    padding-left:340px;
+  }
+  body.timer-panel-open.nav-panel-open .app{
+    max-width:1660px;
+    padding-left:340px;
+    padding-right:300px;
+  }
 }
 
-.stats {
-    max-width: 900px;
-    margin: -20px auto 25px;
-    padding: 0 20px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+/* Study buddy must always remain visible and outside the timer card */
+.studyBuddy{
+  z-index:10060;
+  transition:right .24s ease,left .24s ease,bottom .24s ease,transform .24s ease;
+}
+@media(min-width:900px){
+  body.timer-panel-open .studyBuddy{
+    right:300px;
+    left:auto;
+  }
+}
+@media(max-width:899px){
+  body.timer-panel-open .studyBuddy{
+    left:max(12px,env(safe-area-inset-left));
+    right:auto;
+    bottom:max(12px,env(safe-area-inset-bottom));
+  }
+  body.nav-panel-open .studyBuddy{
+    right:max(12px,env(safe-area-inset-right));
+    left:auto;
+  }
 }
 
-.stat {
-    background: white;
-    padding: 15px;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+/* The timer panel stays compact on phones too */
+@media(max-width:760px){
+  .timerSidePanel{
+    max-height:410px;
+  }
+  .navSidePanel{
+    max-height:calc(100dvh - 90px);
+  }
+  .app{
+    padding-bottom:max(88px,calc(env(safe-area-inset-bottom) + 72px));
+  }
 }
 
-.stat strong {
-    display: block;
-    font-size: 22px;
-    color: #2563eb;
+/* On very wide displays, let the quiz itself use more of the available width */
+@media(min-width:1450px){
+  body:not(.nav-panel-open):not(.timer-panel-open) .app{
+    max-width:1280px;
+  }
 }
 
-.container {
-    max-width: 900px;
-    margin: auto;
-    padding: 0 20px 50px;
+
+/* Navigator moved to the RIGHT side */
+.navSidePanel{
+  left:auto !important;
+  right:max(12px,env(safe-area-inset-right)) !important;
+  transform:translateX(calc(100% + 28px)) !important;
+}
+.navSidePanel.open{
+  transform:translateX(0) !important;
 }
 
-.question {
-    background: white;
-    margin-bottom: 20px;
-    padding: 24px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+/* Navigator show-tab also moves to the right edge */
+.edgeToggle.navEdge{
+  left:auto !important;
+  right:max(0px,env(safe-area-inset-right)) !important;
+  border-left:1px solid #d5dee7 !important;
+  border-right:0 !important;
+  border-radius:13px 0 0 13px !important;
 }
 
-.question-number {
-    display: inline-block;
-    background: #e0e7ff;
-    color: #3730a3;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-weight: bold;
-    margin-bottom: 12px;
+/* Put the two right-edge tabs at different heights */
+.edgeToggle.navEdge{top:42% !important}
+.edgeToggle.timerEdge{top:55% !important}
+
+/* Both drawers use the right side, so only one reserves layout space at a time */
+@media(min-width:1180px){
+  body.nav-panel-open .app{
+    max-width:1480px;
+    padding-left:max(14px,env(safe-area-inset-left)) !important;
+    padding-right:350px !important;
+  }
+  body.timer-panel-open .app{
+    max-width:1480px;
+    padding-right:300px !important;
+  }
+  body.timer-panel-open.nav-panel-open .app{
+    padding-left:max(14px,env(safe-area-inset-left)) !important;
+    padding-right:350px !important;
+  }
 }
 
-.question p {
-    line-height: 1.7;
-    font-size: 17px;
+/* Keep the study buddy clear of whichever right drawer is open */
+@media(min-width:900px){
+  body.nav-panel-open .studyBuddy{
+    right:350px !important;
+    left:auto !important;
+  }
+  body.timer-panel-open .studyBuddy{
+    right:300px !important;
+    left:auto !important;
+  }
+}
+@media(max-width:760px){
+  .edgeToggle.navEdge{
+    top:auto !important;
+    bottom:max(132px,calc(env(safe-area-inset-bottom) + 118px)) !important;
+  }
+  .edgeToggle.timerEdge{
+    top:auto !important;
+    bottom:max(76px,calc(env(safe-area-inset-bottom) + 62px)) !important;
+  }
 }
 
-.answer-row {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
+/* FIX: show Timer + Navigator together without clipping */
+.comboSidePanel{
+  width:min(330px,calc(100vw - 34px)) !important;
+  max-height:calc(100dvh - 96px) !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  overscroll-behavior:contain;
+}
+.comboSidePanel .sidePanelHead{
+  padding:12px 13px 10px !important;
+}
+.comboSidePanel .sidePanelBody{
+  padding:11px 12px 14px !important;
+}
+.comboBody{
+  gap:9px !important;
+}
+.comboSidePanel .timerGroup{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:12px !important;
+  text-align:left !important;
+}
+.comboSidePanel .timerRing{
+  width:82px !important;
+  height:82px !important;
+  flex:0 0 82px !important;
+}
+.comboSidePanel .timerRing:after{
+  inset:7px !important;
+}
+.comboSidePanel .timerText{
+  font-size:1.15rem !important;
+}
+.comboSidePanel .timerLabel{
+  font-size:.98rem !important;
+}
+.comboSidePanel .timerSub{
+  font-size:.8rem !important;
+  margin-top:2px !important;
+}
+.comboSidePanel .streakBox{
+  min-height:42px !important;
+  padding:8px 10px !important;
+  font-size:.92rem !important;
+}
+.comboSidePanel .streakCount{
+  font-size:1.15rem !important;
+}
+.comboSidePanel .panelTip{
+  padding:8px 9px !important;
+  font-size:.77rem !important;
+  line-height:1.35 !important;
+}
+.comboDivider{
+  margin:1px 0 3px !important;
+}
+.comboNavSection{
+  display:block !important;
+}
+.comboNavSection .sidePanelTitle{
+  font-size:1rem !important;
+}
+.comboNavSection .sidePanelSub{
+  font-size:.78rem !important;
+}
+.comboNavSection .navigatorLegend{
+  gap:6px 9px !important;
+  margin-bottom:9px !important;
+  font-size:.75rem !important;
+}
+.comboNavSection .navigatorGrid{
+  grid-template-columns:repeat(5,minmax(0,1fr)) !important;
+  gap:6px !important;
+}
+.comboNavSection .navQ{
+  min-height:34px !important;
+  height:34px !important;
+  border-radius:8px !important;
+  padding:2px !important;
+  font-size:.82rem !important;
+}
+@media(min-height:820px) and (min-width:760px){
+  .comboSidePanel .navQ{
+    min-height:36px !important;
+    height:36px !important;
+  }
+}
+@media(max-width:760px){
+  .comboSidePanel{
+    top:max(66px,calc(env(safe-area-inset-top) + 52px)) !important;
+    max-height:calc(100dvh - 82px) !important;
+    width:min(330px,calc(100vw - 18px)) !important;
+  }
 }
 
-input {
-    flex: 1;
-    padding: 12px 14px;
-    border: 2px solid #d1d5db;
-    border-radius: 9px;
-    font-size: 16px;
-    outline: none;
+#studyBuddy{
+  top:auto!important;
+  right:max(12px,env(safe-area-inset-right))!important;
+  bottom:max(12px,env(safe-area-inset-bottom))!important;
+  left:auto!important;
+  transition:none!important;
+  transform:none!important;
+  animation:none!important;
+}
+#studyBuddy .studyAvatar{animation:none!important}
+body.correct-cheer::before{
+  content:"";position:fixed;inset:0;z-index:10050;pointer-events:none;
+  background:rgba(0,238,255,.14);
+  box-shadow:inset 0 0 170px 55px rgba(0,238,255,.78);
+  animation:cyanPageGlow 1s ease-in-out both;
+}
+body.wrong-buzz .app,body.wrong-buzz .sideControls{animation:wrongBuzz .5s linear both}
+@keyframes cyanPageGlow{
+  0%,100%{opacity:0;filter:brightness(1)}
+  18%{opacity:1;filter:brightness(1.18)}
+  42%{opacity:.38;filter:brightness(1.04)}
+  68%{opacity:1;filter:brightness(1.2)}
+}
+@keyframes wrongBuzz{
+  0%,100%{transform:translate3d(0,0,0)}
+  5%,15%,25%,35%,45%,55%,65%,75%,85%,95%{transform:translate3d(-5px,0,0)}
+  10%,20%,30%,40%,50%,60%,70%,80%,90%{transform:translate3d(5px,0,0)}
 }
 
-input:focus {
-    border-color: #2563eb;
-}
+.frac{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;vertical-align:middle;line-height:1;margin:0 .14em;white-space:nowrap}
+.frac .num{display:block;padding:0 .18em .12em;border-bottom:1px solid currentColor}
+.frac .den{display:block;padding:.12em .18em 0}
 
-button {
-    border: none;
-    border-radius: 9px;
-    padding: 11px 17px;
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
-}
 
-.check-btn {
-    background: #2563eb;
-    color: white;
-}
+/* Chemistry typed-answer additions */
+.typeWrap{display:grid;gap:12px;margin-top:4px}
+.typeLabel{font-weight:900;color:#344257}
+.typeInputRow{display:grid;grid-template-columns:1fr auto;gap:10px}
+.typeInput{width:100%;min-height:56px;padding:13px 15px;border:1px solid #cfd9e4;border-radius:14px;font:inherit;font-size:1.05rem;color:var(--text);background:#fff}
+.typeInput:focus-visible{outline:3px solid rgba(37,99,235,.32);outline-offset:2px}
+.typeInput.correct{border-color:#78bea4;background:#effaf5}
+.typeInput.wrong{border-color:#df9ba5;background:#fff3f4}
+.typeNote{font-size:.9rem;color:var(--muted);line-height:1.45}
+.typeBadge{display:inline-flex;align-items:center;border-radius:999px;padding:4px 8px;background:#eef4ff;color:#2759a8;font-size:.8rem;font-weight:900}
+.chemLine{display:block;margin-top:8px;padding:11px 13px;border:1px solid #dfe6ed;border-radius:12px;background:#fbfcfe;font-size:.98rem;line-height:1.55}
+.eq{font-family:"SFMono-Regular",Consolas,monospace;font-size:.96em}
+@media(max-width:560px){.typeInputRow{grid-template-columns:1fr}.typeInputRow .btn{width:100%}}
 
-.check-btn:hover {
-    background: #1d4ed8;
-}
+.progress{width:0}
+.questionList{display:grid;gap:16px}
+.questionCard{border:1px solid #dfe6ed;border-radius:17px;padding:18px;background:#fff}
+.questionCard h3{font-size:1.08rem;line-height:1.55;margin:0 0 13px}
+.questionCard h3 span{display:inline-grid;place-items:center;width:30px;height:30px;margin-right:8px;border-radius:9px;background:#fff7e2;color:#8e6814;font-size:.9rem}
+.questionCard .answers{display:grid;gap:9px}
+.questionCard .answer{min-height:48px;padding:10px 12px;border-radius:12px;box-shadow:none}
+.questionCard .answer[aria-pressed="true"]{border-color:#0f8f83;background:#effaf8;box-shadow:0 0 0 2px rgba(15,143,131,.12)}
+.questionCard .answer:disabled{cursor:default}
+.questionCard .answer.correct{border-color:#78bea4;background:#effaf5}
+.questionCard .answer.wrong{border-color:#df9ba5;background:#fff3f4}
+.questionExplanation{display:none;margin:12px 0 0;padding:12px 14px;border-radius:12px;background:#f5f8fb;color:#344257;line-height:1.6}
+.questionCard.checked .questionExplanation,.questionCard.review .questionExplanation{display:block}
+.questionCard .answer .letter{flex-basis:28px;height:28px}
+.questionCard[hidden]{display:none}
+.questionLevel{margin-bottom:6px;color:var(--gold);font-size:.82rem;font-weight:950;text-transform:uppercase;letter-spacing:.1em}
+.questionPosition{margin:0 0 8px;color:var(--gold);font-size:.88rem;font-weight:950;text-transform:uppercase;letter-spacing:.12em}
+.questionNavigation{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-top:20px}
+.questionNavigation .navButtons{display:flex;gap:9px;flex-wrap:wrap}
+.questionNavigation .submitMessage{flex:1;min-width:200px}
+.navQ.answered{background:#eef8f6;border-color:#9dd4bf;color:#126147}
+.navQ.current.answered{background:#e8f6f2}
+.navQ.expired{background:#fff8e8;border-color:#e5ca76;color:#8b6b10}
+.navSidePanel .navigatorGrid{grid-template-columns:repeat(5,1fr)}
+.timerPill{font-variant-numeric:tabular-nums;min-width:66px;text-align:center}
+.timerPill.warn{background:#fff8e8;color:#8b6b10}
+.timerPill.danger{background:#fff0f2;color:#a13243}
+.timerToggle{display:inline-flex;align-items:center;gap:7px;padding:5px 9px;border:1px solid #dce3eb;border-radius:999px;background:#fff;color:#344257;font-size:.82rem;font-weight:850}
+.timerToggle input{width:17px;height:17px;margin:0;accent-color:var(--teal)}
+.panelTimer{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;padding:12px 13px;border:1px solid #dfe6ed;border-radius:14px;background:#fbfcfe}
+.panelTimerLabel{font-weight:900;color:#344257}
+.panelTimerValue{font-size:1.2rem;font-weight:950;font-variant-numeric:tabular-nums;color:var(--teal)}
+.panelTimerValue.warn{color:#9b6b09}
+.panelTimerValue.danger{color:#b33849}
+.studyBuddy{position:fixed;right:max(12px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));z-index:10060;display:flex;align-items:center;gap:9px;padding:8px 13px 8px 8px;border:1px solid rgba(11,122,117,.22);border-radius:999px;background:rgba(255,255,255,.98);box-shadow:0 10px 26px rgba(0,0,0,.14);font-weight:900;font-size:14px;color:#173d3a}
+.greenLight{width:10px;height:10px;flex:0 0 10px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 0 rgba(34,197,94,.5);animation:badgePulse 1.5s infinite}
+.cheerBubble{position:absolute;right:10px;bottom:calc(100% + 10px);max-width:min(300px,calc(100vw - 32px));padding:10px 14px;border:1px solid #cfe0df;border-radius:14px;background:#fff;color:#17685f;font-weight:850;line-height:1.4;box-shadow:0 8px 22px rgba(0,0,0,.12);opacity:0;visibility:hidden;transform:translateY(8px);pointer-events:none}
+.studyBuddy.cheer .cheerBubble{visibility:visible;animation:badgeCheer 3.5s ease both}
+@keyframes badgePulse{70%{box-shadow:0 0 0 8px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+@keyframes badgeCheer{0%,100%{opacity:0;transform:translateY(8px)}12%,82%{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.greenLight{animation:none}.studyBuddy.cheer .cheerBubble{animation:none;opacity:1;transform:none}}
+.modeTabs{display:flex;gap:8px;margin:0 0 16px;padding:6px;width:max-content;max-width:100%;border:1px solid #dfe6ed;border-radius:14px;background:#fff}
+.modeTab{border:0;border-radius:10px;padding:10px 16px;min-height:42px;background:transparent;color:#475569;font-weight:900}
+.modeTab[aria-selected="true"]{background:#eaf7f4;color:#126147;box-shadow:0 2px 8px rgba(15,143,131,.12)}
+.hidden{display:none!important}
+.formulaWorkspace{padding:24px}
+.formulaIntro{margin:0 0 18px;color:var(--muted);line-height:1.6}
+.formulaGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.growthChartCard{margin-top:16px;padding:18px;border:1px solid #dfe6ed;border-radius:17px;background:#fff}
+.growthChartCard h3{margin:0 0 6px}
+.growthChartCard p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.5}
+.growthChart{display:block;width:100%;height:auto;margin-top:14px;overflow:visible}
+.growthChart .chartGrid{stroke:#e7edf3;stroke-width:1}
+.growthChart .chartAxis{stroke:#9aa8b8;stroke-width:1.3}
+.growthChart .chartLabel{fill:#657386;font:12px system-ui,sans-serif}
+.growthChart .simpleLine{fill:none;stroke:#2563eb;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.growthChart .compoundLine{fill:none;stroke:#0f8f83;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.chartLegend{display:flex;flex-wrap:wrap;gap:12px 20px;margin-top:8px;color:#344257;font-size:.9rem;font-weight:800}
+.chartLegend span{display:inline-flex;align-items:center;gap:7px}
+.chartLegend i{width:17px;height:4px;border-radius:4px;background:#2563eb}
+.chartLegend .compoundSwatch{background:#0f8f83}
+.chartSummary{min-height:1.4em;margin-top:8px!important}
+.formulaCard{padding:18px;border:1px solid #dfe6ed;border-radius:17px;background:#fff}
+.formulaCard h3{margin:0 0 8px}
+.formulaEquation{display:block;margin:10px 0;padding:12px 14px;border-radius:12px;background:#f5f8fb;color:#173d3a;font-weight:850;line-height:1.8;overflow-wrap:anywhere}
+.formulaFields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0}
+.formulaFields label{display:grid;gap:5px;color:#344257;font-size:.9rem;font-weight:800}
+.formulaFields input,.formulaFields select{min-width:0;min-height:44px;padding:9px 10px;border:1px solid #cfd9e4;border-radius:10px;font:inherit;color:var(--text);background:#fff}
+.formulaFields input:focus-visible,.formulaFields select:focus-visible{outline:3px solid rgba(37,99,235,.32);outline-offset:2px}
+.formulaResult{margin:12px 0 0;padding:12px;border:1px solid #dce9e5;border-radius:12px;background:#f2fbf8;color:#174b43;line-height:1.6}
+.formulaResult:empty{display:none}
+.formulaHint{margin:8px 0 0;color:var(--muted);font-size:.9rem;line-height:1.5}
+.formulaTools{display:grid;gap:16px;margin-top:16px}
+.formulaTools details{border:1px solid #dfe6ed;border-radius:14px;background:#fff;padding:14px 16px}
+.formulaTools summary{font-weight:900;cursor:pointer}
+.formulaTools p{margin:10px 0 0;color:#445267;line-height:1.6}
+.typedAnswerLabel{display:block;margin:0 0 8px;color:#344257;font-weight:850}
+.typedAnswerInput{width:100%;min-height:54px;padding:12px 14px;border:1px solid #cfd9e4;border-radius:12px;font:inherit;font-size:1.05rem;color:var(--text);background:#fff}
+.typedAnswerInput:focus-visible{outline:3px solid rgba(37,99,235,.32);outline-offset:2px}
+.typedAnswerInput:disabled{background:#f5f8fb;color:#657386}
+.typedResult{min-height:1.4em;margin:8px 0 0;color:var(--muted);font-size:.9rem}
+.questionCard.review .typedAnswerInput.correct{border-color:#78bea4;background:#effaf5}
+.questionCard.review .typedAnswerInput.wrong{border-color:#df9ba5;background:#fff3f4}
+.modeTabs + .shell{margin-top:0}
+@media(max-width:760px){.formulaWorkspace{padding:20px 16px}.formulaGrid{grid-template-columns:1fr}}
+@media(max-width:430px){.growthChartCard{padding:14px 10px}.growthChart .chartLabel{font-size:11px}}
+@media(max-width:430px){.formulaFields{grid-template-columns:1fr}.modeTab{padding:9px 12px}}
+#results{margin-top:20px}
+#results .feedbackTitle{font-size:1.15rem}
+#results .explanation{margin:0}
+@media(max-width:600px){.questionCard{padding:14px}.actions{align-items:stretch}.actions .btn{width:100%}}
+@media(max-width:600px){.questionNavigation{align-items:stretch;flex-direction:column}.questionNavigation .navButtons{display:grid;grid-template-columns:1fr 1fr}}
 
-.hint-btn {
-    background: #f3f4f6;
-    color: #374151;
-    margin-top: 12px;
-}
-
-.feedback {
-    margin-top: 12px;
-    font-weight: bold;
-}
-
-.correct {
-    color: #15803d;
-}
-
-.wrong {
-    color: #dc2626;
-}
-
-.hint {
-    display: none;
-    margin-top: 12px;
-    background: #fff7ed;
-    border-left: 4px solid #f59e0b;
-    padding: 12px;
-    line-height: 1.6;
-}
-
-.solution {
-    display: none;
-    margin-top: 12px;
-    background: #eff6ff;
-    border-left: 4px solid #2563eb;
-    padding: 15px;
-    line-height: 1.7;
-}
-
-.bottom {
-    text-align: center;
-    margin-top: 30px;
-}
-
-.submit-all {
-    background: #16a34a;
-    color: white;
-    padding: 14px 25px;
-    font-size: 17px;
-}
-
-.reset {
-    background: #e5e7eb;
-    margin-left: 8px;
-}
-
-#finalScore {
-    margin-top: 20px;
-    font-size: 22px;
-    font-weight: bold;
-}
-
-@media(max-width:600px) {
-    .stats {
-        grid-template-columns: 1fr;
-    }
-
-    .answer-row {
-        flex-direction: column;
-    }
-
-    header h1 {
-        font-size: 25px;
-    }
-}
 </style>
 </head>
-
 <body>
+<main class="app">
+  <header class="hero">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">%</div>
+      <div>
+        <h1>Interest Challenge</h1>
+        <p class="subtitle">Advanced, Ultimate &amp; Master Rounds · 32 questions</p>
+      </div>
+    </div>
+    <div class="pill">3 minutes per question · 32 marks</div>
+  </header>
 
-<header>
-    <h1>📈 Percentage & Compound Interest Quiz</h1>
-    <p>10 exam-style practice questions</p>
-</header>
-
-<div class="stats">
-    <div class="stat">
-        <strong id="score">0</strong>
-        Correct
+  <div aria-label="Learning modes" class="modeTabs" role="tablist">
+    <button aria-controls="quizWorkspace" aria-selected="true" class="modeTab" id="quizTab" role="tab" type="button">Quiz</button>
+    <button aria-controls="formulaWorkspace" aria-selected="false" class="modeTab" id="formulaTab" role="tab" type="button">Formula Lab</button>
+  </div>
+  <section class="shell" aria-labelledby="quizTitle">
+    <div id="quizWorkspace">
+    <div class="topbar">
+      <div class="meta">
+        <div class="counter" id="progressText" aria-live="polite">Your progress · 0/32</div>
+        <div class="catwrap"><span class="category">Simple &amp; Compound Interest</span><span class="diff">Advanced + Ultimate + Master · 32 marks</span><label class="timerToggle"><input id="timerEnabled" type="checkbox" checked>3 min timer</label><span class="diff timerPill" id="timerDisplay" role="timer" aria-label="Time remaining on this question" aria-live="off">3:00</span></div>
+      </div>
+      <div class="progressTrack" id="progressTrack" role="progressbar" aria-label="Questions completed" aria-valuemin="0" aria-valuemax="32" aria-valuenow="0">
+        <div class="progress" id="progress"></div>
+      </div>
     </div>
 
-    <div class="stat">
-        <strong id="attempted">0</strong>
-        Attempted
+    <div class="content">
+      <h2 id="quizTitle" class="question" style="margin-top:0">Select one answer per question</h2>
+      <p class="subtitle" id="timerInstructions" style="margin:0 0 20px">Choose one option in the first two rounds or save your typed answer in the Master round to check it and see its explanation. With the timer on, you have 3 minutes per question; it pauses when you navigate away. Your score appears when all 32 questions are complete.</p>
+      <p class="formulaHint" id="roundInstructions">Advanced round: select the best multiple-choice answer.</p>
+      <div id="questionList" class="questionList"></div>
+      <div class="questionNavigation">
+        <div class="navButtons">
+          <button class="btn btnGhost" id="previousQuestion" type="button">Previous</button>
+          <button class="btn btnSecondary" id="nextQuestion" type="button">Next</button>
+        </div>
+        <span class="keyboardHint submitMessage" id="submitMessage" aria-live="polite">Your score appears when all 32 questions are complete.</span>
+      </div>
+      <div id="results" class="feedback" role="status" aria-live="polite" aria-atomic="true"></div>
     </div>
-
-    <div class="stat">
-        <strong>10</strong>
-        Questions
     </div>
-</div>
+    <section aria-labelledby="formulaTitle" class="formulaWorkspace hidden" id="formulaWorkspace" role="tabpanel" tabindex="0">
+      <h2 id="formulaTitle" class="question" style="margin-top:0">Interest Formula Lab</h2>
+      <p class="formulaIntro">Explore the key relationships used in the Advanced, Ultimate, and Master rounds. Change the values in either tool and calculate to see how the formulas behave.</p>
 
-<div class="container" id="quiz"></div>
+      <div class="formulaGrid">
+        <form class="formulaCard" id="growthCalculator">
+          <h3>Simple vs compound growth</h3>
+          <p class="formulaHint">Compare both methods for the same principal, rate, and time.</p>
+          <div class="formulaFields">
+            <label>Principal ($)<input id="growthPrincipal" min="0.01" step="any" type="number" value="10000" required></label>
+            <label>Annual rate (%)<input id="growthRate" min="0" step="any" type="number" value="6" required></label>
+            <label>Time (years)<input id="growthYears" min="0" step="any" type="number" value="3" required></label>
+            <label>Compounds per year<select id="growthFrequency"><option value="1">Annually</option><option value="2">Semi-annually</option><option value="4">Quarterly</option><option value="12" selected>Monthly</option><option value="365">Daily</option></select></label>
+          </div>
+          <button class="btn btnTeal" type="submit">Compare growth</button>
+          <div aria-live="polite" class="formulaResult" id="growthResult"></div>
+        </form>
 
-<div class="bottom">
-    <button class="submit-all" onclick="submitAll()">Check All Answers</button>
-    <button class="reset" onclick="resetQuiz()">Reset Quiz</button>
+        <form class="formulaCard" id="reverseCalculator">
+          <h3>Reverse compound rate</h3>
+          <p class="formulaHint">Find the nominal annual rate needed to grow a principal to a target balance.</p>
+          <div class="formulaFields">
+            <label>Starting principal ($)<input id="reversePrincipal" min="0.01" step="any" type="number" value="9800" required></label>
+            <label>Target balance ($)<input id="reverseTarget" min="0.01" step="any" type="number" value="13500" required></label>
+            <label>Time (years)<input id="reverseYears" min="0.01" step="any" type="number" value="4" required></label>
+            <label>Compounds per year<input id="reverseFrequency" min="1" step="1" type="number" value="12" required></label>
+          </div>
+          <button class="btn btnTeal" type="submit">Find annual rate</button>
+          <div aria-live="polite" class="formulaResult" id="reverseResult"></div>
+        </form>
+      </div>
+      <section aria-labelledby="growthChartTitle" class="growthChartCard">
+        <h3 id="growthChartTitle">Visual growth comparison</h3>
+        <p>See how simple and compound interest grow over time using the calculator values above.</p>
+        <svg aria-label="Graph comparing simple and compound interest growth" class="growthChart" id="growthChart" role="img" viewBox="0 0 720 340"></svg>
+        <div aria-hidden="true" class="chartLegend">
+          <span><i></i>Simple interest</span>
+          <span><i class="compoundSwatch"></i>Compound interest</span>
+        </div>
+        <p aria-live="polite" class="chartSummary" id="chartSummary"></p>
+      </section>
 
-    <div id="finalScore"></div>
+      <div class="formulaTools">
+        <details>
+          <summary>Simple interest and amount</summary>
+          <p><strong>Interest:</strong> I = Prt. <strong>Final amount:</strong> A = P(1 + rt). Use r as a decimal and t in years. Simple interest is always calculated on the original principal.</p>
+        </details>
+        <details>
+          <summary>Compound interest and compounding periods</summary>
+          <p><strong>Final amount:</strong> A = P(1 + j/m)<sup>mt</sup>, where j is nominal annual rate, m is compounds per year, and t is years. <strong>Effective annual rate:</strong> (1 + j/m)<sup>m</sup> − 1.</p>
+        </details>
+        <details>
+          <summary>Present value, loan payments, and remaining balance</summary>
+          <p><strong>Present value:</strong> PV = <span class="frac"><span class="num">FV</span><span class="den">(1+i)<sup>n</sup></span></span>. <strong>Equal loan payment:</strong> PMT = <span class="frac"><span class="num">PV·i</span><span class="den">1 − (1+i)<sup>−n</sup></span></span>. After k payments, remaining balance = PMT·<span class="frac"><span class="num">1 − (1+i)<sup>−(n−k)</sup></span><span class="den">i</span></span>.</p>
+        </details>
+        <details>
+          <summary>Regular deposits, tax, inflation, and changing rates</summary>
+          <p><strong>End-of-period deposits:</strong> FV = PMT·<span class="frac"><span class="num">(1+i)<sup>n</sup>−1</span><span class="den">i</span></span>. <strong>Tax on interest:</strong> net amount = P + (A−P)(1−tax rate). <strong>Today’s purchasing power:</strong> <span class="frac"><span class="num">after-tax amount</span><span class="den">(1+inflation rate)<sup>years</sup></span></span>. For changing rates, multiply each period’s growth factors.</p>
+        </details>
+      </div>
+    </section>
+  </section>
+  <div class="footer">Advanced + Ultimate + Master Interest Challenge • Simple &amp; Compound Interest • 32 marks</div>
+</main>
+
+<button aria-controls="questionPanel" aria-expanded="false" class="edgeToggle navEdge" id="questionPanelToggle" type="button">☰ Questions</button>
+<aside aria-label="Question navigator" class="sidePanel navSidePanel" id="questionPanel">
+  <div class="sidePanelHead">
+    <div>
+      <div class="sidePanelTitle">Question Navigator</div>
+      <div class="sidePanelSub">Choose a question to jump directly to it.</div>
+    </div>
+    <button class="sideHideBtn" id="questionPanelHide" type="button">Hide</button>
+  </div>
+  <div class="sidePanelBody">
+    <div class="panelTimer">
+      <span class="panelTimerLabel">Current question timer</span>
+      <span class="panelTimerValue" id="panelTimerDisplay">3:00</span>
+    </div>
+    <p class="sidePanelSub" id="panelTimerInstructions">3 minutes per question. The timer pauses when you switch questions. If it expires, that question is marked incorrect.</p>
+    <div class="navigatorLegend">
+      <span class="legendItem"><span class="legendDot current"></span>Current</span>
+      <span class="legendItem"><span class="legendDot correct"></span>Answered</span>
+      <span class="legendItem"><span class="legendDot skipped"></span>Timed out</span>
+      <span class="legendItem"><span class="legendDot"></span>Unanswered</span>
+    </div>
+    <div aria-label="Choose a question" class="navigatorGrid" id="questionNavigator"></div>
+  </div>
+</aside>
+
+<div aria-label="Created by Dr King Wunna" class="studyBuddy" id="studyBuddy">
+  <span>Dr King Wunna</span>
+  <span aria-label="Online" class="greenLight"></span>
+  <div class="cheerBubble" id="cheerBubble" role="status" aria-live="polite"></div>
 </div>
 
 <script>
-
 const questions = [
-
-{
-q: `A house increases in value by 4% during the first year.
-During the second year, its value increases by another 5%.
-At the end of the second year, the house is worth $65,520.
-Calculate the original value of the house.`,
-answer: 60000,
-tolerance: 0.01,
-hint: `Work backwards. Divide the final value by 1.05 and then by 1.04.`,
-solution: `
-Original value × 1.04 × 1.05 = 65,520<br><br>
-Original value = 65,520 ÷ (1.04 × 1.05)<br>
-= 65,520 ÷ 1.092<br>
-= <b>$60,000</b>
-`
-},
-
-{
-q: `A car increases in value by 6% during the first year and by 4% during the second year.
-Its value at the end of the second year is $55,120.
-Find its original value.`,
-answer: 50000,
-tolerance: 0.01,
-hint: `Use: Original × 1.06 × 1.04 = Final value.`,
-solution: `
-Original × 1.06 × 1.04 = 55,120<br><br>
-Original = 55,120 ÷ 1.1024<br>
-= <b>$50,000</b>
-`
-},
-
-{
-q: `A piece of land is bought for a certain price.
-Its value increases by 10% in the first year and by 5% in the second year.
-After two years it is worth $92,400.
-Calculate the original price.`,
-answer: 80000,
-tolerance: 0.01,
-hint: `The multipliers are 1.10 and 1.05.`,
-solution: `
-Original × 1.10 × 1.05 = 92,400<br><br>
-Original = 92,400 ÷ 1.155<br>
-= <b>$80,000</b>
-`
-},
-
-{
-q: `A shop is valued at $40,000.
-Its value increases by 8% in the first year and 6% in the second year.
-Calculate its value at the end of the second year.`,
-answer: 45792,
-tolerance: 0.01,
-hint: `This time you are going forward. Multiply by 1.08 and then 1.06.`,
-solution: `
-40,000 × 1.08 × 1.06<br>
-= 43,200 × 1.06<br>
-= <b>$45,792</b>
-`
-},
-
-{
-q: `An investment of $800 earns compound interest at 3% per year.
-Calculate its value after 5 years.
-Give your answer to the nearest cent.`,
-answer: 927.42,
-tolerance: 0.01,
-hint: `Use A = P(1 + r/100)ⁿ.`,
-solution: `
-A = 800(1.03)⁵<br>
-= 927.419...<br>
-= <b>$927.42</b>
-`
-},
-
-{
-q: `Maria invests $1,000 at 4% compound interest per year.
-Calculate the value of the investment after 6 years.
-Give your answer to the nearest cent.`,
-answer: 1265.32,
-tolerance: 0.01,
-hint: `Use 1000(1.04)⁶.`,
-solution: `
-A = 1000(1.04)⁶<br>
-= 1265.319...<br>
-= <b>$1,265.32</b>
-`
-},
-
-{
-q: `Daniel invests $500 at r% compound interest per year.
-After 4 years, the investment is worth $607.75.
-Find r.
-Give your answer as a percentage.`,
-answer: 5,
-tolerance: 0.02,
-hint: `Start with 607.75 = 500(1 + r/100)⁴.`,
-solution: `
-607.75 = 500(1 + r/100)⁴<br><br>
-607.75 ÷ 500 = (1 + r/100)⁴<br><br>
-Take the fourth root:<br>
-1 + r/100 ≈ 1.05<br><br>
-<b>r ≈ 5%</b>
-`
-},
-
-{
-q: `Sara invests $2,000 at r% compound interest per year.
-After 5 years, her investment is worth $2,552.56.
-Find r.
-Give your answer as a percentage.`,
-answer: 5,
-tolerance: 0.02,
-hint: `Divide by 2000 first, then take the fifth root.`,
-solution: `
-2552.56 = 2000(1 + r/100)⁵<br><br>
-2552.56 ÷ 2000 = (1 + r/100)⁵<br><br>
-Take the fifth root:<br>
-1 + r/100 ≈ 1.05<br><br>
-<b>r ≈ 5%</b>
-`
-},
-
-{
-q: `A house originally costs $75,000.
-Its value increases by 7% in the first year and by 3% in the second year.
-Calculate its value after two years.`,
-answer: 82657.50,
-tolerance: 0.01,
-hint: `Calculate 75,000 × 1.07 × 1.03.`,
-solution: `
-75,000 × 1.07 × 1.03<br>
-= 80,250 × 1.03<br>
-= <b>$82,657.50</b>
-`
-},
-
-{
-q: `An investment grows from $1,200 to $1,459.22 in 5 years at r% compound interest per year.
-Find r.
-Give your answer as a percentage.`,
-answer: 4,
-tolerance: 0.02,
-hint: `Use 1459.22 = 1200(1 + r/100)⁵.`,
-solution: `
-1459.22 = 1200(1 + r/100)⁵<br><br>
-1459.22 ÷ 1200 = (1 + r/100)⁵<br><br>
-Take the fifth root:<br>
-1 + r/100 ≈ 1.04<br><br>
-<b>r ≈ 4%</b>
-`
-}
-
+  {
+    question: '$8,000 is invested at 7% compound interest per year for 3 years. What is the final amount?',
+    options: ['$9,680.00', '$9,800.34', '$9,560.00', '$9,980.34'],
+    answer: 1,
+    explanation: 'Use A = P(1 + r)<sup>t</sup>. A = $8,000 × 1.07<sup>3</sup> = $9,800.344, which rounds to <strong>$9,800.34</strong>.'
+  },
+  {
+    question: 'An investment of $5,000 grows to $6,050 in 2 years, compounded annually. What is the annual interest rate?',
+    options: ['5%', '8%', '10%', '21%'],
+    answer: 2,
+    explanation: '6050 ÷ 5000 = 1.21 = (1 + r)<sup>2</sup>. Taking the square root gives 1 + r = 1.1, so <strong>r = 10%</strong>.'
+  },
+  {
+    question: '$5,000 is invested at 8% per annum, compounded quarterly, for 18 months. Find the final amount.',
+    options: ['$5,600.00', '$5,624.32', '$5,630.81', '$5,760.00'],
+    answer: 2,
+    explanation: 'There are 4 × 1.5 = 6 quarters, and the rate per quarter is 8% ÷ 4 = 2%. A = $5,000 × 1.02<sup>6</sup> = <strong>$5,630.81</strong> (to the nearest cent).'
+  },
+  {
+    question: 'A sum of $4,800 increases to $5,520 in 30 months under simple interest. Find the annual interest rate.',
+    options: ['5%', '6%', '7.5%', '10%'],
+    answer: 1,
+    explanation: 'The interest is $5,520 − $4,800 = $720, over 2.5 years. Using I = Prt, r = 720 ÷ (4,800 × 2.5) = 0.06, so the annual rate is <strong>6%</strong>.'
+  },
+  {
+    question: 'For one year on $10,000, which earns more: 6% annual interest compounded semi-annually, or 6.1% simple annual interest?',
+    options: ['Compound interest by $1', 'Simple interest by $1', 'Both earn the same', 'Simple interest by $10'],
+    answer: 1,
+    explanation: 'Semi-annual compounding earns $10,000 × (1.03)<sup>2</sup> − $10,000 = $609 interest. Simple interest earns $10,000 × 6.1% = $610. Therefore, <strong>simple interest earns $1 more</strong>.'
+  },
+  {
+    question: 'An investment of $1,500 earns 8% compound interest in the first year and 12% in the second year. Find the final amount.',
+    options: ['$1,800.00', '$1,814.40', '$1,820.00', '$1,840.00'],
+    answer: 1,
+    explanation: 'Apply each year’s rate in turn: $1,500 × 1.08 × 1.12 = <strong>$1,814.40</strong>.'
+  },
+  {
+    question: '$10,000 is deposited at 6% annual interest compounded every 6 months. Find the balance after 2 years.',
+    options: ['$11,200.00', '$11,255.09', '$11,236.00', '$11,400.00'],
+    answer: 1,
+    explanation: 'The rate per half-year is 6% ÷ 2 = 3%, with 2 × 2 = 4 periods. Balance = $10,000 × 1.03<sup>4</sup> = <strong>$11,255.09</strong>.'
+  },
+  {
+    question: 'Two accounts each start with $10,000 at 8% per year for 2 years. Account A uses simple interest and Account B uses compound interest annually. What is the difference in interest?',
+    options: ['Compound earns $64 more', 'Simple earns $64 more', 'Compound earns $640 more', 'They earn equal interest'],
+    answer: 0,
+    explanation: 'Simple interest = $10,000 × 0.08 × 2 = $1,600. Compound interest = $10,000 × 1.08<sup>2</sup> − $10,000 = $1,664. Compound interest earns <strong>$64 more</strong>.'
+  },
+  {
+    question: 'A principal of $8,000 becomes $10,648 after 3 years with annual compound interest. Find the annual interest rate.',
+    options: ['9%', '10%', '11%', '33.1%'],
+    answer: 1,
+    explanation: '$10,648 ÷ $8,000 = 1.331 = (1 + r)<sup>3</sup>. Since 1.1<sup>3</sup> = 1.331, the annual interest rate is <strong>10%</strong>.'
+  },
+  {
+    question: 'A bank advertises a nominal annual interest rate of 12%, compounded monthly. What is the effective annual interest rate, approximately?',
+    options: ['12.00%', '12.36%', '12.68%', '13.20%'],
+    answer: 2,
+    explanation: 'The effective annual rate is (1 + 0.12 ÷ 12)<sup>12</sup> − 1 = 0.126825…, or approximately <strong>12.68%</strong>.'
+  },
+  {
+    question: 'An investor deposits $12,500 at 8% nominal annual interest, compounded quarterly, for 3 years. A tax of 15% is deducted from the total interest earned at withdrawal. What is the final amount received?',
+    options: ['$15,853.02', '$15,350.07', '$14,975.00', '$15,000.00'],
+    answer: 1,
+    explanation: 'Before tax, the balance is $12,500 × (1 + 0.08 ÷ 4)<sup>12</sup> = $15,853.02. Interest is $3,353.02; after 15% tax, the investor keeps $12,500 + $3,353.02 × 0.85 = <strong>$15,350.07</strong>.'
+  },
+  {
+    question: 'Bank A offers 9% nominal annual interest compounded monthly. Bank B offers 9.2% nominal annual interest compounded semi-annually. Which bank gives the higher effective annual interest rate, and by approximately how many percentage points?',
+    options: ['Bank A by 0.031 percentage points', 'Bank B by 0.31 percentage points', 'Bank B by 0.031 percentage points', 'Both banks have equal effective rates'],
+    answer: 2,
+    explanation: 'Bank A: (1 + 0.09 ÷ 12)<sup>12</sup> − 1 ≈ 9.3807%. Bank B: (1 + 0.092 ÷ 2)<sup>2</sup> − 1 = 9.4116%. Bank B is higher by about <strong>0.031 percentage points</strong>.'
+  },
+  {
+    question: 'How much money must be deposited today to have $30,000 after 6 years if the nominal annual interest rate is 6.4%, compounded monthly? Round to the nearest dollar.',
+    options: ['$21,000', '$20,455', '$19,800', '$21,455'],
+    answer: 1,
+    explanation: 'Discount the future value over 72 monthly periods: PV = $30,000 ÷ (1 + 0.064 ÷ 12)<sup>72</sup> ≈ $20,454.80. To the nearest dollar, deposit <strong>$20,455</strong>.'
+  },
+  {
+    question: 'An investment of $10,000 earns 4% compound interest annually for the first 2 years, followed by 7% annually for the next 3 years. What is the final value?',
+    options: ['$12,900.00', '$13,100.00', '$13,480.00', '$13,250.07'],
+    answer: 3,
+    explanation: 'Apply each rate over its own period: $10,000 × 1.04<sup>2</sup> × 1.07<sup>3</sup> = $13,250.065088, which rounds to <strong>$13,250.07</strong>.'
+  },
+  {
+    question: 'A deposit of $6,000 earns 7.2% nominal annual interest compounded monthly. What is the minimum number of complete months required for the balance to reach or exceed $9,000?',
+    options: ['67 months', '68 months', '66 months', '72 months'],
+    answer: 1,
+    explanation: 'Solve 6,000(1 + 0.072 ÷ 12)<sup>n</sup> ≥ 9,000. Thus n ≥ ln(1.5) ÷ ln(1.006) ≈ 67.78. The first complete month that reaches the target is <strong>month 68</strong>.'
+  },
+  {
+    question: 'A $24,000 loan carries an annual nominal interest rate of 9.6%, compounded monthly. It is repaid with 48 equal monthly payments, the first after one month. What is the monthly payment?',
+    options: ['$604.10', '$576.12', '$620.00', '$692.00'],
+    answer: 0,
+    explanation: 'For an ordinary annuity, PMT = PV × i ÷ [1 − (1 + i)<sup>−n</sup>], where i = 0.096 ÷ 12 = 0.008 and n = 48. PMT = 24,000 × 0.008 ÷ [1 − 1.008<sup>−48</sup>] ≈ <strong>$604.10 per month</strong>.'
+  },
+  {
+    question: 'An investor deposits $18,000 at 5.5% nominal annual interest, compounded quarterly, for 4 years. If inflation is 3% annually, what is the final balance worth in today’s purchasing power?',
+    options: ['$22,395.79', '$20,395.11', '$19,898.37', '$18,540.00'],
+    answer: 2,
+    explanation: 'First find the nominal balance: $18,000(1 + 0.055 ÷ 4)<sup>16</sup> ≈ $22,395.79. Deflate for four years of inflation: $22,395.79 ÷ 1.03<sup>4</sup> ≈ <strong>$19,898.37</strong> in today’s purchasing power.'
+  },
+  {
+    question: 'A total of $20,000 is split between Bank A paying 6% compound interest annually and Bank B paying 4% compound interest annually. After 2 years, the combined balance is $22,136. How much was originally deposited in Bank A?',
+    options: ['$8,000', '$10,000', '$14,000', '$12,000'],
+    answer: 3,
+    explanation: 'Let x be the amount in Bank A. Then 1.06<sup>2</sup>x + 1.04<sup>2</sup>(20,000 − x) = 22,136. Solving gives x = <strong>$12,000</strong>.'
+  },
+  {
+    question: 'A person borrows $15,000 at 8% compound interest annually. After exactly 2 years, they make a single repayment of $6,000. No further payments are made until the end of year 4. What is the remaining balance then?',
+    options: ['$11,496.00', '$13,996.80', '$13,408.93', '$17,496.00'],
+    answer: 2,
+    explanation: 'The balance after 2 years is $15,000 × 1.08<sup>2</sup> = $17,496. Subtract the $6,000 repayment to get $11,496, then compound for 2 more years: $11,496 × 1.08<sup>2</sup> = <strong>$13,408.93</strong>.'
+  },
+  {
+    question: 'Two accounts each receive $10,000. Account A earns 8% simple interest annually, while Account B earns 6% compound interest annually. At the end of which year does Account B first have a higher balance than Account A?',
+    options: ['Year 9', 'Year 10', 'Year 11', 'Year 12'],
+    answer: 2,
+    explanation: 'At the end of year n, A has $10,000(1 + 0.08n) and B has $10,000(1.06)<sup>n</sup>. At year 10, B’s factor (1.06)<sup>10</sup> ≈ 1.79085 is below A’s 1.8. At year 11, B’s factor ≈ 1.89830 is above A’s 1.88, so it first overtakes in <strong>year 11</strong>.'
+  },
+  {
+    type: 'typed', level: 'Master Level · Question 1 of 12',
+    question: 'Taxed quarterly compound interest',
+    prompt: 'Your answer (USD)',
+    numeric: 18922.024190406195, tolerance: 0.011, formattedAnswer: '$18,922.02',
+    problem: '$14,000 is invested at 7.2% nominal annual interest, compounded quarterly, for 5 years. At withdrawal, the bank deducts 18% tax from the total interest earned. Calculate the final amount received.',
+    explanation: 'Before tax, A = $14,000(1 + 0.072/4)<sup>20</sup> = $20,002.47. Interest = $6,002.47, of which 82% remains after tax. Final amount = $14,000 + $6,002.47 × 0.82 = <strong>$18,922.02</strong>.'
+  },
+  {
+    type: 'typed', level: 'Master Level · Question 2 of 12',
+    question: 'Reverse compound interest rate',
+    prompt: 'Your answer (% per year)',
+    numeric: 8.034459931506355, tolerance: 0.0051, formattedAnswer: '8.03%',
+    problem: 'An investment increases from $9,800 to $13,500 in exactly 4 years. Interest is compounded monthly at a constant nominal annual rate. Calculate the nominal annual interest rate.',
+    explanation: 'For nominal annual rate j compounded monthly, 13,500 = 9,800(1 + j/12)<sup>48</sup>. Thus j = 12[(13,500/9,800)<sup>1/48</sup> − 1] ≈ 8.03446%, or <strong>8.03% per year</strong>.'
+  },
+  {
+    type: 'typed', level: 'Master Level · Question 3 of 12',
+    question: 'Minimum investment duration',
+    prompt: 'Your answer (whole months)',
+    numeric: 117, tolerance: 0.001, formattedAnswer: '117 months',
+    problem: 'You invest $9,500 at 6.6% nominal annual interest compounded monthly. Find the minimum number of complete months required for the balance to reach at least $18,000.',
+    explanation: 'Solve 9,500(1 + 0.066/12)<sup>n</sup> ≥ 18,000. n ≥ ln(18,000/9,500)/ln(1.0055) ≈ 116.16, so the minimum complete number of months is <strong>117</strong>.'
+  },
+  {
+    type: 'typed', level: 'Master Level · Question 4 of 12',
+    question: 'Present value of future withdrawals',
+    prompt: 'Your answer (USD)',
+    numeric: 17729.752520811813, tolerance: 0.011, formattedAnswer: '$17,729.75',
+    problem: 'You want to withdraw exactly $5,000 at the end of each year for 4 years from an account earning 5% compound interest annually. The balance must become exactly zero immediately after the fourth withdrawal. How much must you deposit today?',
+    explanation: 'This is the present value of an ordinary annuity: PV = 5,000[1 − (1.05)<sup>−4</sup>]/0.05 = $17,729.7525…, so deposit <strong>$17,729.75</strong>.'
+  },
+  {
+    type: 'typed', level: 'Master Level · Question 5 of 12',
+    question: 'Outstanding loan balance',
+    prompt: 'Your answer (USD)',
+    numeric: 28177.220708219633, tolerance: 0.011, formattedAnswer: '$28,177.22',
+    problem: 'A $42,500 loan charges 10.8% nominal annual interest compounded monthly. It is repaid with 60 equal monthly payments, starting one month after borrowing. Calculate the outstanding balance immediately after the 24th payment.',
+    explanation: 'Monthly rate i = 0.108/12 = 0.009. The monthly payment is 42,500i/[1 − (1+i)<sup>−60</sup>] ≈ $919.82. After payment 24, 36 payments remain, so balance = 919.8196[1 − (1.009)<sup>−36</sup>]/0.009 ≈ <strong>$28,177.22</strong>.'
+  },
+  {
+    type: 'typed', level: 'Master Level · Question 6 of 12',
+    question: 'Variable interest and service charge',
+    prompt: 'Your answer (USD)',
+    numeric: 27530.0207994492, tolerance: 0.011, formattedAnswer: '$27,530.02',
+    problem: '$20,000 earns 5.2% nominal annual interest compounded monthly for the first 2 years, then 8% effective annual interest for the following 3 years. At the end of year 5, a one-time service charge of 1.5% of the entire balance is deducted. Find the final amount.',
+    explanation: 'Balance before the fee = $20,000(1 + 0.052/12)<sup>24</sup>(1.08)<sup>3</sup> = $27,949.26. Deduct 1.5%: $27,949.26 × 0.985 = <strong>$27,530.02</strong>.'
+  },
+  {
+    type: 'typed', level: 'Master Level · Question 7 of 12',
+    question: 'Tripling an investment',
+    prompt: 'Your answer (whole quarters)',
+    numeric: 60, tolerance: 0.001, formattedAnswer: '60 quarters',
+    problem: 'An account earns 7.5% nominal annual interest compounded quarterly. Starting with no additional deposits, find the minimum number of complete quarters needed for the investment to become at least three times its original value.',
+    explanation: 'Each quarter earns 0.075/4 = 0.01875. Solve (1.01875)<sup>n</sup> ≥ 3, giving n ≥ ln(3)/ln(1.01875) ≈ 59.14. It takes <strong>60 complete quarters</strong>.'
+  },
+  {
+    type: 'typed', level: 'Master Level · Question 8 of 12',
+    question: 'Splitting an investment',
+    prompt: 'Your answer (USD)',
+    numeric: 10000, tolerance: 0.011, formattedAnswer: '$10,000.00',
+    problem: 'A total of $25,000 is split between two banks. Bank A pays 9% compound interest annually. Bank B pays 4% simple interest annually. After 3 years, the combined balance is $29,750.29. Calculate the original amount invested in Bank A.',
+    explanation: 'Let x be Bank A’s deposit. Then x(1.09)<sup>3</sup> + (25,000 − x)(1 + 0.04 × 3) = 29,750.29. Solving gives x ≈ <strong>$10,000</strong>.'
+  },
+  {
+    type: 'typed', level: 'Master Level · Question 9 of 12',
+    question: 'Monthly contributions and compound growth',
+    prompt: 'Your answer (USD)',
+    numeric: 15432.289283979988, tolerance: 0.011, formattedAnswer: '$15,432.29',
+    problem: 'You deposit $5,000 immediately into an account earning 4.8% nominal annual interest compounded monthly. You also deposit $250 at the end of every month for 36 months. What is the account balance immediately after the 36th deposit?',
+    explanation: 'Monthly rate i = 0.048/12 = 0.004. Future value = 5,000(1.004)<sup>36</sup> + 250[(1.004)<sup>36</sup> − 1]/0.004 = $5,772.76 + $9,659.53 = <strong>$15,432.29</strong>.'
+  },
+  {
+    type: 'typed', level: 'Master Level · Question 10 of 12',
+    question: 'Inflation-adjusted investment after tax',
+    prompt: 'Your answer (USD in today’s value)',
+    numeric: 16432.405344552193, tolerance: 0.011, formattedAnswer: '$16,432.41',
+    problem: 'You invest $15,000 for 3 years at 8% nominal annual interest compounded quarterly. At maturity, 20% tax is deducted from the total interest earned. Inflation averages 3.5% compounded annually. Calculate the final after-tax balance in today’s purchasing power.',
+    explanation: 'Nominal balance = $15,000(1 + 0.08/4)<sup>12</sup> = $19,023.63. After tax, it is $15,000 + ($19,023.63 − $15,000) × 0.8 = $18,218.90. In today’s dollars: $18,218.90/(1.035)<sup>3</sup> ≈ <strong>$16,432.41</strong>.'
+  },
+  {
+    type: 'typed', level: 'Master Level · Question 11 of 12',
+    question: 'Loan with irregular repayments',
+    prompt: 'Your answer (USD)',
+    numeric: 25057.32400523002, tolerance: 0.011, formattedAnswer: '$25,057.32',
+    problem: 'You borrow $30,000 at 9% annual compound interest. You repay $12,000 exactly at the end of year 2 and $7,000 exactly at the end of year 4, immediately after interest is added on each date. No other repayments occur. Find the outstanding debt at the end of year 6.',
+    explanation: 'At year 2, debt after payment = 30,000(1.09)<sup>2</sup> − 12,000 = $23,643. At year 4, after interest and the second payment = 23,643(1.09)<sup>2</sup> − 7,000 = $21,090.2483. Grow for two more years: $21,090.2483(1.09)<sup>2</sup> = <strong>$25,057.32</strong>.'
+  },
+  {
+    type: 'typed', level: 'Master Level · Question 12 of 12',
+    question: 'Equivalent nominal annual rate',
+    prompt: 'Your answer (% nominal APR)',
+    numeric: 8.278547470953512, tolerance: 0.0051, formattedAnswer: '8.28%',
+    problem: 'Bank A offers 8.6% effective annual interest. Bank B compounds monthly. Calculate the nominal annual interest rate Bank B must offer to produce exactly the same effective annual return as Bank A.',
+    explanation: 'Set (1 + j/12)<sup>12</sup> = 1.086. Thus j = 12[(1.086)<sup>1/12</sup> − 1] ≈ 8.27855%, or <strong>8.28% nominal APR</strong>.'
+  }
 ];
+const letters = ['A', 'B', 'C', 'D'];
+const selections = Array(questions.length).fill(null);
+const typedAnswers = Array(questions.length).fill('');
+const typedSaved = Array(questions.length).fill(false);
+const checkedAnswers = Array(questions.length).fill(false);
+const timedOut = Array(questions.length).fill(false);
+const QUESTION_SECONDS = 180;
+const remainingSeconds = Array(questions.length).fill(QUESTION_SECONDS);
+const questionList = document.getElementById('questionList');
+const progressText = document.getElementById('progressText');
+const progress = document.getElementById('progress');
+const progressTrack = document.getElementById('progressTrack');
+const submitMessage = document.getElementById('submitMessage');
+const results = document.getElementById('results');
+const questionNavigator = document.getElementById('questionNavigator');
+const previousButton = document.getElementById('previousQuestion');
+const nextButton = document.getElementById('nextQuestion');
+const questionPanel = document.getElementById('questionPanel');
+const questionPanelToggle = document.getElementById('questionPanelToggle');
+const timerDisplay = document.getElementById('timerDisplay');
+const panelTimerDisplay = document.getElementById('panelTimerDisplay');
+const timerEnabledInput = document.getElementById('timerEnabled');
+const studyBuddy = document.getElementById('studyBuddy');
+const cheerBubble = document.getElementById('cheerBubble');
+const quizWorkspace = document.getElementById('quizWorkspace');
+const formulaWorkspace = document.getElementById('formulaWorkspace');
+const quizTab = document.getElementById('quizTab');
+const formulaTab = document.getElementById('formulaTab');
+let submitted = false;
+let currentQuestion = 0;
+let timerId = null;
+let timerStartedAt = 0;
+let timerBaseRemaining = QUESTION_SECONDS;
+let timerAnnouncement = '';
+let timerEnabled = true;
+let cheerTimeout = null;
 
-let answered = new Array(questions.length).fill(false);
+function renderQuestions() {
+  stopTimer();
+  questionList.replaceChildren();
+  questions.forEach((item, index) => {
+    const card = document.createElement('article');
+    card.className = 'questionCard';
+    card.dataset.question = String(index);
+    card.hidden = index !== currentQuestion;
 
-function buildQuiz() {
+    const level = document.createElement('div');
+    level.className = 'questionLevel';
+    level.textContent = item.level || (index < 10 ? `Advanced Round · Question ${index + 1} of 10` : `Ultimate Expert Round · Question ${index - 9} of 10`);
+    card.appendChild(level);
 
-    const quiz = document.getElementById("quiz");
+    const heading = document.createElement('h3');
+    const number = document.createElement('span');
+    number.textContent = String(index + 1);
+    heading.append(number, document.createTextNode(item.type === 'typed' ? `${item.question}: ${item.problem}` : item.question));
+    card.appendChild(heading);
 
-    questions.forEach((item, index) => {
-
-        const div = document.createElement("div");
-        div.className = "question";
-
-        div.innerHTML = `
-            <div class="question-number">Question ${index + 1}</div>
-
-            <p>${item.q.replace(/\n/g,"<br>")}</p>
-
-            <div class="answer-row">
-                <input
-                    type="number"
-                    step="any"
-                    id="answer${index}"
-                    placeholder="Enter your answer"
-                >
-
-                <button
-                    class="check-btn"
-                    onclick="checkAnswer(${index})">
-                    Check
-                </button>
-            </div>
-
-            <button
-                class="hint-btn"
-                onclick="showHint(${index})">
-                💡 Hint
-            </button>
-
-            <button
-                class="hint-btn"
-                onclick="showSolution(${index})">
-                Show Solution
-            </button>
-
-            <div class="hint" id="hint${index}">
-                ${item.hint}
-            </div>
-
-            <div class="feedback" id="feedback${index}"></div>
-
-            <div class="solution" id="solution${index}">
-                ${item.solution}
-            </div>
-        `;
-
-        quiz.appendChild(div);
-    });
-}
-
-function checkAnswer(index) {
-
-    const input = document.getElementById("answer" + index);
-    const feedback = document.getElementById("feedback" + index);
-
-    const userAnswer = parseFloat(input.value);
-
-    if (isNaN(userAnswer)) {
-        feedback.className = "feedback wrong";
-        feedback.innerHTML = "Please enter an answer first.";
-        return false;
-    }
-
-    answered[index] = true;
-
-    const difference =
-        Math.abs(userAnswer - questions[index].answer);
-
-    if (difference <= questions[index].tolerance) {
-
-        feedback.className = "feedback correct";
-        feedback.innerHTML = "✓ Correct!";
-
-        input.style.borderColor = "#16a34a";
-
-        updateScore();
-
-        return true;
-
+    if (item.type === 'typed') {
+      const label = document.createElement('label');
+      label.className = 'typedAnswerLabel';
+      label.htmlFor = `typedAnswer${index}`;
+      label.textContent = item.prompt;
+      const input = document.createElement('input');
+      input.className = 'typedAnswerInput';
+      input.id = `typedAnswer${index}`;
+      input.type = 'text';
+      input.inputMode = 'decimal';
+      input.autocomplete = 'off';
+      input.placeholder = 'Type a number';
+      input.value = typedAnswers[index];
+      input.disabled = timedOut[index] || submitted;
+      input.setAttribute('aria-label', `Question ${index + 1}: ${item.prompt}`);
+      const save = document.createElement('button');
+      save.className = 'btn btnSecondary typedAnswerSave';
+      save.type = 'button';
+      save.textContent = typedSaved[index] ? 'Answer Saved' : 'Save Answer';
+      save.disabled = timedOut[index] || submitted || !typedAnswers[index].trim();
+      const note = document.createElement('p');
+      note.className = 'typedResult';
+      note.setAttribute('aria-live', 'polite');
+      note.textContent = timedOut[index] ? 'Time expired — this question is marked incorrect.' : typedSaved[index] ? 'Answer saved. You may edit it before submitting.' : 'Enter your value, then save it to mark this question complete.';
+      input.addEventListener('input', () => {
+        const wasSaved = typedSaved[index];
+        timerAnnouncement = '';
+        typedAnswers[index] = input.value;
+        typedSaved[index] = false;
+        checkedAnswers[index] = false;
+        card.classList.remove('checked');
+        card.classList.remove('review');
+        input.classList.remove('correct', 'wrong');
+        save.textContent = 'Save Answer';
+        const valid = input.value.trim() && Number.isFinite(parseTypedAnswer(input.value));
+        save.disabled = timedOut[index] || submitted || !valid;
+        note.textContent = input.value.trim() && !valid
+          ? 'Enter a valid number before saving your answer.'
+          : 'Enter your value, then save it to mark this question complete.';
+        updateNavigation();
+        if (wasSaved) startTimer();
+      });
+      save.addEventListener('click', () => {
+        if (!input.value.trim() || !Number.isFinite(parseTypedAnswer(input.value))) {
+          note.textContent = 'Enter a valid number before saving your answer.';
+          return;
+        }
+        timerAnnouncement = '';
+        typedAnswers[index] = input.value;
+        typedSaved[index] = true;
+        checkedAnswers[index] = true;
+        card.classList.add('checked');
+        const correct = isTypedAnswerCorrect(item, typedAnswers[index]);
+        input.classList.toggle('correct', correct);
+        input.classList.toggle('wrong', !correct);
+        note.textContent = `${correct ? 'Correct!' : `Not quite. Correct answer: ${item.formattedAnswer}`} ${correct ? 'Answer saved.' : 'Answer saved; you may edit and try again.'}`;
+        explanation.innerHTML = `<strong>${correct ? 'Correct.' : `Not correct. The correct answer is ${item.formattedAnswer}.`}</strong> ${item.explanation}`;
+        stopTimer();
+        updateNavigation();
+        save.textContent = 'Answer Saved';
+        if (correct) showCheer(`Correct! Great work on question ${index + 1}.`);
+      });
+      card.append(label, input, save, note);
     } else {
-
-        feedback.className = "feedback wrong";
-        feedback.innerHTML = "✗ Not quite. Try again.";
-
-        input.style.borderColor = "#dc2626";
-
-        updateScore();
-
-        return false;
+      const answers = document.createElement('div');
+      answers.className = 'answers';
+      answers.setAttribute('role', 'group');
+      answers.setAttribute('aria-label', `Answers for question ${index + 1}`);
+      item.options.forEach((option, optionIndex) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'answer';
+        button.setAttribute('aria-pressed', 'false');
+        button.disabled = timedOut[index] || submitted;
+        const letter = document.createElement('span');
+        letter.className = 'letter';
+        letter.textContent = letters[optionIndex];
+        const text = document.createElement('span');
+        text.innerHTML = option;
+        button.append(letter, text);
+        button.addEventListener('click', () => selectAnswer(index, optionIndex));
+        if (selections[index] === optionIndex) button.setAttribute('aria-pressed', 'true');
+        answers.appendChild(button);
+      });
+      card.appendChild(answers);
     }
+
+    const explanation = document.createElement('p');
+    explanation.className = 'questionExplanation';
+    card.appendChild(explanation);
+    questionList.appendChild(card);
+  });
+  renderNavigator();
+  updateNavigation();
+  startTimer();
 }
 
-function showHint(index) {
-
-    const hint = document.getElementById("hint" + index);
-
-    hint.style.display =
-        hint.style.display === "block"
-        ? "none"
-        : "block";
+function selectAnswer(questionIndex, optionIndex) {
+  if (submitted || timedOut[questionIndex]) return;
+  stopTimer();
+  timerAnnouncement = '';
+  selections[questionIndex] = optionIndex;
+  checkedAnswers[questionIndex] = true;
+  const card = questionList.children[questionIndex];
+  const item = questions[questionIndex];
+  const correct = optionIndex === item.answer;
+  card.classList.add('checked');
+  card.querySelectorAll('.answer').forEach((button, index) => {
+    button.setAttribute('aria-pressed', String(index === optionIndex));
+    button.classList.toggle('correct', index === item.answer);
+    button.classList.toggle('wrong', index === optionIndex && !correct);
+    button.classList.toggle('dim', index !== item.answer && index !== optionIndex);
+  });
+  card.querySelector('.questionExplanation').innerHTML = `<strong>${correct ? 'Correct!' : `Not quite. The correct answer is ${letters[item.answer]}.`}</strong> ${item.explanation}`;
+  updateNavigation();
+  if (correct) showCheer(`Correct! Great work on question ${questionIndex + 1}.`);
 }
 
-function showSolution(index) {
-
-    const solution =
-        document.getElementById("solution" + index);
-
-    solution.style.display =
-        solution.style.display === "block"
-        ? "none"
-        : "block";
+function renderNavigator() {
+  questionNavigator.replaceChildren();
+  questions.forEach((_, index) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'navQ';
+    button.textContent = String(index + 1);
+    button.setAttribute('aria-label', `Go to question ${index + 1}`);
+    button.addEventListener('click', () => showQuestion(index));
+    questionNavigator.appendChild(button);
+  });
+  updateNavigation();
 }
 
-function updateScore() {
+function updateNavigation() {
+  const completed = questions.reduce((count, _, index) => count + Number(hasAnswered(index) || timedOut[index]), 0);
+  progressText.textContent = `Your progress · ${completed}/${questions.length} · Question ${currentQuestion + 1} of ${questions.length}`;
+  progress.style.width = `${completed / questions.length * 100}%`;
+  progressTrack.setAttribute('aria-valuenow', String(completed));
+  previousButton.disabled = currentQuestion === 0;
+  nextButton.disabled = currentQuestion === questions.length - 1;
+  const roundInstructions = document.getElementById('roundInstructions');
+  if (!submitted) {
+    const masterAnswered = typedSaved.slice(20).filter(Boolean).length;
+    roundInstructions.textContent = currentQuestion < 10
+      ? 'Advanced round: select the best multiple-choice answer.'
+      : currentQuestion < 20
+        ? 'Ultimate Expert round: select one answer. A calculator is allowed.'
+        : `Master Level progress: ${masterAnswered}/12 answers saved. No multiple choice; type and save each numerical answer. Round money and rates to 2 decimal places and keep intermediate calculations unrounded. Calculator allowed. Aim for at least 10/12.`;
+  }
+  if (!submitted) {
+    submitMessage.textContent = timerAnnouncement || (completed === questions.length
+      ? `All ${questions.length} questions are complete. Your final score is below.`
+      : `Your score appears when all ${questions.length} questions are complete.`);
+  }
 
-    let score = 0;
-    let attempted = 0;
-
-    questions.forEach((q,index) => {
-
-        const value =
-            parseFloat(
-                document.getElementById("answer"+index).value
-            );
-
-        if (!isNaN(value)) {
-
-            attempted++;
-
-            if (
-                Math.abs(value-q.answer)
-                <= q.tolerance
-            ) {
-                score++;
-            }
-        }
-    });
-
-    document.getElementById("score").textContent = score;
-    document.getElementById("attempted").textContent = attempted;
+  [...questionNavigator.children].forEach((button, index) => {
+    button.classList.toggle('current', index === currentQuestion);
+    button.classList.toggle('answered', hasAnswered(index));
+    button.classList.toggle('expired', timedOut[index]);
+    const isChecked = checkedAnswers[index] || submitted;
+    const isCorrect = questions[index].type === 'typed'
+      ? !timedOut[index] && typedSaved[index] && isTypedAnswerCorrect(questions[index], typedAnswers[index])
+      : !timedOut[index] && selections[index] === questions[index].answer;
+    button.classList.toggle('correct', isChecked && isCorrect);
+    button.classList.toggle('wrong', isChecked && !isCorrect);
+    button.setAttribute('aria-current', index === currentQuestion ? 'step' : 'false');
+  });
+  updateTimerDisplay();
+  if (!submitted && completed === questions.length) finalizeQuiz();
 }
 
-function submitAll() {
-
-    let score = 0;
-
-    questions.forEach((q,index) => {
-
-        if(checkAnswer(index)) {
-            score++;
-        }
-    });
-
-    const final =
-        document.getElementById("finalScore");
-
-    let message = "";
-
-    if(score === 10)
-        message = "🏆 Excellent! Perfect score!";
-    else if(score >= 8)
-        message = "🌟 Great work!";
-    else if(score >= 6)
-        message = "👍 Good job — keep practising!";
-    else
-        message = "📚 Keep practising. You can do it!";
-
-    final.innerHTML =
-        `Your Score: ${score}/10<br>${message}`;
+function hasAnswered(index) {
+  return questions[index].type === 'typed' ? typedSaved[index] : selections[index] !== null;
 }
 
-function resetQuiz() {
-
-    questions.forEach((q,index) => {
-
-        document.getElementById("answer"+index).value = "";
-        document.getElementById("feedback"+index).innerHTML = "";
-        document.getElementById("hint"+index).style.display = "none";
-        document.getElementById("solution"+index).style.display = "none";
-        document.getElementById("answer"+index).style.borderColor = "#d1d5db";
-    });
-
-    document.getElementById("score").textContent = "0";
-    document.getElementById("attempted").textContent = "0";
-    document.getElementById("finalScore").innerHTML = "";
-
-    answered.fill(false);
-
-    window.scrollTo({top:0, behavior:"smooth"});
+function parseTypedAnswer(value) {
+  const normalized = String(value).trim().replace(/[$,%\s,]/g, '').replace(/−/g, '-');
+  return normalized ? Number(normalized) : NaN;
 }
 
-buildQuiz();
+function isTypedAnswerCorrect(question, value) {
+  const numericAnswer = parseTypedAnswer(value);
+  return Number.isFinite(numericAnswer) && Math.abs(numericAnswer - question.numeric) <= question.tolerance;
+}
 
+function showQuestion(index) {
+  if (index < 0 || index >= questions.length) return;
+  stopTimer();
+  currentQuestion = index;
+  [...questionList.children].forEach((card, cardIndex) => {
+    card.hidden = cardIndex !== currentQuestion;
+  });
+  updateNavigation();
+  startTimer();
+}
+
+function formatTime(seconds) {
+  return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
+}
+
+function updateTimerDisplay() {
+  const time = remainingSeconds[currentQuestion];
+  const completed = hasAnswered(currentQuestion) || timedOut[currentQuestion];
+  const display = !timerEnabled ? 'Off' : completed ? (timedOut[currentQuestion] ? 'Time up' : 'Done') : formatTime(time);
+  timerDisplay.textContent = display;
+  panelTimerDisplay.textContent = display;
+  [timerDisplay, panelTimerDisplay].forEach((element) => {
+    element.classList.toggle('warn', timerEnabled && !completed && time <= 60 && time > 20);
+    element.classList.toggle('danger', timerEnabled && !completed && time <= 20);
+  });
+}
+
+function stopTimer() {
+  if (timerId !== null) {
+    remainingSeconds[currentQuestion] = Math.max(0, timerBaseRemaining - Math.floor((Date.now() - timerStartedAt) / 1000));
+    clearInterval(timerId);
+    timerId = null;
+  }
+  updateTimerDisplay();
+}
+
+function startTimer() {
+  if (!timerEnabled || submitted || document.hidden || quizWorkspace.classList.contains('hidden') || timedOut[currentQuestion] || hasAnswered(currentQuestion) || timerId !== null) return;
+  if (remainingSeconds[currentQuestion] <= 0) {
+    expireCurrentQuestion();
+    return;
+  }
+  timerBaseRemaining = remainingSeconds[currentQuestion];
+  timerStartedAt = Date.now();
+  timerId = setInterval(() => {
+    const elapsed = Math.floor((Date.now() - timerStartedAt) / 1000);
+    remainingSeconds[currentQuestion] = Math.max(0, timerBaseRemaining - elapsed);
+    updateTimerDisplay();
+    if (remainingSeconds[currentQuestion] <= 0) expireCurrentQuestion();
+  }, 250);
+  updateTimerDisplay();
+}
+
+function expireCurrentQuestion() {
+  if (submitted || timedOut[currentQuestion] || selections[currentQuestion] !== null) return;
+  stopTimer();
+  remainingSeconds[currentQuestion] = 0;
+  timedOut[currentQuestion] = true;
+  const expiredNumber = currentQuestion + 1;
+  timerAnnouncement = `Time expired for question ${expiredNumber}; it is marked incorrect.`;
+  submitMessage.textContent = timerAnnouncement;
+  questionList.children[currentQuestion].querySelectorAll('.answer, .typedAnswerInput, .typedAnswerSave').forEach((button) => {
+    button.disabled = true;
+  });
+  questionList.children[currentQuestion].querySelector('.typedResult')?.replaceChildren(document.createTextNode('Time expired — this question is marked incorrect.'));
+  updateNavigation();
+  const nextUncompleted = questions.findIndex((_, index) => !hasAnswered(index) && !timedOut[index]);
+  if (nextUncompleted !== -1) showQuestion(nextUncompleted);
+}
+
+function setQuestionPanel(open) {
+  questionPanel.classList.toggle('open', open);
+  questionPanelToggle.classList.toggle('tabHidden', open);
+  questionPanelToggle.setAttribute('aria-expanded', String(open));
+  document.body.classList.toggle('nav-panel-open', open);
+}
+
+function finalizeQuiz() {
+  const completed = questions.every((_, index) => hasAnswered(index) || timedOut[index]);
+  if (submitted || !completed) return;
+  stopTimer();
+  submitted = true;
+  const score = questions.reduce((total, question, index) => {
+    const correct = question.type === 'typed'
+      ? !timedOut[index] && typedSaved[index] && isTypedAnswerCorrect(question, typedAnswers[index])
+      : selections[index] === question.answer;
+    return total + Number(correct);
+  }, 0);
+  questions.forEach((question, index) => {
+    const card = questionList.children[index];
+    card.classList.add('review');
+    if (question.type === 'typed') {
+      const correct = !timedOut[index] && typedSaved[index] && isTypedAnswerCorrect(question, typedAnswers[index]);
+      card.querySelector('.typedAnswerInput').disabled = true;
+      card.querySelector('.typedAnswerSave').disabled = true;
+      card.querySelector('.typedAnswerInput').classList.add(correct ? 'correct' : 'wrong');
+      card.querySelector('.typedResult').textContent = `${correct ? 'Correct.' : 'Not correct.'} Correct answer: ${question.formattedAnswer}`;
+    } else {
+      card.querySelectorAll('.answer').forEach((button, optionIndex) => {
+        button.disabled = true;
+        if (optionIndex === question.answer) button.classList.add('correct');
+        else if (optionIndex === selections[index]) button.classList.add('wrong');
+      });
+    }
+    card.querySelector('.questionExplanation').innerHTML = `${timedOut[index] ? '<strong>Time expired — marked incorrect.</strong> ' : ''}<strong>Worked solution:</strong> ${question.explanation}`;
+  });
+  results.className = `feedback show ${score === questions.length ? 'correct' : 'wrong'}`;
+  const typedScore = questions.reduce((total, question, index) => total + Number(question.type === 'typed' && !timedOut[index] && typedSaved[index] && isTypedAnswerCorrect(question, typedAnswers[index])), 0);
+  const typedTotal = questions.filter((question) => question.type === 'typed').length;
+  results.innerHTML = `<div class="feedbackTitle">Your score: ${score} of ${questions.length}</div><p class="explanation">${typedScore} of ${typedTotal} Master answers correct. ${score === questions.length ? 'Excellent work — you got every question right!' : 'Review the worked solutions below to strengthen your understanding.'}</p>`;
+  submitMessage.textContent = 'Your answers and worked solutions are shown below.';
+  updateNavigation();
+  const cheer = score === questions.length
+    ? `Perfect score, Dr King Wunna! ${score} out of ${questions.length} — outstanding work!`
+    : score >= Math.ceil(questions.length * 0.75)
+      ? `Excellent effort, Dr King Wunna! You scored ${score} out of ${questions.length}.`
+      : `Keep it up, Dr King Wunna! You scored ${score} out of ${questions.length} — every challenge builds your skill.`;
+  showCheer(cheer);
+  results.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function setMode(mode) {
+  const showFormula = mode === 'formula';
+  quizWorkspace.classList.toggle('hidden', showFormula);
+  formulaWorkspace.classList.toggle('hidden', !showFormula);
+  quizTab.setAttribute('aria-selected', String(!showFormula));
+  formulaTab.setAttribute('aria-selected', String(showFormula));
+  if (showFormula) stopTimer();
+  else startTimer();
+}
+
+function setTimerEnabled(enabled) {
+  timerEnabled = enabled;
+  document.getElementById('timerInstructions').textContent = enabled
+    ? 'Choose one option in the first two rounds or save your typed answer in the Master round to check it and see its explanation. With the timer on, you have 3 minutes per question; it pauses when you navigate away. Your score appears when all 32 questions are complete.'
+    : 'Choose one option in the first two rounds or save your typed answer in the Master round to check it and see its explanation. The timer is off, so work at your own pace. Your score appears when all 32 questions are complete.';
+  document.getElementById('panelTimerInstructions').textContent = enabled
+    ? '3 minutes per question. The timer pauses when you switch questions. If it expires, that question is marked incorrect.'
+    : 'Timer off — work at your own pace. Your answers will not expire.';
+  if (enabled) {
+    if (remainingSeconds[currentQuestion] <= 0 && !timedOut[currentQuestion] && !hasAnswered(currentQuestion)) {
+      remainingSeconds[currentQuestion] = QUESTION_SECONDS;
+    }
+    startTimer();
+  } else {
+    stopTimer();
+  }
+  updateTimerDisplay();
+}
+
+function showCheer(message) {
+  cheerBubble.textContent = message;
+  studyBuddy.classList.remove('cheer');
+  void studyBuddy.offsetWidth;
+  studyBuddy.classList.add('cheer');
+  if (cheerTimeout !== null) clearTimeout(cheerTimeout);
+  cheerTimeout = setTimeout(() => {
+    studyBuddy.classList.remove('cheer');
+    cheerTimeout = null;
+  }, 3600);
+}
+
+function readPositiveValues(ids) {
+  const values = ids.map((id) => Number(document.getElementById(id).value));
+  return values.every((value) => Number.isFinite(value) && value > 0) ? values : null;
+}
+
+function renderGrowthChart() {
+  const chart = document.getElementById('growthChart');
+  const summary = document.getElementById('chartSummary');
+  const principal = Number(document.getElementById('growthPrincipal').value);
+  const annualPercent = Number(document.getElementById('growthRate').value);
+  const years = Number(document.getElementById('growthYears').value);
+  const frequency = Number(document.getElementById('growthFrequency').value);
+  const valid = Number.isFinite(principal) && principal > 0
+    && Number.isFinite(annualPercent) && annualPercent >= 0
+    && Number.isFinite(years) && years > 0
+    && Number.isFinite(frequency) && frequency > 0;
+  if (!valid) {
+    chart.replaceChildren();
+    summary.textContent = 'Enter a positive principal and time, and a non-negative annual rate to view the graph.';
+    return;
+  }
+
+  const simpleAmount = principal * (1 + annualPercent / 100 * years);
+  const compoundAmount = principal * (1 + annualPercent / 100 / frequency) ** (frequency * years);
+  const maximum = Math.max(principal, simpleAmount, compoundAmount);
+  if (!Number.isFinite(maximum) || maximum <= 0) {
+    chart.replaceChildren();
+    summary.textContent = 'These values are too large to display on the graph.';
+    return;
+  }
+
+  const namespace = 'http://www.w3.org/2000/svg';
+  const left = 76;
+  const right = 690;
+  const top = 24;
+  const bottom = 282;
+  const graphMax = maximum * 1.08;
+  const makeElement = (name, attributes, text) => {
+    const element = document.createElementNS(namespace, name);
+    Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, String(value)));
+    if (text !== undefined) element.textContent = text;
+    return element;
+  };
+  const formatAxisMoney = (amount) => {
+    if (amount >= 1000000) return `$${(amount / 1000000).toFixed(1)}m`;
+    if (amount >= 10000) return `$${(amount / 1000).toFixed(0)}k`;
+    return `$${Math.round(amount).toLocaleString()}`;
+  };
+  const xAt = (time) => left + time / years * (right - left);
+  const yAt = (amount) => bottom - amount / graphMax * (bottom - top);
+  chart.replaceChildren();
+  for (let tick = 0; tick <= 4; tick++) {
+    const amount = graphMax * tick / 4;
+    const y = yAt(amount);
+    chart.append(
+      makeElement('line', { x1: left, y1: y, x2: right, y2: y, class: 'chartGrid' }),
+      makeElement('text', { x: left - 10, y: y + 4, 'text-anchor': 'end', class: 'chartLabel' }, formatAxisMoney(amount))
+    );
+    const time = years * tick / 4;
+    chart.append(makeElement('text', { x: xAt(time), y: bottom + 24, 'text-anchor': 'middle', class: 'chartLabel' }, `${Number(time.toFixed(1))} yr`));
+  }
+  chart.append(
+    makeElement('line', { x1: left, y1: top, x2: left, y2: bottom, class: 'chartAxis' }),
+    makeElement('line', { x1: left, y1: bottom, x2: right, y2: bottom, class: 'chartAxis' })
+  );
+  const pointsFor = (compound) => {
+    const points = [];
+    for (let sample = 0; sample <= 80; sample++) {
+      const time = years * sample / 80;
+      const amount = compound
+        ? principal * (1 + annualPercent / 100 / frequency) ** (frequency * time)
+        : principal * (1 + annualPercent / 100 * time);
+      points.push(`${sample === 0 ? 'M' : 'L'}${xAt(time).toFixed(2)},${yAt(amount).toFixed(2)}`);
+    }
+    return points.join(' ');
+  };
+  chart.append(
+    makeElement('path', { d: pointsFor(false), class: 'simpleLine' }),
+    makeElement('path', { d: pointsFor(true), class: 'compoundLine' })
+  );
+  chart.setAttribute('aria-label', `Simple interest grows from ${formatAxisMoney(principal)} to ${formatAxisMoney(simpleAmount)}; compound interest grows to ${formatAxisMoney(compoundAmount)} over ${years} years.`);
+  summary.textContent = `After ${years} years: simple ${simpleAmount.toLocaleString(undefined, { style: 'currency', currency: 'USD' })} · compound ${compoundAmount.toLocaleString(undefined, { style: 'currency', currency: 'USD' })}.`;
+}
+
+document.getElementById('growthCalculator').addEventListener('submit', (event) => {
+  event.preventDefault();
+  const result = document.getElementById('growthResult');
+  const principal = Number(document.getElementById('growthPrincipal').value);
+  const annualPercent = Number(document.getElementById('growthRate').value);
+  const years = Number(document.getElementById('growthYears').value);
+  if (!(Number.isFinite(principal) && principal > 0 && Number.isFinite(annualPercent) && annualPercent >= 0 && Number.isFinite(years) && years > 0)) {
+    result.textContent = 'Enter a positive principal and time, and a non-negative annual rate.';
+    return;
+  }
+  const frequency = Number(document.getElementById('growthFrequency').value);
+  const rate = annualPercent / 100;
+  const simpleAmount = principal * (1 + rate * years);
+  const compoundAmount = principal * (1 + rate / frequency) ** (frequency * years);
+  const money = (amount) => amount.toLocaleString(undefined, { style: 'currency', currency: 'USD' });
+  result.innerHTML = `<strong>Simple:</strong> A = P(1 + rt) = ${money(simpleAmount)} (interest ${money(simpleAmount - principal)}).<br><strong>Compound:</strong> A = P(1 + r/m)<sup>mt</sup> = ${money(compoundAmount)} (interest ${money(compoundAmount - principal)}).`;
+  renderGrowthChart();
+});
+
+document.getElementById('reverseCalculator').addEventListener('submit', (event) => {
+  event.preventDefault();
+  const values = readPositiveValues(['reversePrincipal', 'reverseTarget', 'reverseYears', 'reverseFrequency']);
+  const result = document.getElementById('reverseResult');
+  if (!values || values[1] <= values[0]) {
+    result.textContent = 'Enter positive values, with a target balance greater than the starting principal.';
+    return;
+  }
+  const [principal, target, years, frequency] = values;
+  const nominalPercent = frequency * ((target / principal) ** (1 / (frequency * years)) - 1) * 100;
+  result.innerHTML = `j = m[(FV/PV)<sup>1/(mt)</sup> − 1] = <strong>${nominalPercent.toFixed(4)}% nominal annual rate</strong>.`;
+});
+
+previousButton.addEventListener('click', () => showQuestion(currentQuestion - 1));
+nextButton.addEventListener('click', () => showQuestion(currentQuestion + 1));
+questionPanelToggle.addEventListener('click', () => setQuestionPanel(true));
+document.getElementById('questionPanelHide').addEventListener('click', () => setQuestionPanel(false));
+quizTab.addEventListener('click', () => setMode('quiz'));
+formulaTab.addEventListener('click', () => setMode('formula'));
+timerEnabledInput.addEventListener('change', () => setTimerEnabled(timerEnabledInput.checked));
+['growthPrincipal', 'growthRate', 'growthYears', 'growthFrequency'].forEach((id) => {
+  document.getElementById(id).addEventListener('input', renderGrowthChart);
+  document.getElementById(id).addEventListener('change', renderGrowthChart);
+});
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) stopTimer();
+  else startTimer();
+});
+renderQuestions();
+renderGrowthChart();
 </script>
-
 </body>
 </html>

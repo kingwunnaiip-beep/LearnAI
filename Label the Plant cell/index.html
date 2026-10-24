@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plant Cell Learning Tool</title>
+    <style>
+      :root {
+        --bg: #f2f2f2;
+        --panel: #f8f8f8;
+        --ink: #1f1f1f;
+        --muted: #4b4b4b;
+        --accent: #8f2424;
+        --line: #2a2a2a;
+        --dot: #111111;
+        --button: #ffffff;
+        --button-border: #d4d4d4;
+        --error: #9e2424;
+        --error-bg: #fff0f0;
+        --warning: #805400;
+        --warning-bg: #fff8e5;
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 0;
+      }
+
+      .app {
+        width: 100%;
+      }
+
+      .page-header {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        gap: 16px;
+        margin: 0 0 18px;
+      }
+
+      h1 {
+        grid-column: 2;
+        margin: 0;
+        color: var(--ink);
+        font-size: clamp(1.5rem, 3vw, 2.25rem);
+        text-align: center;
+      }
+
+      .creator-badge {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        z-index: 5;
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 9px 14px;
+        border: 1px solid #0a8293;
+        border-radius: 999px;
+        background: #e8fbfd;
+        color: #12464d;
+        font-size: 0.95rem;
+        font-weight: 700;
+        white-space: nowrap;
+        box-shadow: 0 2px 8px rgba(0, 174, 190, 0.14);
+      }
+
+      .creator-badge__dot {
+        width: 11px;
+        height: 11px;
+        flex: 0 0 11px;
+        border-radius: 50%;
+        background: #00d9f5;
+        box-shadow: 0 0 8px rgba(0, 217, 245, 0.9);
+        animation: cyan-flash 900ms ease-in-out infinite alternate;
+      }
+
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 14px;
+        justify-content: center;
+      }
+
+      button {
+        appearance: none;
+        border: 1px solid var(--button-border);
+        background: var(--button);
+        color: var(--ink);
+        font-size: 1rem;
+        min-height: 44px;
+        padding: 10px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+      }
+
+      button:hover:not(:disabled) {
+        border-color: #b5b5b5;
+      }
+
+      button:focus-visible,
+      .diagram-scroll:focus-visible {
+        outline: 3px solid var(--accent);
+        outline-offset: 3px;
+      }
+
+      button:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+
+      .card {
+        background: var(--panel);
+        border: 1px solid #d7d7d7;
+        border-radius: 12px;
+        box-shadow: 0 10px 26px rgba(0,0,0,0.06);
+        overflow: hidden;
+      }
+
+      .diagram-scroll {
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scrollbar-color: #888 #e7e7e7;
+      }
+
+      .diagram-wrap {
+        position: relative;
+        width: 100%;
+        min-width: 760px;
+        margin: 0 auto;
+        aspect-ratio: 1448 / 1086;
+        background: #f0f0f0;
+      }
+
+      .diagram {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("Plant cell Diagram.PNG");
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+      }
+
+      .label-cover {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+      }
+
+      .label-mask {
+        position: absolute;
+        z-index: 1;
+        background: #fff;
+      }
+
+      .answer-input {
+        width: 100%;
+        height: 100%;
+        min-width: 0;
+        padding: 2px 6px;
+        border: 1px solid #888;
+        border-radius: 3px;
+        background: #fff;
+        color: var(--ink);
+        font: 14px Arial, Helvetica, sans-serif;
+      }
+
+      .answer-input:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 1px;
+      }
+
+      .answer-input[data-result="incorrect"] {
+        border: 2px solid var(--error);
+        background: var(--error-bg);
+      }
+
+      .answer-input[data-result="unanswered"] {
+        border: 2px solid var(--warning);
+        background: var(--warning-bg);
+      }
+
+      .label-mask[data-side="left"] .answer-input {
+        border-left: 5px solid #176b8b;
+      }
+
+      .label-mask[data-side="right"] .answer-input {
+        border-left: 5px solid #9a4e16;
+      }
+
+      svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      .status {
+        text-align: center;
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
+
+      .quiz-progress {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 14px;
+        color: var(--ink);
+        font-size: 0.95rem;
+      }
+
+      .quiz-progress[hidden],
+      .controls button[hidden] {
+        display: none;
+      }
+
+      .quiz-progress progress {
+        width: min(240px, 45vw);
+        height: 14px;
+        accent-color: var(--accent);
+      }
+
+      .hint {
+        min-height: 1.5em;
+        margin: 8px 0 0;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      .diagram-note {
+        margin: 0;
+        padding: 10px 14px;
+        border-top: 1px solid #d7d7d7;
+        color: var(--muted);
+        font-size: 0.9rem;
+        text-align: center;
+      }
+
+      .diagram-note strong:first-child {
+        color: #12536b;
+      }
+
+      .diagram-note strong:last-child {
+        color: #783b10;
+      }
+
+      @keyframes cyan-flash {
+        from {
+          opacity: 0.35;
+          box-shadow: 0 0 3px rgba(0, 217, 245, 0.45);
+        }
+        to {
+          opacity: 1;
+          box-shadow: 0 0 12px rgba(0, 217, 245, 1);
+        }
+      }
+
+      @media (max-width: 600px) {
+        body { padding: 0; }
+        .app { width: 100%; }
+        .page-header {
+          grid-template-columns: 1fr;
+          justify-items: center;
+          gap: 10px;
+        }
+        h1,
+        .creator-badge {
+          grid-column: 1;
+        }
+        .creator-badge {
+          right: 12px;
+          bottom: 12px;
+        }
+        .controls { gap: 8px; }
+        button { flex: 1 1 145px; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="app">
+    <header class="page-header">
+      <h1>Plant Cell: Labeling Practice</h1>
+      <div class="creator-badge" aria-label="Created by Dr King Wunna">
+        <span class="creator-badge__dot" aria-hidden="true"></span>
+        <span>Dr King Wunna</span>
+      </div>
+    </header>
+      <div class="controls" role="group" aria-label="Learning controls">
+        <button id="showAll">Show full structure</button>
+        <button id="showOne">Reveal one label</button>
+        <button id="hideAll">Hide all labels</button>
+        <button id="quizMode">Quiz mode</button>
+        <button id="checkAnswers" hidden>Check answers</button>
+        <button id="showHint" hidden>Show hint</button>
+        <button id="reviewAnswers" hidden>Reveal remaining answers</button>
+        <button id="restartQuiz" hidden>Restart quiz</button>
+      </div>
+
+      <div class="card">
+        <div class="diagram-scroll" role="region" aria-label="Plant cell diagram; scroll horizontally on small screens" tabindex="0">
+          <div class="diagram-wrap">
+            <div class="diagram" role="img" aria-label="Plant cell diagram with structures to identify"></div>
+            <div id="labelCover" class="label-cover"></div>
+            <svg id="overlay" viewBox="0 0 1448 1086" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg>
+          </div>
+        </div>
+        <p class="diagram-note">Use the labels to identify the main <strong>cell structures</strong> and key <strong>organelles</strong> in the plant cell.</p>
+      </div>
+
+      <div id="quizProgress" class="quiz-progress" hidden>
+        <progress id="progressBar" max="15" value="0" aria-label="Quiz progress"></progress>
+        <span id="progressText"></span>
+      </div>
+      <div id="status" class="status" role="status" aria-live="polite" aria-atomic="true">All labels are visible.</div>
+      <p id="hint" class="hint" role="status" aria-live="polite" hidden></p>
+    </div>
+
+    <script>
+      const diagramSize = { width: 1448, height: 1086 };
+      const labels = [
+        { name: 'Rough endoplasmic reticulum', mask: [20, 89, 232, 70], point: [290, 83] },
+        { name: 'Ribosomes', mask: [20, 210, 153, 49], point: [318, 150] },
+        { name: 'Smooth endoplasmic reticulum', mask: [17, 335, 235, 72], point: [285, 195] },
+        { name: 'Large central vacuole', mask: [17, 551, 242, 50], point: [320, 345] },
+        { name: 'Tonoplast', mask: [19, 635, 135, 48], point: [310, 440] },
+        { name: 'Nucleus', mask: [1235, 73, 198, 52], point: [615, 78] },
+        { name: 'Nucleolus', mask: [1235, 145, 198, 52], point: [690, 92] },
+        { name: 'Nuclear envelope', mask: [1235, 217, 198, 52], point: [620, 130] },
+        { name: 'Cytoplasm', mask: [1235, 286, 198, 52], point: [960, 120] },
+        { name: 'Golgi apparatus', mask: [1235, 388, 198, 52], point: [875, 220] },
+        { name: 'Vesicles', mask: [1235, 491, 198, 52], point: [980, 260] },
+        { name: 'Mitochondrion', mask: [1235, 609, 198, 52], point: [920, 320] },
+        { name: 'Chloroplast', mask: [19, 760, 153, 50], point: [982, 455] },
+        { name: 'Peroxisome', mask: [1235, 705, 198, 52], point: [1035, 520] },
+        { name: 'Cell membrane', mask: [1235, 803, 198, 52], point: [1040, 560] },
+        { name: 'Cell wall', mask: [19, 907, 119, 49], point: [940, 595] },
+        { name: 'Plasmodesmata', mask: [1242, 964, 191, 50], point: [1145, 620] },
+      ];
+      const overlay = document.getElementById('overlay');
+      const labelCover = document.getElementById('labelCover');
+      const statusEl = document.getElementById('status');
+      const checkAnswersButton = document.getElementById('checkAnswers');
+      const showHintButton = document.getElementById('showHint');
+      const reviewAnswersButton = document.getElementById('reviewAnswers');
+      const restartQuizButton = document.getElementById('restartQuiz');
+      const quizProgress = document.getElementById('quizProgress');
+      const progressBar = document.getElementById('progressBar');
+      const progressText = document.getElementById('progressText');
+      const hintEl = document.getElementById('hint');
+      const hiddenNames = new Set();
+      const answers = new Map();
+      const answerResults = new Map();
+      let quizModeActive = false;
+      let quizFeedback = '';
+      let statusOverride = '';
+
+      function render() {
+        labels.forEach((label, index) => {
+          const key = label.id || label.name;
+          let mask = labelCover.querySelector(`[data-label-key="${key}"]`);
+          let input;
+
+          if (!mask) {
+            mask = document.createElement('span');
+            mask.className = 'label-mask';
+            mask.dataset.labelKey = key;
+            mask.style.left = `${(label.mask[0] / diagramSize.width) * 100}%`;
+            mask.style.top = `${(label.mask[1] / diagramSize.height) * 100}%`;
+            mask.style.width = `${(label.mask[2] / diagramSize.width) * 100}%`;
+            mask.style.height = `${(label.mask[3] / diagramSize.height) * 100}%`;
+            if (label.id === 'pulmonary-veins-left') mask.dataset.side = 'left';
+            if (label.id === 'pulmonary-veins-right') mask.dataset.side = 'right';
+
+            input = document.createElement('input');
+            input.className = 'answer-input';
+            input.type = 'text';
+            input.autocomplete = 'off';
+            input.spellcheck = false;
+            const location = label.id === 'pulmonary-veins-left'
+              ? ', on the left side of the diagram'
+              : label.id === 'pulmonary-veins-right'
+                ? ', on the right side of the diagram'
+                : '';
+            input.setAttribute('aria-label', `Name structure ${index + 1}${location}`);
+            input.placeholder = 'Answer';
+            input.addEventListener('input', () => {
+              answers.set(key, input.value);
+              answerResults.delete(key);
+              delete input.dataset.result;
+              input.removeAttribute('aria-invalid');
+              quizFeedback = '';
+              hintEl.hidden = true;
+              reviewAnswersButton.hidden = true;
+              updateStatus();
+            });
+            input.addEventListener('keydown', (event) => {
+              if (event.key !== 'Enter') return;
+              event.preventDefault();
+              const userAnswer = (answers.get(key) || '').trim();
+              if (!userAnswer) {
+                answerResults.set(key, 'unanswered');
+                quizFeedback = 'Please enter an answer or try another label.';
+              } else if (normalizeAnswer(userAnswer) === normalizeAnswer(label.name)) {
+                hiddenNames.delete(key);
+                answers.delete(key);
+                answerResults.delete(key);
+                quizFeedback = `Correct: ${label.name}`;
+              } else {
+                answerResults.set(key, 'incorrect');
+                quizFeedback = 'Incorrect — try again.';
+              }
+              render();
+            });
+            mask.appendChild(input);
+            labelCover.appendChild(mask);
+          } else {
+            input = mask.querySelector('input');
+          }
+
+          mask.hidden = !hiddenNames.has(key);
+          input.hidden = !quizModeActive;
+          if (quizModeActive && document.activeElement !== input) {
+            input.value = answers.get(key) || '';
+          }
+          const result = answerResults.get(key);
+          if (result) {
+            input.dataset.result = result;
+            input.setAttribute('aria-invalid', 'true');
+          } else {
+            delete input.dataset.result;
+            input.removeAttribute('aria-invalid');
+          }
+        });
+
+        checkAnswersButton.hidden = !quizModeActive;
+        showHintButton.hidden = !quizModeActive || hiddenNames.size === 0;
+        restartQuizButton.hidden = !quizModeActive;
+        reviewAnswersButton.hidden = !quizModeActive || hiddenNames.size === 0 || !quizFeedback;
+        quizProgress.hidden = !quizModeActive;
+        updateStatus();
+      }
+
+      function normalizeAnswer(value) {
+        return value.trim().toLocaleLowerCase().replace(/[.,]/g, '').replace(/\s+/g, ' ');
+      }
+
+      function checkAnswers() {
+        if (!quizModeActive) return;
+
+        let correct = 0;
+        let unanswered = 0;
+        answerResults.clear();
+        labels.forEach((label) => {
+          const key = label.id || label.name;
+          if (!hiddenNames.has(key)) return;
+          const answer = answers.get(key) || '';
+          if (!answer.trim()) {
+            unanswered += 1;
+            answerResults.set(key, 'unanswered');
+          } else if (normalizeAnswer(answer) === normalizeAnswer(label.name)) {
+            hiddenNames.delete(key);
+            answers.delete(key);
+            correct += 1;
+          } else {
+            answerResults.set(key, 'incorrect');
+          }
+        });
+
+        const incorrect = hiddenNames.size - unanswered;
+        quizFeedback = hiddenNames.size === 0
+          ? `Great work! All ${labels.length} labels are correct.`
+          : `${correct} correct, ${incorrect} to try again, ${unanswered} unanswered.`;
+        render();
+      }
+
+      function showHint() {
+        const label = labels.find((item) => {
+          const key = item.id || item.name;
+          return hiddenNames.has(key) && !(answers.get(key) || '').trim();
+        }) || labels.find((item) => hiddenNames.has(item.id || item.name));
+        if (!label) return;
+
+        const words = label.name.split(/\s+/);
+        hintEl.textContent = `Hint: the answer starts with "${words[0][0]}" and has ${words.length} ${words.length === 1 ? 'word' : 'words'}.`;
+        hintEl.hidden = false;
+      }
+
+      function revealRemainingAnswers() {
+        if (!quizModeActive) return;
+
+        hiddenNames.clear();
+        answers.clear();
+        answerResults.clear();
+        quizModeActive = false;
+        quizFeedback = '';
+        statusOverride = 'Answers revealed for review. Start Quiz mode whenever you are ready to try again.';
+        hintEl.hidden = true;
+        render();
+      }
+
+      function updateStatus() {
+        const total = labels.length;
+        const hidden = hiddenNames.size;
+        const correct = total - hidden;
+        progressBar.max = total;
+        progressBar.value = correct;
+        progressText.textContent = `${correct} of ${total} correct`;
+        if (statusOverride) {
+          statusEl.textContent = statusOverride;
+          return;
+        }
+        if (quizModeActive) {
+          statusEl.textContent = quizFeedback || (correct === total
+            ? `All ${total} labels are correct!`
+            : `Quiz mode: type each label, then select Check answers. ${correct} of ${total} correct.`);
+        } else if (hidden === 0) {
+          statusEl.textContent = 'All labels are visible.';
+        } else if (hidden === total) {
+          statusEl.textContent = 'All labels are hidden. Try to name each structure.';
+        } else {
+          statusEl.textContent = `${total - hidden} of ${total} labels are visible.`;
+        }
+      }
+
+      function showAllLabels() {
+        quizModeActive = false;
+        quizFeedback = '';
+        statusOverride = '';
+        answers.clear();
+        answerResults.clear();
+        hintEl.hidden = true;
+        hiddenNames.clear();
+        render();
+      }
+
+      function hideAllLabels() {
+        quizModeActive = false;
+        quizFeedback = '';
+        statusOverride = '';
+        answers.clear();
+        answerResults.clear();
+        hintEl.hidden = true;
+        labels.forEach((label) => hiddenNames.add(label.id || label.name));
+        render();
+      }
+
+      function revealOneLabel() {
+        quizModeActive = false;
+        quizFeedback = '';
+        statusOverride = '';
+        answers.clear();
+        answerResults.clear();
+        hintEl.hidden = true;
+        if (hiddenNames.size === 0) {
+          labels.forEach((label) => hiddenNames.add(label.id || label.name));
+        }
+        const next = labels.find((label) => hiddenNames.has(label.id || label.name));
+        if (next) hiddenNames.delete(next.id || next.name);
+        render();
+      }
+
+      function startQuiz() {
+        labels.forEach((label) => hiddenNames.add(label.id || label.name));
+        quizModeActive = true;
+        quizFeedback = '';
+        statusOverride = '';
+        answers.clear();
+        answerResults.clear();
+        hintEl.hidden = true;
+        render();
+      }
+
+      document.getElementById('showAll').addEventListener('click', showAllLabels);
+      document.getElementById('hideAll').addEventListener('click', hideAllLabels);
+      document.getElementById('showOne').addEventListener('click', revealOneLabel);
+      document.getElementById('quizMode').addEventListener('click', startQuiz);
+      checkAnswersButton.addEventListener('click', checkAnswers);
+      showHintButton.addEventListener('click', showHint);
+      reviewAnswersButton.addEventListener('click', revealRemainingAnswers);
+      restartQuizButton.addEventListener('click', startQuiz);
+
+      render();
+    </script>
+  </body>
+</html>
